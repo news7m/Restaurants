@@ -1,0 +1,26 @@
+{
+  "name": "دليل مطاعم ولاية أريانة",
+  "short_name": "مطاعم أريانة",
+  "description": "المنصة التفاعلية المتكاملة لجميع مطاعم ومقاهي ولاية أريانة بتونس",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#e11d48",
+  "lang": "ar",
+  "dir": "rtl",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

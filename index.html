@@ -2,12 +2,12 @@
 <html lang="ar" dir="rtl" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>دليل مطاعم ومقاهي ولاية أريانة | Ariana Restaurants Directory</title>
 
   <!-- PWA Meta Tags & Manifest -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#e11d48">
+  <meta name="theme-color" content="#0f172a">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -29,9 +29,6 @@
               600: '#e11d48',
               700: '#be123c',
               800: '#9f1239',
-            },
-            amber: {
-              500: '#f59e0b',
             }
           },
           fontFamily: {
@@ -60,12 +57,21 @@
   <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
 
   <style>
+    :root {
+      --sat: env(safe-area-inset-top, 0px);
+      --sab: env(safe-area-inset-bottom, 0px);
+    }
     body {
       font-family: 'Tajawal', sans-serif;
+      padding-top: var(--sat);
+      padding-bottom: var(--sab);
+    }
+    header {
+      padding-top: max(0.75rem, var(--sat));
     }
     #map {
       height: 100%;
-      min-height: 400px;
+      min-height: 380px;
       z-index: 10;
       border-radius: 1rem;
     }
@@ -83,110 +89,117 @@
       background: rgba(225, 29, 72, 0.7);
     }
     .glass-effect {
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(12px);
     }
     .dark .glass-effect {
-      background: rgba(17, 24, 39, 0.85);
+      background: rgba(15, 23, 42, 0.92);
       backdrop-filter: blur(12px);
+    }
+    .dark .leaflet-tile-pane {
+      filter: brightness(0.75) invert(1) contrast(1.2) hue-rotate(200deg) saturate(0.3);
     }
   </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
 
   <!-- Top Navigation Bar -->
-  <header class="sticky top-0 z-50 glass-effect border-b border-slate-200 dark:border-slate-800 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+  <header class="sticky top-0 z-50 glass-effect border-b border-slate-200 dark:border-slate-800 shadow-sm pb-3">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
       
       <!-- Logo & Title -->
-      <div class="flex items-center space-x-3 space-x-reverse">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-600 to-amber-500 flex items-center justify-center text-white shadow-lg shadow-rose-500/30">
-          <i class="fa-solid font-bold text-xl fa-utensils"></i>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-600 to-amber-500 flex items-center justify-center text-white shadow-md shadow-rose-500/20 shrink-0">
+          <i class="fa-solid font-bold text-lg fa-utensils"></i>
         </div>
         <div>
-          <h1 class="text-lg font-black tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-            دليل مطاعم أريانة
-            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-rose-100 dark:bg-rose-900/50 text-rose-700 dark:text-rose-300">تونس 🇹🇳</span>
-          </h1>
-          <p class="text-xs text-slate-500 dark:text-slate-400">المنصة التفاعلية المتكاملة لجميع مطاعم ومقاهي ولاية أريانة</p>
+          <div class="flex items-center gap-2 flex-wrap">
+            <h1 class="text-base sm:text-lg font-black tracking-tight text-slate-900 dark:text-white">
+              دليل مطاعم أريانة
+            </h1>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-900/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800/50">
+              تونس 🇹🇳
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1">المنصة التفاعلية المتكاملة لمطاعم ومقاهي ولاية أريانة</p>
         </div>
       </div>
 
       <!-- Actions / Install App / Dark Mode -->
-      <div class="flex items-center space-x-3 space-x-reverse">
+      <div class="flex items-center gap-2">
         
         <!-- PWA Install Button -->
-        <button id="pwa-install-btn" onclick="installPWA()" class="hidden flex items-center gap-1.5 bg-gradient-to-r from-rose-600 to-amber-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-md hover:opacity-90 transition">
+        <button id="pwa-install-btn" onclick="installPWA()" class="hidden flex items-center gap-1.5 bg-gradient-to-r from-rose-600 to-amber-500 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow-sm hover:opacity-95 transition shrink-0">
           <i class="fa-solid fa-mobile-screen-button"></i>
-          <span>تثبيت التطبيق</span>
+          <span class="hidden sm:inline">تثبيت التطبيق</span>
         </button>
 
-        <button id="locate-btn" onclick="getUserLocation()" class="hidden sm:flex items-center gap-2 bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800/60 px-3 py-1.5 rounded-lg text-xs font-bold transition">
+        <button id="locate-btn" onclick="getUserLocation()" class="hidden sm:flex items-center gap-2 bg-indigo-50 dark:bg-indigo-950/50 hover:bg-indigo-100 dark:hover:bg-indigo-900/70 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/60 px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0">
           <i class="fa-solid fa-location-crosshairs text-sm"></i>
-          <span>المطاعم القريبة مني</span>
+          <span>الأقرب مني</span>
         </button>
 
-        <button onclick="exportData('json')" class="hidden md:flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 px-3 py-1.5 rounded-lg text-xs font-medium transition">
+        <button onclick="exportData('json')" class="hidden md:flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 px-3 py-1.5 rounded-xl text-xs font-medium transition shrink-0">
           <i class="fa-solid fa-file-code text-rose-500"></i>
-          <span>تصدير JSON</span>
+          <span>تصدير البيانات</span>
         </button>
 
-        <button onclick="toggleDarkMode()" class="w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 transition">
-          <i id="theme-toggle-dark-icon" class="fa-solid fa-moon text-base"></i>
-          <i id="theme-toggle-light-icon" class="fa-solid fa-sun text-base hidden text-amber-400"></i>
+        <button onclick="toggleDarkMode()" aria-label="تبديل المظهر" class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 transition shrink-0">
+          <i id="theme-toggle-dark-icon" class="fa-solid fa-moon text-sm"></i>
+          <i id="theme-toggle-light-icon" class="fa-solid fa-sun text-sm hidden text-amber-400"></i>
         </button>
       </div>
     </div>
   </header>
 
   <!-- Main Container -->
-  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 space-y-5">
 
     <!-- KPI / Statistics Banner -->
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-      <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-4">
-        <div class="w-12 h-12 rounded-xl bg-rose-50 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 flex items-center justify-center text-2xl font-bold">
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-3">
+        <div class="w-11 h-11 rounded-xl bg-rose-50 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xl shrink-0">
           <i class="fa-solid fa-store"></i>
         </div>
         <div>
-          <span class="block text-2xl font-black text-slate-900 dark:text-white" id="stat-total">236</span>
-          <span class="text-xs text-slate-500 dark:text-slate-400">إجمالي الأماكن المسجلة</span>
+          <span class="block text-xl font-black text-slate-900 dark:text-white leading-tight" id="stat-total">236</span>
+          <span class="text-[11px] text-slate-500 dark:text-slate-400">مكان مسجل</span>
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-4">
-        <div class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center justify-center text-2xl font-bold">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-3">
+        <div class="w-11 h-11 rounded-xl bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl shrink-0">
           <i class="fa-solid fa-utensils"></i>
         </div>
         <div>
-          <span class="block text-2xl font-black text-slate-900 dark:text-white" id="stat-restaurants">165</span>
-          <span class="text-xs text-slate-500 dark:text-slate-400">مطاعم عامة</span>
+          <span class="block text-xl font-black text-slate-900 dark:text-white leading-tight" id="stat-restaurants">165</span>
+          <span class="text-[11px] text-slate-500 dark:text-slate-400">مطاعم عامة</span>
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-4">
-        <div class="w-12 h-12 rounded-xl bg-sky-50 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 flex items-center justify-center text-2xl font-bold">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-3">
+        <div class="w-11 h-11 rounded-xl bg-sky-50 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 flex items-center justify-center text-xl shrink-0">
           <i class="fa-solid fa-mug-saucer"></i>
         </div>
         <div>
-          <span class="block text-2xl font-black text-slate-900 dark:text-white" id="stat-cafes">59</span>
-          <span class="text-xs text-slate-500 dark:text-slate-400">مقاهي وكافيهات</span>
+          <span class="block text-xl font-black text-slate-900 dark:text-white leading-tight" id="stat-cafes">59</span>
+          <span class="text-[11px] text-slate-500 dark:text-slate-400">مقاهي وكافيهات</span>
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-4">
-        <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-2xl font-bold">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-3">
+        <div class="w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl shrink-0">
           <i class="fa-solid fa-map-location-dot"></i>
         </div>
         <div>
-          <span class="block text-2xl font-black text-slate-900 dark:text-white" id="stat-delegations">7</span>
-          <span class="text-xs text-slate-500 dark:text-slate-400">معتمديات ومناطق</span>
+          <span class="block text-xl font-black text-slate-900 dark:text-white leading-tight" id="stat-delegations">7</span>
+          <span class="text-[11px] text-slate-500 dark:text-slate-400">معتمديات ومناطق</span>
         </div>
       </div>
     </div>
 
     <!-- Filters & Search Section -->
-    <section class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200/80 dark:border-slate-700/60 space-y-4">
+    <section class="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-slate-200/80 dark:border-slate-700/60 space-y-3.5 relative z-20">
       
       <!-- Top Row: Search input & Quick buttons -->
       <div class="flex flex-col sm:flex-row gap-3">
@@ -196,26 +209,26 @@
           <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
             <i class="fa-solid fa-magnifying-glass"></i>
           </div>
-          <input type="text" id="search-input" oninput="applyFilters()" placeholder="ابحث باسم المطعم، الشارع، المطبخ، أو المنطقة (مثال: حي النصر، شاورما، سكرة)..." 
-                 class="w-full pl-10 pr-10 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white placeholder-slate-400 transition">
+          <input type="text" id="search-input" oninput="applyFilters()" placeholder="ابحث باسم المطعم، المنطقة، أو المطبخ..." 
+                 class="w-full pl-10 pr-10 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white placeholder-slate-400 transition">
           <button id="clear-search" onclick="clearSearch()" class="hidden absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
             <i class="fa-solid fa-circle-xmark"></i>
           </button>
         </div>
 
         <!-- Mobile Near Me button -->
-        <button onclick="getUserLocation()" class="sm:hidden flex items-center justify-center gap-2 bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800/60 px-4 py-2.5 rounded-xl text-xs font-bold">
-          <i class="fa-solid fa-location-crosshairs"></i>
+        <button onclick="getUserLocation()" class="sm:hidden flex items-center justify-center gap-2 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 text-indigo-600 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800/60 px-4 py-2.5 rounded-xl text-xs font-bold transition">
+          <i class="fa-solid fa-location-crosshairs text-indigo-500"></i>
           <span>المطاعم القريبة مني</span>
         </button>
       </div>
 
       <!-- Bottom Row: Dropdown Filters -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 pt-2 border-t border-slate-100 dark:border-slate-700/50">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 pt-2.5 border-t border-slate-100 dark:border-slate-700/50">
         
         <!-- Filter by Delegation -->
         <div>
-          <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1.5">
+          <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
             <i class="fa-solid fa-city text-rose-500 ml-1"></i>المعتمدية / المنطقة
           </label>
           <select id="delegation-filter" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white">
@@ -234,8 +247,8 @@
 
         <!-- Filter by Category -->
         <div>
-          <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1.5">
-            <i class="fa-solid fa-list text-rose-500 ml-1"></i>نوع النشاط
+          <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
+            <i class="fa-solid fa-layer-group text-rose-500 ml-1"></i>نوع النشاط
           </label>
           <select id="category-filter" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white">
             <option value="ALL">جميع الأنشطة (مطاعم ومقاهي)</option>
@@ -249,7 +262,7 @@
 
         <!-- Filter by Delivery / Seating Options -->
         <div>
-          <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1.5">
+          <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
             <i class="fa-solid fa-truck-fast text-rose-500 ml-1"></i>الخدمات المتوفرة
           </label>
           <select id="services-filter" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white">
@@ -261,12 +274,12 @@
 
         <!-- Sort by option -->
         <div>
-          <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1.5">
+          <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
             <i class="fa-solid fa-arrow-down-wide-short text-rose-500 ml-1"></i>ترتيب حسب
           </label>
           <select id="sort-option" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white">
-            <option value="rating_desc">الأعلى تقييماً ⭐</option>
-            <option value="reviews_desc">الأكثر مراجعة 💬</option>
+            <option value="rating_desc">الأعلى تقييماً</option>
+            <option value="reviews_desc">الأكثر مراجعة</option>
             <option value="name_asc">الاسم (أ - ي)</option>
           </select>
         </div>
@@ -275,31 +288,34 @@
     </section>
 
     <!-- Content Layout: Interactive Map + List Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start relative z-10">
       
       <!-- Interactive Map Panel -->
-      <div class="lg:col-span-7 bg-white dark:bg-slate-800 rounded-2xl p-3 shadow-sm border border-slate-200/80 dark:border-slate-700/60 sticky top-20">
-        <div class="flex items-center justify-between mb-3 px-2">
+      <div class="lg:col-span-7 bg-white dark:bg-slate-800 rounded-2xl p-3 shadow-sm border border-slate-200/80 dark:border-slate-700/60 lg:sticky lg:top-20 z-10">
+        <div class="flex items-center justify-between mb-2.5 px-1">
           <div class="flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-rose-500 animate-ping"></span>
-            <h2 class="text-sm font-bold text-slate-900 dark:text-white">خريطة المطاعم التفاعلية</h2>
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-rose-500"></span>
+            </span>
+            <h2 class="text-xs font-bold text-slate-900 dark:text-white">خريطة المطاعم التفاعلية</h2>
           </div>
-          <span class="text-xs font-semibold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300" id="map-counter">236 مكان</span>
+          <span class="text-[11px] font-semibold px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300" id="map-counter">236 مكان</span>
         </div>
-        <div id="map" class="shadow-inner"></div>
+        <div id="map" class="shadow-inner overflow-hidden"></div>
       </div>
 
       <!-- Restaurant Cards List -->
-      <div class="lg:col-span-5 space-y-4">
+      <div class="lg:col-span-5 space-y-3 relative z-10">
         
         <!-- Results Summary Bar -->
         <div class="flex items-center justify-between text-xs font-medium text-slate-500 dark:text-slate-400 px-1">
-          <span>نتائج البحث (<strong id="results-count" class="text-rose-600 dark:text-rose-400 font-extrabold">236</strong> مطعم ومقهى)</span>
+          <span>نتائج البحث (<strong id="results-count" class="text-rose-600 dark:text-rose-400 font-extrabold">236</strong> <span id="results-unit">مكان</span>)</span>
           <button onclick="resetFilters()" class="text-rose-600 dark:text-rose-400 hover:underline">إعادة ضبط الفلاتر</button>
         </div>
 
         <!-- Scrollable Cards Container -->
-        <div id="restaurants-container" class="space-y-3.5 max-h-[720px] overflow-y-auto pr-1 custom-scrollbar">
+        <div id="restaurants-container" class="space-y-3 max-h-[640px] overflow-y-auto pr-1 custom-scrollbar relative">
           <!-- Cards rendered dynamically via JavaScript -->
         </div>
       </div>
@@ -310,7 +326,7 @@
 
   <!-- Modal for Restaurant Detailed View -->
   <div id="details-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300">
-    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative overflow-hidden transform transition-all">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative overflow-hidden transform transition-all">
       <button onclick="closeModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 flex items-center justify-center text-slate-500 dark:text-slate-300 transition">
         <i class="fa-solid fa-xmark text-lg"></i>
       </button>
@@ -322,10 +338,10 @@
   </div>
 
   <!-- Footer -->
-  <footer class="mt-12 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700/60 py-6 text-center text-xs text-slate-500 dark:text-slate-400">
-    <div class="max-w-7xl mx-auto px-4 space-y-2">
-      <p class="font-medium">مشروع دليل مطاعم ولاية أريانة © 2025 - دليل تفاعلي شامل واحترافي (تطبيق PWA)</p>
-      <p class="text-slate-400 dark:text-slate-500">تم التجميع والربط برمجياً عبر خرائط الشارع المفتوحة OSM والتقنيات التفاعلية الحديثة</p>
+  <footer class="mt-10 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700/60 py-6 text-center text-xs text-slate-500 dark:text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 space-y-1.5">
+      <p class="font-medium">دليل مطاعم ولاية أريانة © 2025 - دليل تفاعلي شامل (تطبيق PWA)</p>
+      <p class="text-slate-400 dark:text-slate-500">مبني عبر خرائط الشارع المفتوحة OSM والتقنيات التفاعلية الحديثة</p>
     </div>
   </footer>
 
@@ -345,6 +361,15 @@
       initTheme();
       registerServiceWorker();
     });
+
+    // Arabic Pluralization Helper
+    function getArabicPlural(count) {
+      if (count === 0) return 'لا توجد أماكن';
+      if (count === 1) return 'مكان واحد';
+      if (count === 2) return 'مكانيْن';
+      if (count >= 3 && count <= 10) return `${count} أماكن`;
+      return `${count} مكاناً`;
+    }
 
     // PWA Service Worker Registration
     function registerServiceWorker() {
@@ -407,7 +432,6 @@
 
     // Initialize Leaflet Map centered on Ariana Governorate
     function initMap() {
-      // Center of Ariana roughly 36.866, 10.183
       map = L.map('map').setView([36.866, 10.183], 12);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -519,16 +543,18 @@
     // Render Cards in List Panel
     function renderList() {
       const container = document.getElementById('restaurants-container');
-      document.getElementById('results-count').innerText = filteredRestaurants.length;
-      document.getElementById('map-counter').innerText = `${filteredRestaurants.length} مكان`;
+      const count = filteredRestaurants.length;
+      document.getElementById('results-count').innerText = count;
+      document.getElementById('results-unit').innerText = count === 1 ? 'مكان' : (count === 2 ? 'مكانيْن' : (count >= 3 && count <= 10 ? 'أماكن' : 'مكاناً'));
+      document.getElementById('map-counter').innerText = getArabicPlural(count);
 
-      if (filteredRestaurants.length === 0) {
+      if (count === 0) {
         container.innerHTML = `
-          <div class="text-center py-12 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6">
-            <i class="fa-solid fa-magnifying-glass-location text-4xl text-slate-300 dark:text-slate-600 mb-3"></i>
-            <h3 class="text-sm font-bold text-slate-700 dark:text-slate-200 mb-1">لا توجد نتائج مطابقة لمحددات البحث</h3>
-            <p class="text-xs text-slate-400 mb-4">جرب البحث بكلمات أخرى أو تغيير خيارات التصفية.</p>
-            <button onclick="resetFilters()" class="px-4 py-2 bg-rose-600 text-white rounded-xl text-xs font-bold hover:bg-rose-700 transition">
+          <div class="text-center py-10 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6">
+            <i class="fa-solid fa-magnifying-glass-location text-3xl text-slate-300 dark:text-slate-600 mb-2"></i>
+            <h3 class="text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">لا توجد نتائج مطابقة لمحددات البحث</h3>
+            <p class="text-[11px] text-slate-400 mb-3">جرب البحث بكلمات أخرى أو تغيير خيارات التصفية.</p>
+            <button onclick="resetFilters()" class="px-3.5 py-1.5 bg-rose-600 text-white rounded-xl text-xs font-bold hover:bg-rose-700 transition">
               عرض جميع الأماكن
             </button>
           </div>
@@ -537,23 +563,23 @@
       }
 
       container.innerHTML = filteredRestaurants.map(item => `
-        <div onclick="focusOnRestaurant(${item.id})" class="bg-white dark:bg-slate-800 hover:border-rose-400 dark:hover:border-rose-500 rounded-xl p-4 shadow-sm border border-slate-200/80 dark:border-slate-700/60 transition cursor-pointer group relative overflow-hidden">
+        <div onclick="focusOnRestaurant(${item.id})" class="bg-white dark:bg-slate-800 hover:border-rose-400 dark:hover:border-rose-500 rounded-xl p-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700/60 transition cursor-pointer group relative overflow-hidden">
           
-          <div class="flex items-start justify-between gap-3">
+          <div class="flex items-start justify-between gap-2.5">
             
-            <div class="flex items-start gap-3">
-              <div class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xl shrink-0 group-hover:scale-110 transition-transform">
+            <div class="flex items-start gap-2.5 min-w-0">
+              <div class="w-9 h-9 rounded-xl bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">
                 ${item.icon}
               </div>
               
-              <div>
-                <h3 class="font-bold text-slate-900 dark:text-white text-sm group-hover:text-rose-600 dark:group-hover:text-rose-400 transition flex items-center gap-1.5">
-                  ${item.name}
-                  <span class="text-[10px] font-normal px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
+              <div class="min-w-0">
+                <h3 class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 dark:group-hover:text-rose-400 transition flex items-center gap-1.5 flex-wrap">
+                  <span class="truncate">${item.name}</span>
+                  <span class="text-[10px] font-normal px-2 py-0.2 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 shrink-0">
                     ${item.delegation}
                   </span>
                 </h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-1">
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1">
                   <i class="fa-solid fa-location-dot text-rose-500 ml-1"></i>${item.address}
                 </p>
               </div>
@@ -561,32 +587,32 @@
 
             <!-- Rating badge -->
             <div class="flex flex-col items-end shrink-0">
-              <div class="flex items-center gap-1 bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 px-2 py-1 rounded-lg text-xs font-bold border border-amber-200/60 dark:border-amber-800/40">
-                <i class="fa-solid fa-star text-amber-500 text-xs"></i>
+              <div class="flex items-center gap-1 bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 px-1.5 py-0.5 rounded-lg text-xs font-bold border border-amber-200/60 dark:border-amber-800/40">
+                <i class="fa-solid fa-star text-amber-500 text-[10px]"></i>
                 <span>${item.rating}</span>
               </div>
-              <span class="text-[10px] text-slate-400 mt-1">(${item.reviews_count} تقييم)</span>
+              <span class="text-[9px] text-slate-400 mt-0.5">(${item.reviews_count} تقييم)</span>
             </div>
 
           </div>
 
           <!-- Tags & Quick Action Row -->
-          <div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-700/50 flex items-center justify-between text-xs">
+          <div class="mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-700/50 flex items-center justify-between text-xs">
             
-            <div class="flex items-center gap-2 flex-wrap">
-              <span class="bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 px-2 py-0.5 rounded text-[11px]">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 px-2 py-0.5 rounded text-[10px]">
                 ${item.cuisine}
               </span>
-              ${item.delivery_available ? '<span class="text-emerald-600 dark:text-emerald-400 text-[11px] font-medium"><i class="fa-solid fa-truck-fast ml-0.5"></i>توصيل</span>' : ''}
-              ${item.outdoor_seating ? '<span class="text-sky-600 dark:text-sky-400 text-[11px] font-medium"><i class="fa-solid fa-chair ml-0.5"></i>جلسات خارجية</span>' : ''}
+              ${item.delivery_available ? '<span class="text-emerald-600 dark:text-emerald-400 text-[10px] font-medium"><i class="fa-solid fa-truck-fast ml-0.5"></i>توصيل</span>' : ''}
+              ${item.outdoor_seating ? '<span class="text-sky-600 dark:text-sky-400 text-[10px] font-medium"><i class="fa-solid fa-chair ml-0.5"></i>جلسات خارجية</span>' : ''}
             </div>
 
-            <div class="flex items-center gap-1">
-              <button onclick="event.stopPropagation(); openDetailsModal(${item.id})" class="p-1.5 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="عرض التفاصيل الكاملة">
-                <i class="fa-solid fa-circle-info text-sm"></i>
+            <div class="flex items-center gap-1 shrink-0">
+              <button onclick="event.stopPropagation(); openDetailsModal(${item.id})" class="p-1 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="عرض التفاصيل">
+                <i class="fa-solid fa-circle-info text-xs"></i>
               </button>
-              <a href="${item.google_maps_url}" target="_blank" onclick="event.stopPropagation();" class="p-1.5 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="فتح الموقع في خرائط Google">
-                <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+              <a href="${item.google_maps_url}" target="_blank" onclick="event.stopPropagation();" class="p-1 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="فتح في Google Maps">
+                <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
               </a>
             </div>
 
@@ -603,21 +629,21 @@
       filteredRestaurants.forEach(item => {
         const customIcon = L.divIcon({
           className: 'custom-div-icon',
-          html: `<div style="background-color: #e11d48; color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); font-size: 14px; border: 2px solid white;">${item.icon}</div>`,
-          iconSize: [30, 30],
-          iconAnchor: [15, 15]
+          html: `<div style="background-color: #e11d48; color: white; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 6px -1px rgba(0,0,0,0.3); font-size: 13px; border: 2px solid white;">${item.icon}</div>`,
+          iconSize: [28, 28],
+          iconAnchor: [14, 14]
         });
 
         const marker = L.marker([item.lat, item.lon], { icon: customIcon });
 
         const popupContent = `
           <div dir="rtl" class="text-right font-sans p-1">
-            <div class="font-bold text-slate-900 text-sm mb-1">${item.name}</div>
-            <div class="text-xs text-rose-600 font-semibold mb-1">${item.category}</div>
-            <div class="text-xs text-slate-600 mb-2"><i class="fa-solid fa-location-dot ml-1 text-slate-400"></i>${item.address}</div>
-            <div class="flex items-center justify-between pt-2 border-t border-slate-200">
-              <span class="text-xs font-bold text-amber-600">⭐ ${item.rating} (${item.reviews_count})</span>
-              <a href="${item.google_maps_url}" target="_blank" class="text-xs font-bold text-rose-600 hover:underline">الاتجاهات ↗</a>
+            <div class="font-bold text-slate-900 text-xs mb-0.5">${item.name}</div>
+            <div class="text-[11px] text-rose-600 font-semibold mb-1">${item.category}</div>
+            <div class="text-[11px] text-slate-600 mb-2"><i class="fa-solid fa-location-dot ml-1 text-slate-400"></i>${item.address}</div>
+            <div class="flex items-center justify-between pt-1.5 border-t border-slate-200">
+              <span class="text-[11px] font-bold text-amber-600">⭐ ${item.rating} (${item.reviews_count})</span>
+              <a href="${item.google_maps_url}" target="_blank" class="text-[11px] font-bold text-rose-600 hover:underline">الاتجاهات ↗</a>
             </div>
           </div>
         `;
@@ -700,19 +726,19 @@
       const modalContent = document.getElementById('modal-content');
       modalContent.innerHTML = `
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-2xl bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 flex items-center justify-center text-2xl">
+          <div class="w-11 h-11 rounded-2xl bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xl shrink-0">
             ${item.icon}
           </div>
           <div>
-            <h3 class="text-base font-bold text-slate-900 dark:text-white">${item.name}</h3>
+            <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white">${item.name}</h3>
             <span class="text-xs text-rose-600 dark:text-rose-400 font-semibold">${item.category}</span>
           </div>
         </div>
 
-        <div class="space-y-2.5 text-xs text-slate-600 dark:text-slate-300 pt-3 border-t border-slate-100 dark:border-slate-700">
+        <div class="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-3 border-t border-slate-100 dark:border-slate-700">
           <p class="flex items-center gap-2">
             <i class="fa-solid fa-city text-rose-500 w-4"></i>
-            <strong>المعمدية:</strong> ${item.delegation}
+            <strong>المعتمدية:</strong> ${item.delegation}
           </p>
           <p class="flex items-center gap-2">
             <i class="fa-solid fa-location-dot text-rose-500 w-4"></i>
@@ -736,12 +762,12 @@
           </p>
         </div>
 
-        <div class="pt-4 flex items-center gap-3">
-          <a href="${item.google_maps_url}" target="_blank" class="flex-1 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold py-2.5 px-4 rounded-xl text-center transition flex items-center justify-center gap-2">
+        <div class="pt-3 flex items-center gap-2.5">
+          <a href="${item.google_maps_url}" target="_blank" class="flex-1 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold py-2.5 px-3 rounded-xl text-center transition flex items-center justify-center gap-1.5">
             <i class="fa-solid fa-map-location-dot"></i>
-            فتح الاتجاهات عبر Google Maps
+            الاتجاهات عبر Google Maps
           </a>
-          <a href="tel:${item.phone.replace(/\s+/g, '')}" class="bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-800 dark:text-slate-100 text-xs font-bold py-2.5 px-4 rounded-xl text-center transition flex items-center justify-center gap-2">
+          <a href="tel:${item.phone.replace(/\s+/g, '')}" class="bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-800 dark:text-slate-100 text-xs font-bold py-2.5 px-3 rounded-xl text-center transition flex items-center justify-center gap-1.5 shrink-0">
             <i class="fa-solid fa-phone"></i>
             اتصال
           </a>

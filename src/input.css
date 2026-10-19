@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+}
+body {
+  font-family: 'Tajawal', sans-serif;
+  padding-top: var(--sat);
+  padding-bottom: var(--sab);
+}
+header {
+  padding-top: max(0.75rem, var(--sat));
+}
+#map {
+  height: 100%;
+  min-height: 380px;
+  z-index: 10;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+}
+.dark .custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(225, 29, 72, 0.4);
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(225, 29, 72, 0.7);
+}
+.glass-effect {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+.dark .glass-effect {
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(12px);
+}
+
+/* Dark Mode Leaflet Tile Customizations */
+.dark .leaflet-tile-pane {
+  filter: brightness(0.85) contrast(1.1) invert(0.92) hue-rotate(200deg);
+}
+.dark .leaflet-popup-content-wrapper,
+.dark .leaflet-popup-tip {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5) !important;
+}
+.dark .leaflet-popup-content div.font-bold {
+  color: #f8fafc !important;
+}
+.dark .leaflet-popup-content div.text-slate-600 {
+  color: #94a3b8 !important;
+}
+.dark .leaflet-popup-content div.border-slate-200 {
+  border-color: #334155 !important;
+}

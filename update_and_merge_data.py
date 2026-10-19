@@ -53,6 +53,8 @@ def clean_item(item, default_gov):
     lat_val = round(float(lat), 6) if lat else 0.0
     lon_val = round(float(lon), 6) if lon else 0.0
 
+    gmaps_url = f'https://www.google.com/maps/search/?api=1&query={lat_val},{lon_val}'
+
     return {
         'id': item.get('id'),
         'governorate': gov,
@@ -69,11 +71,13 @@ def clean_item(item, default_gov):
         'price_level': price_lvl,
         'cuisine': cuisine_str,
         'phone': item.get('phone') or '',
+        'email': item.get('email', ''),
         'opening_hours': item.get('opening_hours') or '08:00 - 23:00 (يومياً)',
-        'google_maps_url': item.get('google_maps_url') or f'https://www.google.com/maps/search/?api=1&query={lat_val},{lon_val}',
+        'google_maps_url': gmaps_url,
         'delivery_available': delivery,
         'outdoor_seating': outdoor,
         'website': item.get('website', ''),
+        'social_media': item.get('social_media', ''),
         'services': services,
         'is_featured': bool(item.get('is_featured', False))
     }

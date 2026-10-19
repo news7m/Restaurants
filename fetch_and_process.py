@@ -195,8 +195,15 @@ def process_elements(raw_data, gov_id, gov_name_ar, default_regions):
         if tags.get('internet_access') in ['wlan', 'yes'] and "واي فاي مجاني" not in assigned_services:
             assigned_services.append("واي فاي مجاني")
 
-        # Google Maps URL
-        gmaps_url = f"https://www.google.com/maps/search/?api=1&query={lat},{lon}"
+        # Google Maps URL with precise rounded coordinates
+        lat_rounded = round(lat, 6)
+        lon_rounded = round(lon, 6)
+        gmaps_url = f"https://www.google.com/maps/search/?api=1&query={lat_rounded},{lon_rounded}"
+
+        # Contact details
+        email = tags.get('email') or tags.get('contact:email') or ""
+        website = tags.get('website') or tags.get('contact:website') or ""
+        social_media = tags.get('facebook') or tags.get('contact:facebook') or tags.get('instagram') or tags.get('contact:instagram') or tags.get('social_media') or ""
 
         item = {
             "id": f"{gov_id}_{el['type']}_{el['id']}",
@@ -213,12 +220,14 @@ def process_elements(raw_data, gov_id, gov_name_ar, default_regions):
             "price_level": price_level,
             "address": full_address,
             "phone": phone,
+            "email": email,
             "opening_hours": opening_hours,
-            "website": tags.get('website') or tags.get('contact:website') or "",
+            "website": website,
+            "social_media": social_media,
             "services": list(set(assigned_services)),
             "coordinates": {
-                "lat": round(lat, 6),
-                "lng": round(lon, 6)
+                "lat": lat_rounded,
+                "lng": lon_rounded
             },
             "google_maps_url": gmaps_url,
             "is_featured": random.random() > 0.85

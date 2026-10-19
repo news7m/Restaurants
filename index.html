@@ -462,9 +462,26 @@
           </div>
         </div>
 
-        <div>
-          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">رقم الهاتف</label>
-          <input type="text" id="new-phone" placeholder="+216 71 000 000" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">رقم الهاتف</label>
+            <input type="text" id="new-phone" placeholder="+216 71 000 000" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">البريد الإلكتروني</label>
+            <input type="email" id="new-email" placeholder="contact@example.com" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الموقع الإلكتروني</label>
+            <input type="url" id="new-website" placeholder="https://example.com" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">وسائل التواصل الاجتماعي</label>
+            <input type="url" id="new-social" placeholder="https://facebook.com/..." class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
+          </div>
         </div>
 
         <div class="pt-2 flex items-center justify-end gap-2">
@@ -741,6 +758,8 @@
     function handleAddNewPlace(e) {
       e.preventDefault();
       const newGov = document.getElementById('new-governorate').value;
+      const latVal = round(parseFloat(document.getElementById('new-lat').value) || (newGov === 'ولاية تونس' ? 36.806 : 36.866), 6);
+      const lonVal = round(parseFloat(document.getElementById('new-lon').value) || (newGov === 'ولاية تونس' ? 10.181 : 10.183), 6);
       const newPlace = {
         id: Date.now(),
         governorate: newGov,
@@ -750,15 +769,18 @@
         delegation: document.getElementById('new-delegation').value,
         address: document.getElementById('new-address').value.trim(),
         street: 'غير محدد',
-        lat: parseFloat(document.getElementById('new-lat').value) || (newGov === 'ولاية تونس' ? 36.806 : 36.866),
-        lon: parseFloat(document.getElementById('new-lon').value) || (newGov === 'ولاية تونس' ? 10.181 : 10.183),
+        lat: latVal,
+        lon: lonVal,
         rating: 5.0,
         reviews_count: 1,
         price_level: '$$',
         cuisine: document.getElementById('new-cuisine').value.trim() || 'تونسية',
         phone: document.getElementById('new-phone').value.trim() || '+216 00 000 000',
+        email: document.getElementById('new-email') ? document.getElementById('new-email').value.trim() : '',
+        website: document.getElementById('new-website') ? document.getElementById('new-website').value.trim() : '',
+        social_media: document.getElementById('new-social') ? document.getElementById('new-social').value.trim() : '',
         opening_hours: '08:00 - 23:00 (يومياً)',
-        google_maps_url: `https://www.google.com/maps/search/?api=1&query=${document.getElementById('new-lat').value || '36.806'},${document.getElementById('new-lon').value || '10.181'}`,
+        google_maps_url: `https://www.google.com/maps/search/?api=1&query=${latVal},${lonVal}`,
         delivery_available: true,
         outdoor_seating: true
       };
@@ -967,6 +989,8 @@
             <div class="flex items-center gap-1 shrink-0">
               <button onclick="event.stopPropagation(); toggleFavorite(${item.id})" class="p-1 text-slate-400 hover:text-rose-600 transition" title="حفظ بالمفضلة"><i class="${favorites.includes(item.id) ? 'fa-solid fa-heart text-rose-500' : 'fa-regular fa-heart'} text-xs"></i></button>
               ${item.website ? `<a href="${item.website}" target="_blank" onclick="event.stopPropagation();" class="p-1 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="الموقع الإلكتروني"><i class="fa-solid fa-globe text-xs"></i></a>` : ''}
+              ${item.email ? `<a href="mailto:${item.email}" onclick="event.stopPropagation();" class="p-1 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="البريد الإلكتروني"><i class="fa-solid fa-envelope text-xs"></i></a>` : ''}
+              ${item.social_media ? `<a href="${item.social_media}" target="_blank" onclick="event.stopPropagation();" class="p-1 text-slate-400 hover:text-sky-500 transition" title="وسائل التواصل الاجتماعي"><i class="fa-brands fa-facebook text-xs"></i></a>` : ''}
               <button onclick="event.stopPropagation(); openDetailsModal(${item.id})" class="p-1 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="عرض التفاصيل">
                 <i class="fa-solid fa-circle-info text-xs"></i>
               </button>
@@ -1085,7 +1109,11 @@
             <div class="text-[11px] text-slate-600 mb-2"><i class="fa-solid fa-location-dot ml-1 text-slate-400"></i>${item.address}</div>
             <div class="flex items-center justify-between pt-1.5 border-t border-slate-200">
               <span class="text-[11px] font-bold text-amber-600">⭐ ${item.rating} (${item.reviews_count})</span>
-              <a href="${item.google_maps_url}" target="_blank" class="text-[11px] font-bold text-rose-600 hover:underline">الاتجاهات ↗</a>
+              <div class="flex items-center gap-1.5">
+                ${item.website ? `<a href="${item.website}" target="_blank" class="text-[11px] text-slate-600 hover:text-rose-600" title="الموقع"><i class="fa-solid fa-globe"></i></a>` : ''}
+                ${item.social_media ? `<a href="${item.social_media}" target="_blank" class="text-[11px] text-sky-600 hover:text-sky-700" title="التواصل الاجتماعي"><i class="fa-brands fa-facebook"></i></a>` : ''}
+                <a href="${item.google_maps_url}" target="_blank" class="text-[11px] font-bold text-rose-600 hover:underline">الاتجاهات ↗</a>
+              </div>
             </div>
           </div>
         `;
@@ -1218,6 +1246,18 @@
             <i class="fa-solid fa-phone text-rose-500 w-4"></i>
             <strong>الهاتف:</strong> <span dir="ltr">${item.phone || 'غير متوفر'}</span>
           </p>
+          ${item.email ? `
+          <p class="flex items-center gap-2">
+            <i class="fa-solid fa-envelope text-rose-500 w-4"></i>
+            <strong>البريد الإلكتروني:</strong> <a href="mailto:${item.email}" class="text-rose-600 dark:text-rose-400 hover:underline" dir="ltr">${item.email}</a>
+          </p>
+          ` : ''}
+          ${item.social_media ? `
+          <p class="flex items-center gap-2">
+            <i class="fa-brands fa-facebook text-sky-500 w-4"></i>
+            <strong>وسائل التواصل:</strong> <a href="${item.social_media}" target="_blank" class="text-sky-600 dark:text-sky-400 hover:underline">زيارة صفحة التواصل ↗</a>
+          </p>
+          ` : ''}
           <p class="flex items-center gap-2">
             <i class="fa-solid fa-star text-amber-500 w-4"></i>
             <strong>التقييم:</strong> ⭐ ${item.rating} من 5 (${item.reviews_count} مراجعة)
@@ -1225,12 +1265,18 @@
           ${servicesHtml}
         </div>
 
-        <div class="pt-3 flex items-center gap-2.5">
-          <a href="${item.google_maps_url}" target="_blank" class="flex-1 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold py-2.5 px-3 rounded-xl text-center transition flex items-center justify-center gap-1.5">
+        <div class="pt-3 flex items-center gap-2.5 flex-wrap sm:flex-nowrap">
+          <a href="${item.google_maps_url}" target="_blank" class="flex-1 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold py-2.5 px-3 rounded-xl text-center transition flex items-center justify-center gap-1.5 min-w-[140px]">
             <i class="fa-solid fa-map-location-dot"></i>
             الاتجاهات عبر Google Maps
           </a>
           ${websiteBtn}
+          ${item.social_media ? `
+          <a href="${item.social_media}" target="_blank" class="bg-sky-50 dark:bg-sky-950/50 hover:bg-sky-100 text-sky-600 dark:text-sky-300 border border-sky-200 dark:border-sky-800/60 text-xs font-bold py-2.5 px-3 rounded-xl text-center transition flex items-center justify-center gap-1.5 shrink-0">
+            <i class="fa-brands fa-facebook"></i>
+            التواصل
+          </a>
+          ` : ''}
           ${item.phone ? `
           <a href="tel:${item.phone.replace(/\s+/g, '')}" class="bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-800 dark:text-slate-100 text-xs font-bold py-2.5 px-3 rounded-xl text-center transition flex items-center justify-center gap-1.5 shrink-0">
             <i class="fa-solid fa-phone"></i>
@@ -1259,7 +1305,7 @@
         downloadAnchor.remove();
         showToast('تم تصدير ملف JSON بنجاح', 'success');
       } else if (format === 'csv') {
-        const headers = ["id", "governorate", "name", "category", "delegation", "address", "rating", "reviews_count", "price_level", "cuisine", "phone"];
+        const headers = ["id", "governorate", "name", "category", "delegation", "address", "rating", "reviews_count", "price_level", "cuisine", "phone", "email", "website", "social_media"];
         const rows = filteredRestaurants.map(r => [
           r.id,
           `"${(r.governorate || 'ولاية أريانة').replace(/"/g, '""')}"`,
@@ -1271,7 +1317,10 @@
           r.reviews_count,
           `"${r.price_level || ''}"`,
           `"${(r.cuisine || '').replace(/"/g, '""')}"`,
-          `"${r.phone || ''}"`
+          `"${r.phone || ''}"`,
+          `"${r.email || ''}"`,
+          `"${r.website || ''}"`,
+          `"${r.social_media || ''}"`
         ]);
         const csvContent = "\uFEFF" + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
         const encodedUri = encodeURI("data:text/csv;charset=utf-8," + csvContent);

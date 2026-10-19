@@ -1,4 +1,5 @@
 {
+  "id": "./index.html",
   "name": "دليل مطاعم ومقاهي أريانة وتونس",
   "short_name": "مطاعم أريانة وتونس",
   "description": "المنصة التفاعلية المتكاملة لجميع مطاعم ومقاهي ولايتي أريانة وتونس (تونس الكبرى)",
@@ -14,13 +15,35 @@
       "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "شاشة الرئيسية للدليل التفاعلي على الحاسوب"
+    },
+    {
+      "src": "screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "واجهة الاستخدام التفاعلية على الهاتف المحمول"
     }
   ]
 }

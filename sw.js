@@ -1,4 +1,4 @@
-const CACHE_NAME = 'greatertunis-static-v7';
+const CACHE_NAME = 'greatertunis-static-v8';
 const DATA_CACHE_NAME = 'greatertunis-data-v1';
 const TILE_CACHE_NAME = 'greatertunis-tiles-v1';
 const MAX_TILES_CACHE = 150;
@@ -11,6 +11,9 @@ const ASSETS_TO_CACHE = [
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
+  './icon-maskable-512.png',
+  './screenshot-desktop.png',
+  './screenshot-mobile.png',
   'https://cdn.tailwindcss.com',
   'https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',

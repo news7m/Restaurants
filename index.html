@@ -102,9 +102,9 @@
       backdrop-filter: blur(12px);
     }
 
-    /* Dark Mode Leaflet Filter & Popup Customizations */
+    /* Dark Mode Leaflet Tile Customizations */
     .dark .leaflet-tile-pane {
-      filter: brightness(0.75) invert(1) contrast(1.2) hue-rotate(200deg) saturate(0.3);
+      filter: brightness(0.85) contrast(1.1) invert(0.92) hue-rotate(200deg);
     }
     .dark .leaflet-popup-content-wrapper,
     .dark .leaflet-popup-tip {
@@ -246,7 +246,7 @@
           <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
             <i class="fa-solid fa-magnifying-glass"></i>
           </div>
-          <input type="text" id="search-input" oninput="applyFilters()" placeholder="ابحث باسم المطعم، المنطقة، أو المطبخ..."
+          <input type="text" id="search-input" oninput="debouncedApplyFilters()" placeholder="ابحث باسم المطعم، المنطقة، أو المطبخ..."
                  class="w-full pl-10 pr-10 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white placeholder-slate-400 transition">
           <button id="clear-search" onclick="clearSearch()" class="hidden absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
             <i class="fa-solid fa-circle-xmark"></i>
@@ -505,11 +505,22 @@
     let showFavsOnly = false;
 
     let map = null;
+    let tileLayer = null;
     let markersCluster = null;
     let userMarker = null;
 
     const OSM_TILES = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     const TILE_ATTR = '© OpenStreetMap contributors';
+
+    function updateMapTileTheme() {
+      if (!map) return;
+      if (!tileLayer) {
+        tileLayer = L.tileLayer(OSM_TILES, {
+          maxZoom: 19,
+          attribution: TILE_ATTR
+        }).addTo(map);
+      }
+    }
 
     // Toast Notification System
     function showToast(message, type = 'info') {
@@ -661,16 +672,14 @@
         document.getElementById('theme-toggle-dark-icon').classList.add('hidden');
         document.getElementById('theme-toggle-light-icon').classList.remove('hidden');
       }
+      updateMapTileTheme();
     }
 
     // Initialize Leaflet Map centered on Greater Tunis (Ariana & Tunis)
     function initMap() {
       map = L.map('map').setView([36.84, 10.22], 11);
 
-      L.tileLayer(OSM_TILES, {
-        maxZoom: 19,
-        attribution: TILE_ATTR
-      }).addTo(map);
+      updateMapTileTheme();
 
       markersCluster = L.markerClusterGroup({
         spiderfyOnMaxZoom: true,
@@ -706,7 +715,7 @@
     function handleGovernorateChange() {
       populateDelegationOptions();
       updateStats();
-      applyFilters();
+      applyFilters(true);
     }
 
     // Modal Add Place helpers
@@ -793,7 +802,7 @@
 
         populateDelegationOptions();
         updateStats();
-        applyFilters();
+        applyFilters(true);
       } catch (err) {
         console.error('Error loading restaurant datasets:', err);
         showToast('تعذر تحميل قاعدة البيانات، يرجى إعادة التأكد من الاتصال', 'danger');
@@ -818,8 +827,17 @@
       document.getElementById('stat-delegations').innerText = delgSet.size;
     }
 
+    function debounce(func, wait = 250) {
+      let timeout;
+      return function (...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+      };
+    }
+    const debouncedApplyFilters = debounce(applyFilters, 250);
+
     // Apply Search and Multi-Filters
-    function applyFilters() {
+    function applyFilters(shouldFitBounds = false) {
       const searchTerm = document.getElementById('search-input').value.trim().toLowerCase();
       const governorateVal = document.getElementById('governorate-filter').value;
       const delegationVal = document.getElementById('delegation-filter').value;
@@ -882,12 +900,12 @@
       }
 
       renderList();
-      renderMarkers();
+      renderMarkers(shouldFitBounds);
     }
 
     function clearSearch() {
       document.getElementById('search-input').value = '';
-      applyFilters();
+      applyFilters(true);
     }
 
     function resetFilters() {
@@ -900,41 +918,20 @@
       document.getElementById('rating-filter').value = '0';
       document.getElementById('sort-option').value = 'rating_desc';
       updateStats();
-      applyFilters();
+      applyFilters(true);
     }
 
-    // Render Cards in List Panel
-    function renderList() {
-      const container = document.getElementById('restaurants-container');
-      const count = filteredRestaurants.length;
-      document.getElementById('results-count').innerText = count;
-      document.getElementById('results-unit').innerText = count === 1 ? 'مكان' : (count === 2 ? 'مكانيْن' : (count >= 3 && count <= 10 ? 'أماكن' : 'مكاناً'));
-      document.getElementById('map-counter').innerText = getArabicPlural(count);
+    let displayedItemsCount = 20;
+    const PAGE_SIZE = 20;
 
-      if (count === 0) {
-        container.innerHTML = `
-          <div class="text-center py-10 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 transition-colors duration-300">
-            <i class="fa-solid fa-magnifying-glass-location text-3xl text-slate-300 dark:text-slate-600 mb-2"></i>
-            <h3 class="text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">لا توجد نتائج مطابقة لمحددات البحث</h3>
-            <p class="text-[11px] text-slate-400 mb-3">جرب البحث بكلمات أخرى أو تغيير خيارات التصفية.</p>
-            <button onclick="resetFilters()" class="px-3.5 py-1.5 bg-rose-600 text-white rounded-xl text-xs font-bold hover:bg-rose-700 transition">
-              عرض جميع الأماكن
-            </button>
-          </div>
-        `;
-        return;
-      }
-
-      container.innerHTML = filteredRestaurants.map(item => `
+    function renderCardHTML(item) {
+      return `
         <div onclick="focusOnRestaurant(${item.id})" class="bg-white dark:bg-slate-800 hover:border-rose-400 dark:hover:border-rose-500 rounded-xl p-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700/60 transition duration-300 cursor-pointer group relative overflow-hidden">
-
           <div class="flex items-start justify-between gap-2.5">
-
             <div class="flex items-start gap-2.5 min-w-0">
               <div class="w-9 h-9 rounded-xl bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">
                 ${item.icon}
               </div>
-
               <div class="min-w-0">
                 <h3 class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 dark:group-hover:text-rose-400 transition flex items-center gap-1.5 flex-wrap">
                   <span class="truncate">${item.name}</span>
@@ -951,8 +948,6 @@
                 </p>
               </div>
             </div>
-
-            <!-- Rating badge -->
             <div class="flex flex-col items-end shrink-0">
               <div class="flex items-center gap-1 bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 px-1.5 py-0.5 rounded-lg text-xs font-bold border border-amber-200/60 dark:border-amber-800/40">
                 <i class="fa-solid fa-star text-amber-500 text-[10px]"></i>
@@ -960,12 +955,8 @@
               </div>
               <span class="text-[9px] text-slate-400 mt-0.5">(${item.reviews_count} تقييم)</span>
             </div>
-
           </div>
-
-          <!-- Tags & Quick Action Row -->
           <div class="mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-700/50 flex items-center justify-between text-xs">
-
             <div class="flex items-center gap-1.5 flex-wrap">
               <span class="bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 px-2 py-0.5 rounded text-[10px]">
                 ${item.cuisine}
@@ -973,7 +964,6 @@
               ${item.delivery_available ? '<span class="text-emerald-600 dark:text-emerald-400 text-[10px] font-medium"><i class="fa-solid fa-truck-fast ml-0.5"></i>توصيل</span>' : ''}
               ${item.outdoor_seating ? '<span class="text-sky-600 dark:text-sky-400 text-[10px] font-medium"><i class="fa-solid fa-chair ml-0.5"></i>جلسات خارجية</span>' : ''}
             </div>
-
             <div class="flex items-center gap-1 shrink-0">
               <button onclick="event.stopPropagation(); toggleFavorite(${item.id})" class="p-1 text-slate-400 hover:text-rose-600 transition" title="حفظ بالمفضلة"><i class="${favorites.includes(item.id) ? 'fa-solid fa-heart text-rose-500' : 'fa-regular fa-heart'} text-xs"></i></button>
               ${item.website ? `<a href="${item.website}" target="_blank" onclick="event.stopPropagation();" class="p-1 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="الموقع الإلكتروني"><i class="fa-solid fa-globe text-xs"></i></a>` : ''}
@@ -984,16 +974,99 @@
                 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
               </a>
             </div>
-
           </div>
-
         </div>
-      `).join('');
+      `;
     }
 
-    // Render Markers on Map
-    function renderMarkers() {
+    // Render Cards in List Panel with Chunked/Paginated Lazy Loading
+    function renderList(resetScroll = true) {
+      const container = document.getElementById('restaurants-container');
+      const count = filteredRestaurants.length;
+      document.getElementById('results-count').innerText = count;
+      document.getElementById('results-unit').innerText = count === 1 ? 'مكان' : (count === 2 ? 'مكانيْن' : (count >= 3 && count <= 10 ? 'أماكن' : 'مكاناً'));
+      document.getElementById('map-counter').innerText = getArabicPlural(count);
+
+      if (resetScroll) {
+        displayedItemsCount = PAGE_SIZE;
+        container.scrollTop = 0;
+      }
+
+      if (count === 0) {
+        container.innerHTML = `
+          <div class="text-center py-10 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 transition-colors duration-300">
+            <i class="fa-solid fa-magnifying-glass-location text-3xl text-slate-300 dark:text-slate-600 mb-2"></i>
+            <h3 class="text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">لا توجد نتائج مطابقة لمحددات البحث</h3>
+            <p class="text-[11px] text-slate-400 mb-3">جرب البحث بكلمات أخرى أو تغيير خيارات التصفية.</p>
+            <button onclick="resetFilters()" class="px-3.5 py-1.5 bg-rose-600 text-white rounded-xl text-xs font-bold hover:bg-rose-700 transition">
+              عرض جميع الأماكن
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      const itemsToRender = filteredRestaurants.slice(0, displayedItemsCount);
+      let html = itemsToRender.map(item => renderCardHTML(item)).join('');
+
+      if (displayedItemsCount < count) {
+        html += `
+          <div id="load-more-sentinel" class="text-center py-3">
+            <button onclick="loadMoreRestaurants()" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-xl text-xs font-bold transition">
+              عرض المزيد (${count - displayedItemsCount} المتبقية)
+            </button>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+      setupContainerScrollListener();
+    }
+
+    function loadMoreRestaurants() {
+      if (displayedItemsCount >= filteredRestaurants.length) return;
+      const container = document.getElementById('restaurants-container');
+      const sentinel = document.getElementById('load-more-sentinel');
+      if (sentinel) sentinel.remove();
+
+      const prevCount = displayedItemsCount;
+      displayedItemsCount += PAGE_SIZE;
+      const nextChunk = filteredRestaurants.slice(prevCount, displayedItemsCount);
+
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = nextChunk.map(item => renderCardHTML(item)).join('');
+      while (tempDiv.firstChild) {
+        container.appendChild(tempDiv.firstChild);
+      }
+
+      if (displayedItemsCount < filteredRestaurants.length) {
+        const newSentinel = document.createElement('div');
+        newSentinel.id = 'load-more-sentinel';
+        newSentinel.className = 'text-center py-3';
+        newSentinel.innerHTML = `
+          <button onclick="loadMoreRestaurants()" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-xl text-xs font-bold transition">
+            عرض المزيد (${filteredRestaurants.length - displayedItemsCount} المتبقية)
+          </button>
+        `;
+        container.appendChild(newSentinel);
+      }
+    }
+
+    function setupContainerScrollListener() {
+      const container = document.getElementById('restaurants-container');
+      if (!container || container.dataset.scrollAttached) return;
+      container.dataset.scrollAttached = 'true';
+      container.addEventListener('scroll', () => {
+        if (container.scrollTop + container.clientHeight >= container.scrollHeight - 150) {
+          loadMoreRestaurants();
+        }
+      });
+    }
+
+    // Render Markers on Map with Bulk Batching
+    function renderMarkers(shouldFitBounds = false) {
       markersCluster.clearLayers();
+      const newMarkers = [];
 
       filteredRestaurants.forEach(item => {
         const customIcon = L.divIcon({
@@ -1018,11 +1091,14 @@
         `;
 
         marker.bindPopup(popupContent);
-        markersCluster.addLayer(marker);
+        newMarkers.push(marker);
       });
 
-      if (filteredRestaurants.length > 0) {
-        const group = new L.featureGroup(markersCluster.getLayers());
+      // Bulk addition to marker cluster for fast rendering
+      markersCluster.addLayers(newMarkers);
+
+      if (shouldFitBounds && filteredRestaurants.length > 0) {
+        const group = new L.featureGroup(newMarkers);
         if (group.getLayers().length > 0) {
           map.fitBounds(group.getBounds().pad(0.05));
         }

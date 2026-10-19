@@ -134,15 +134,29 @@
           <span class="hidden sm:inline">تثبيت التطبيق</span>
         </button>
 
+        <button id="favs-toggle-btn" onclick="toggleFavsFilter()" class="flex items-center gap-1.5 bg-rose-50 dark:bg-rose-950/50 hover:bg-rose-100 dark:hover:bg-rose-900/70 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800/60 px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0">
+          <i id="favs-btn-icon" class="fa-regular fa-heart text-sm"></i>
+          <span>المفضلة (<span id="favs-count">0</span>)</span>
+        </button>
         <button id="locate-btn" onclick="getUserLocation()" class="hidden sm:flex items-center gap-2 bg-indigo-50 dark:bg-indigo-950/50 hover:bg-indigo-100 dark:hover:bg-indigo-900/70 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/60 px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0">
           <i class="fa-solid fa-location-crosshairs text-sm"></i>
           <span>الأقرب مني</span>
         </button>
 
-        <button onclick="exportData('json')" class="hidden md:flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 px-3 py-1.5 rounded-xl text-xs font-medium transition shrink-0">
-          <i class="fa-solid fa-file-code text-rose-500"></i>
-          <span>تصدير البيانات</span>
+        <button onclick="openAddPlaceModal()" class="hidden md:flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow-sm transition shrink-0">
+          <i class="fa-solid fa-plus-circle"></i>
+          <span>إضافة مكان</span>
         </button>
+        <div class="hidden md:flex items-center gap-1">
+          <button onclick="exportData('json')" class="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 px-2.5 py-1.5 rounded-xl text-xs font-medium transition shrink-0" title="تصدير JSON">
+            <i class="fa-solid fa-file-code text-rose-500"></i>
+            <span>JSON</span>
+          </button>
+          <button onclick="exportData('csv')" class="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 px-2.5 py-1.5 rounded-xl text-xs font-medium transition shrink-0" title="تصدير CSV">
+            <i class="fa-solid fa-file-csv text-emerald-500"></i>
+            <span>CSV</span>
+          </button>
+        </div>
 
         <button onclick="toggleDarkMode()" aria-label="تبديل المظهر" class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 transition shrink-0">
           <i id="theme-toggle-dark-icon" class="fa-solid fa-moon text-sm"></i>
@@ -221,10 +235,14 @@
           <i class="fa-solid fa-location-crosshairs text-indigo-500"></i>
           <span>المطاعم القريبة مني</span>
         </button>
+        <button onclick="suggestRandomRestaurant()" class="flex items-center justify-center gap-1.5 bg-amber-500 hover:bg-amber-600 text-white px-3.5 py-2.5 sm:py-1.5 rounded-xl text-xs font-bold shadow-sm transition shrink-0">
+          <i class="fa-solid fa-dice text-sm"></i>
+          <span>اقترح لي!</span>
+        </button>
       </div>
 
       <!-- Bottom Row: Dropdown Filters -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 pt-2.5 border-t border-slate-100 dark:border-slate-700/50">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-3 pt-2.5 border-t border-slate-100 dark:border-slate-700/50">
         
         <!-- Filter by Delegation -->
         <div>
@@ -269,6 +287,32 @@
             <option value="ALL">جميع الخدمات</option>
             <option value="delivery">خدمة التوصيل متوفرة</option>
             <option value="outdoor">جلسات خارجية متوفرة</option>
+          </select>
+        </div>
+
+        <!-- Filter by Price Level -->
+        <div>
+          <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
+            <i class="fa-solid fa-money-bill-wave text-rose-500 ml-1"></i>مستوى السعر
+          </label>
+          <select id="price-filter" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white">
+            <option value="ALL">جميع الأسعار</option>
+            <option value="$">$ (اقتصادي)</option>
+            <option value="$$">$$ (متوسط)</option>
+            <option value="$$$">$$$ (راقي)</option>
+          </select>
+        </div>
+
+        <!-- Filter by Rating -->
+        <div>
+          <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
+            <i class="fa-solid fa-star text-amber-500 ml-1"></i>الحد الأدنى للتقييم
+          </label>
+          <select id="rating-filter" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white">
+            <option value="0">الكل</option>
+            <option value="4.5">⭐ 4.5 فأكثر</option>
+            <option value="4.0">⭐ 4.0 فأكثر</option>
+            <option value="3.5">⭐ 3.5 فأكثر</option>
           </select>
         </div>
 
@@ -324,6 +368,87 @@
 
   </main>
 
+  
+  <!-- Modal for Adding New Restaurant/Cafe -->
+  <div id="add-place-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative overflow-hidden transform transition-all">
+      <button onclick="closeAddPlaceModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 flex items-center justify-center text-slate-500 dark:text-slate-300 transition">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <h3 class="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-store text-emerald-500"></i>
+        إضافة مطعم أو مقهى جديد
+      </h3>
+
+      <form id="add-place-form" onsubmit="handleAddNewPlace(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم المكان *</label>
+          <input type="text" id="new-name" required placeholder="مثال: مطعم الياسمين" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:text-white">
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">نوع النشاط *</label>
+            <select id="new-category" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
+              <option value="مطعم عام (Restaurant)">مطعم عام</option>
+              <option value="مقهى وكافيه (Café & Lounge)">مقهى وكافيه</option>
+              <option value="وجبات سريعة (Fast Food)">وجبات سريعة</option>
+              <option value="مطعم بيتزا (Pizzeria)">مطعم بيتزا</option>
+              <option value="حلويات ومخبوزات (Bakery & Sweets)">حلويات ومخبوزات</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المعتمدية *</label>
+            <select id="new-delegation" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
+              <option value="أريانة المدينة">أريانة المدينة</option>
+              <option value="أريانة المدينة (حي النصر / المنزه)">أريانة المدينة (حي النصر / المنزه)</option>
+              <option value="سكرة">سكرة</option>
+              <option value="سكرة (برج الوزير)">سكرة (برج الوزير)</option>
+              <option value="رواد (حي الغزالة)">رواد (حي الغزالة)</option>
+              <option value="المنيهلة">المنيهلة</option>
+              <option value="التضامن">التضامن</option>
+              <option value="سيدي ثابت">سيدي ثابت</option>
+              <option value="قلعة الأندلس">قلعة الأندلس</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">العنوان التفصيلي *</label>
+          <input type="text" id="new-address" required placeholder="مثال: شارع الهادي نويرة، النصر 2" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">خط العرض (Latitude)</label>
+            <input type="number" step="any" id="new-lat" placeholder="36.866" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">خط الطول (Longitude)</label>
+            <input type="number" step="any" id="new-lon" placeholder="10.183" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المطبخ / الاختصاص</label>
+            <input type="text" id="new-cuisine" placeholder="مثال: مشاوي عربية" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">رقم الهاتف</label>
+            <input type="text" id="new-phone" placeholder="+216 71 000 000" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
+          </div>
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-2">
+          <button type="button" onclick="closeAddPlaceModal()" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-xl font-bold">إلغاء</button>
+          <button type="submit" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition">حفظ المكان</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- Modal for Restaurant Detailed View -->
   <div id="details-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300">
     <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative overflow-hidden transform transition-all">
@@ -348,10 +473,92 @@
   <!-- Application Logic -->
   <script>
     let restaurants = [];
+    let favorites = JSON.parse(localStorage.getItem('ariana_favs') || '[]');
+    let showFavsOnly = false;
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      const toast = document.createElement('div');
+      toast.className = `pointer-events-auto flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-white shadow-lg transition-all transform translate-y-2 opacity-0 ${
+        type === 'success' ? 'bg-emerald-600' : type === 'warning' ? 'bg-amber-600' : type === 'danger' ? 'bg-rose-600' : 'bg-slate-800'
+      }`;
+      toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-circle-info'}"></i> <span>${message}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      }, 10);
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    function toggleFavorite(id) {
+      const idx = favorites.indexOf(id);
+      const rest = restaurants.find(r => r.id === id);
+      const name = rest ? rest.name : '';
+      if (idx > -1) {
+        favorites.splice(idx, 1);
+        showToast(`تم إزالة ${name} من المفضلة`, 'warning');
+      } else {
+        favorites.push(id);
+        showToast(`تم إضافة ${name} إلى المفضلة`, 'success');
+      }
+      localStorage.setItem('ariana_favs', JSON.stringify(favorites));
+      updateFavsCounter();
+      applyFilters();
+    }
+
+    function updateFavsCounter() {
+      const el = document.getElementById('favs-count');
+      if (el) el.innerText = favorites.length;
+    }
+
+    function toggleFavsFilter() {
+      showFavsOnly = !showFavsOnly;
+      const btn = document.getElementById('favs-toggle-btn');
+      const icon = document.getElementById('favs-btn-icon');
+      if (showFavsOnly) {
+        btn.classList.add('bg-rose-600', 'text-white');
+        btn.classList.remove('bg-rose-50', 'dark:bg-rose-950/50', 'text-rose-600', 'dark:text-rose-400');
+        icon.className = 'fa-solid fa-heart text-sm';
+        showToast('عرض الأماكن المفضلة فقط', 'info');
+      } else {
+        btn.classList.remove('bg-rose-600', 'text-white');
+        btn.classList.add('bg-rose-50', 'dark:bg-rose-950/50', 'text-rose-600', 'dark:text-rose-400');
+        icon.className = 'fa-regular fa-heart text-sm';
+      }
+      applyFilters();
+    }
     let filteredRestaurants = [];
     let map = null;
     let markersCluster = null;
     let userMarker = null;
+    let userCoords = null; // { lat, lon }
+
+    // Haversine Distance Formula in Kilometers
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371; // Radius of Earth in KM
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return (R * c).toFixed(1); // 1 decimal place KM
+    }
+
+    function suggestRandomRestaurant() {
+      if (filteredRestaurants.length === 0) {
+        showToast('لا توجد مطاعم مطابقة للبحث حالياً للاقتراح منه!', 'warning');
+        return;
+      }
+      const randomItem = filteredRestaurants[Math.floor(Math.random() * filteredRestaurants.length)];
+      focusOnRestaurant(randomItem.id);
+      openDetailsModal(randomItem.id);
+      showToast(`اقترحنا لك: ${randomItem.name} 🎲`, 'success');
+    }
     let deferredPrompt = null;
 
     // Load Data, Register Service Worker and Initialize Map on DOM Ready
@@ -449,10 +656,75 @@
     }
 
     // Fetch Restaurants JSON Data
+    
+    let customPlaces = JSON.parse(localStorage.getItem('ariana_custom_places') || '[]');
+
+    function openAddPlaceModal() {
+      document.getElementById('add-place-modal').classList.remove('hidden');
+    }
+
+    function closeAddPlaceModal() {
+      document.getElementById('add-place-modal').classList.add('hidden');
+    }
+
+    function handleAddNewPlace(e) {
+      e.preventDefault();
+      const newPlace = {
+        id: Date.now(),
+        name: document.getElementById('new-name').value.trim(),
+        category: document.getElementById('new-category').value,
+        icon: document.getElementById('new-category').value.includes('مقهى') ? '☕' : '🍽️',
+        delegation: document.getElementById('new-delegation').value,
+        address: document.getElementById('new-address').value.trim(),
+        street: 'غير محدد',
+        lat: parseFloat(document.getElementById('new-lat').value) || 36.866,
+        lon: parseFloat(document.getElementById('new-lon').value) || 10.183,
+        rating: 5.0,
+        reviews_count: 1,
+        price_level: '$$',
+        cuisine: document.getElementById('new-cuisine').value.trim() || 'شرقية',
+        phone: document.getElementById('new-phone').value.trim() || '+216 00 000 000',
+        opening_hours: '08:00 - 23:00 (يومياً)',
+        google_maps_url: `https://www.google.com/maps/search/?api=1&query=${document.getElementById('new-lat').value || '36.866'},${document.getElementById('new-lon').value || '10.183'}`,
+        delivery_available: true,
+        outdoor_seating: true
+      };
+
+      customPlaces.push(newPlace);
+      localStorage.setItem('ariana_custom_places', JSON.stringify(customPlaces));
+      restaurants.unshift(newPlace);
+      
+      closeAddPlaceModal();
+      document.getElementById('add-place-form').reset();
+      
+      updateStats();
+      applyFilters();
+      showToast(`تمت إضافة "${newPlace.name}" بنجاح!`, 'success');
+    }
+
+    function shareRestaurant(id) {
+      const item = restaurants.find(r => r.id === id);
+      if (!item) return;
+      
+      const shareData = {
+        title: item.name,
+        text: `تعرف على ${item.name} (${item.category}) في ${item.address} عبر دليل مطاعم أريانة`,
+        url: window.location.href
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(`${shareData.text} - ${shareData.url}`);
+        showToast('تم نسخ معلومات المكان إلى الحافظة!', 'success');
+      }
+    }
+
     async function loadRestaurantsData() {
       try {
         const resp = await fetch('restaurants.json');
-        restaurants = await resp.json();
+        const apiData = await resp.json();
+        restaurants = [...customPlaces, ...apiData];
         filteredRestaurants = [...restaurants];
 
         updateStats();
@@ -481,6 +753,8 @@
       const delegationVal = document.getElementById('delegation-filter').value;
       const categoryVal = document.getElementById('category-filter').value;
       const serviceVal = document.getElementById('services-filter').value;
+      const priceVal = document.getElementById('price-filter') ? document.getElementById('price-filter').value : 'ALL';
+      const ratingVal = document.getElementById('rating-filter') ? parseFloat(document.getElementById('rating-filter').value) : 0;
       const sortVal = document.getElementById('sort-option').value;
 
       // Show/Hide Clear Button
@@ -510,7 +784,16 @@
         if (serviceVal === 'delivery') matchService = item.delivery_available;
         if (serviceVal === 'outdoor') matchService = item.outdoor_seating;
 
-        return matchSearch && matchDelegation && matchCategory && matchService;
+        // Favorites check
+        const matchFav = !showFavsOnly || favorites.includes(item.id);
+
+        // Price check
+        const matchPrice = priceVal === 'ALL' || item.price_level === priceVal;
+
+        // Rating check
+        const matchRating = (item.rating || 0) >= ratingVal;
+
+        return matchSearch && matchDelegation && matchCategory && matchService && matchFav && matchPrice && matchRating;
       });
 
       // Sorting
@@ -608,7 +891,7 @@
             </div>
 
             <div class="flex items-center gap-1 shrink-0">
-              <button onclick="event.stopPropagation(); openDetailsModal(${item.id})" class="p-1 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="عرض التفاصيل">
+              <button onclick="event.stopPropagation(); toggleFavorite(${item.id})" class="p-1 text-slate-400 hover:text-rose-600 transition" title="حفظ بالمفضلة"><i class="${favorites.includes(item.id) ? 'fa-solid fa-heart text-rose-500' : 'fa-regular fa-heart'} text-xs"></i></button><button onclick="event.stopPropagation(); openDetailsModal(${item.id})" class="p-1 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="عرض التفاصيل">
                 <i class="fa-solid fa-circle-info text-xs"></i>
               </button>
               <a href="${item.google_maps_url}" target="_blank" onclick="event.stopPropagation();" class="p-1 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="فتح في Google Maps">
@@ -791,8 +1074,34 @@
         document.body.appendChild(downloadAnchor);
         downloadAnchor.click();
         downloadAnchor.remove();
+        showToast('تم تصدير ملف JSON بنجاح', 'success');
+      } else if (format === 'csv') {
+        const headers = ["id", "name", "category", "delegation", "address", "rating", "reviews_count", "price_level", "cuisine", "phone"];
+        const rows = filteredRestaurants.map(r => [
+          r.id,
+          `"${(r.name || '').replace(/"/g, '""')}"`,
+          `"${(r.category || '').replace(/"/g, '""')}"`,
+          `"${(r.delegation || '').replace(/"/g, '""')}"`,
+          `"${(r.address || '').replace(/"/g, '""')}"`,
+          r.rating,
+          r.reviews_count,
+          `"${r.price_level || ''}"`,
+          `"${(r.cuisine || '').replace(/"/g, '""')}"`,
+          `"${r.phone || ''}"`
+        ]);
+        const csvContent = "\uFEFF" + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
+        const encodedUri = encodeURI("data:text/csv;charset=utf-8," + csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `ariana_restaurants_${new Date().toISOString().slice(0,10)}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        showToast('تم تصدير ملف CSV بنجاح', 'success');
       }
     }
   </script>
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 </body>
 </html>

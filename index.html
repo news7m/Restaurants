@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>دليل مطاعم ومقاهي أريانة وتونس | Greater Tunis Restaurants Directory</title>
+  <meta name="description" content="الدليل التفاعلي الشامل لمطاعم ومقاهي ولايتي أريانة وتونس، استكشف خريطة المطاعم والمقاهي مع التقييمات والاتجاهات وساعات العمل والأسعار.">
 
   <!-- PWA Meta Tags & Manifest -->
   <link rel="manifest" href="manifest.json">
@@ -196,7 +197,7 @@
           </button>
         </div>
 
-        <button onclick="toggleDarkMode()" aria-label="تبديل المظهر" class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 transition shrink-0">
+        <button onclick="toggleDarkMode()" aria-label="تبديل مظهر الليل والنهار" class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 transition shrink-0">
           <i id="theme-toggle-dark-icon" class="fa-solid fa-moon text-sm"></i>
           <i id="theme-toggle-light-icon" class="fa-solid fa-sun text-sm hidden text-amber-400"></i>
         </button>
@@ -261,9 +262,9 @@
           <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
             <i class="fa-solid fa-magnifying-glass"></i>
           </div>
-          <input type="text" id="search-input" oninput="debouncedApplyFilters()" placeholder="ابحث باسم المطعم، المنطقة، أو المطبخ..."
+          <input type="text" id="search-input" aria-label="البحث عن مطعم أو كافيه" oninput="debouncedApplyFilters()" placeholder="ابحث باسم المطعم، المنطقة، أو المطبخ..."
                  class="w-full pl-10 pr-10 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white placeholder-slate-400 transition">
-          <button id="clear-search" onclick="clearSearch()" class="hidden absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+          <button id="clear-search" aria-label="مسح نصل البحث" onclick="clearSearch()" class="hidden absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
             <i class="fa-solid fa-circle-xmark"></i>
           </button>
         </div>
@@ -284,10 +285,10 @@
 
         <!-- Governorate Filter -->
         <div>
-          <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
+          <label for="governorate-filter" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
             <i class="fa-solid fa-map text-rose-500 ml-1"></i>الولاية
           </label>
-          <select id="governorate-filter" onchange="handleGovernorateChange()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
+          <select id="governorate-filter" aria-label="تصفية حسب الولاية" onchange="handleGovernorateChange()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
             <option value="ALL">جميع الولايات (أريانة وتونس)</option>
             <option value="ولاية أريانة">ولاية أريانة 🌹</option>
             <option value="ولاية تونس">ولاية تونس 🇹🇳</option>
@@ -296,20 +297,20 @@
 
         <!-- Filter by Delegation -->
         <div>
-          <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
+          <label for="delegation-filter" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
             <i class="fa-solid fa-city text-rose-500 ml-1"></i>المعتمدية / المنطقة
           </label>
-          <select id="delegation-filter" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
+          <select id="delegation-filter" aria-label="تصفية حسب المعتمدية أو المنطقة" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
             <option value="ALL">جميع المناطق والمجتمعات</option>
           </select>
         </div>
 
         <!-- Filter by Category -->
         <div>
-          <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
+          <label for="category-filter" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
             <i class="fa-solid fa-layer-group text-rose-500 ml-1"></i>نوع النشاط
           </label>
-          <select id="category-filter" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
+          <select id="category-filter" aria-label="تصفية حسب نوع النشاط" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
             <option value="ALL">جميع الأنشطة (مطاعم ومقاهي)</option>
             <option value="مطعم عام (Restaurant)">مطاعم عامة</option>
             <option value="مقهى وكافيه (Café & Lounge)">مقاهي وكافيهات</option>
@@ -321,10 +322,10 @@
 
         <!-- Filter by Delivery / Seating Options -->
         <div>
-          <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
+          <label for="services-filter" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
             <i class="fa-solid fa-truck-fast text-rose-500 ml-1"></i>الخدمات المتوفرة
           </label>
-          <select id="services-filter" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
+          <select id="services-filter" aria-label="تصفية حسب الخدمات المتوفرة" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
             <option value="ALL">جميع الخدمات</option>
             <option value="delivery">خدمة التوصيل متوفرة</option>
             <option value="outdoor">جلسات خارجية متوفرة</option>
@@ -333,10 +334,10 @@
 
         <!-- Filter by Price Level -->
         <div>
-          <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
+          <label for="price-filter" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
             <i class="fa-solid fa-money-bill-wave text-rose-500 ml-1"></i>مستوى السعر
           </label>
-          <select id="price-filter" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
+          <select id="price-filter" aria-label="تصفية حسب مستوى السعر" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
             <option value="ALL">جميع الأسعار</option>
             <option value="$">$ (اقتصادي)</option>
             <option value="$$">$$ (متوسط)</option>
@@ -346,10 +347,10 @@
 
         <!-- Filter by Rating -->
         <div>
-          <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
+          <label for="rating-filter" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
             <i class="fa-solid fa-star text-amber-500 ml-1"></i>الحد الأدنى للتقييم
           </label>
-          <select id="rating-filter" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
+          <select id="rating-filter" aria-label="تصفية حسب الحد الأدنى للتقييم" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
             <option value="0">الكل</option>
             <option value="4.5">⭐ 4.5 فأكثر</option>
             <option value="4.0">⭐ 4.0 فأكثر</option>
@@ -359,10 +360,10 @@
 
         <!-- Sort by option -->
         <div>
-          <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
+          <label for="sort-option" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
             <i class="fa-solid fa-arrow-down-wide-short text-rose-500 ml-1"></i>ترتيب حسب
           </label>
-          <select id="sort-option" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
+          <select id="sort-option" aria-label="اختيار طريقة الترتيب" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
             <option value="rating_desc">الأعلى تقييماً</option>
             <option value="reviews_desc">الأكثر مراجعة</option>
             <option value="name_asc">الاسم (أ - ي)</option>
@@ -627,12 +628,16 @@
 
     // DOM Ready Initialization
     document.addEventListener('DOMContentLoaded', async () => {
-      initMap();
-      await loadRestaurantsData();
       initTheme();
       updateFavsCounter();
       registerServiceWorker();
       initOfflineStatusListeners();
+
+      // Defer Map Init to allow immediate DOM rendering and First Contentful Paint
+      requestAnimationFrame(() => {
+        initMap();
+        loadRestaurantsData();
+      });
     });
 
     // Offline / Online Status Listeners

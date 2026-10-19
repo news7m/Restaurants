@@ -1,5 +1,7 @@
-const CACHE_NAME = 'greatertunis-static-v6';
+const CACHE_NAME = 'greatertunis-static-v7';
+const DATA_CACHE_NAME = 'greatertunis-data-v1';
 const TILE_CACHE_NAME = 'greatertunis-tiles-v1';
+const MAX_TILES_CACHE = 150;
 
 const ASSETS_TO_CACHE = [
   './',
@@ -23,45 +25,59 @@ const ASSETS_TO_CACHE = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[Service Worker] Pre-caching core app shell & assets');
+      console.log('[Service Worker] Pre-caching core app shell & static assets');
       return cache.addAll(ASSETS_TO_CACHE);
     })
   );
   self.skipWaiting();
 });
 
-// Activate Event & Cache Cleanup
+// Activate Event & Navigation Preload
 self.addEventListener('activate', (event) => {
-  console.log('[Service Worker] Activating & cleaning old caches');
-  const allowedCaches = [CACHE_NAME, TILE_CACHE_NAME];
+  console.log('[Service Worker] Activating new Service Worker version');
+  const allowedCaches = [CACHE_NAME, DATA_CACHE_NAME, TILE_CACHE_NAME];
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cache) => {
-          if (!allowedCaches.includes(cache)) {
-            console.log('[Service Worker] Deleting outdated cache:', cache);
-            return caches.delete(cache);
-          }
-        })
-      );
-    }).then(() => self.clients.claim())
+    Promise.all([
+      // Clean old caches
+      caches.keys().then((cacheNames) => {
+        return Promise.all(
+          cacheNames.map((cache) => {
+            if (!allowedCaches.includes(cache)) {
+              console.log('[Service Worker] Deleting outdated cache:', cache);
+              return caches.delete(cache);
+            }
+          })
+        );
+      }),
+      // Enable Navigation Preload if supported (Google/Microsoft PWA Best Practice)
+      self.registration.navigationPreload
+        ? self.registration.navigationPreload.enable()
+        : Promise.resolve()
+    ]).then(() => self.clients.claim())
   );
 });
 
-// Message Listener for SKIP_WAITING
+// Message Listener
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
 });
 
-// Helper: Network with Timeout
+// Helper: Trim Cache size
+async function trimCache(cacheName, maxItems) {
+  const cache = await caches.open(cacheName);
+  const keys = await cache.keys();
+  if (keys.length > maxItems) {
+    await cache.delete(keys[0]);
+    trimCache(cacheName, maxItems);
+  }
+}
+
+// Helper: Fetch with Timeout
 function fetchWithTimeout(request, timeoutMs = 3000) {
   return new Promise((resolve, reject) => {
-    const timer = setTimeout(() => {
-      reject(new Error('Network timeout'));
-    }, timeoutMs);
-
+    const timer = setTimeout(() => reject(new Error('Network timeout')), timeoutMs);
     fetch(request)
       .then((response) => {
         clearTimeout(timer);
@@ -74,59 +90,84 @@ function fetchWithTimeout(request, timeoutMs = 3000) {
   });
 }
 
-// Fetch Listener with Smart Caching Strategies
+// Fetch Event Listener
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
   const url = new URL(event.request.url);
 
-  // 1. OpenStreetMap Tile Strategy: Cache-First with Tile Cache & Network Fallback
+  // 1. Navigation Requests (HTML Documents) with Navigation Preload support
+  if (event.request.mode === 'navigate' || url.pathname.endsWith('index.html') || url.pathname === '/' || url.pathname.endsWith('/')) {
+    event.respondWith(
+      (async () => {
+        try {
+          const preloadResponse = await event.preloadResponse;
+          if (preloadResponse) return preloadResponse;
+
+          const networkResponse = await fetchWithTimeout(event.request, 3000);
+          if (networkResponse && networkResponse.status === 200) {
+            const cache = await caches.open(CACHE_NAME);
+            cache.put(event.request, networkResponse.clone());
+          }
+          return networkResponse;
+        } catch (err) {
+          const cachedResponse = await caches.match(event.request);
+          if (cachedResponse) return cachedResponse;
+          return caches.match('./index.html');
+        }
+      })()
+    );
+    return;
+  }
+
+  // 2. OpenStreetMap Tiles: Cache-First with Size Management
   if (url.hostname.includes('tile.openstreetmap.org')) {
     event.respondWith(
-      caches.open(TILE_CACHE_NAME).then((cache) => {
-        return cache.match(event.request).then((cachedResponse) => {
-          if (cachedResponse) return cachedResponse;
-          return fetch(event.request).then((networkResponse) => {
+      caches.open(TILE_CACHE_NAME).then(async (cache) => {
+        const cachedResponse = await cache.match(event.request);
+        if (cachedResponse) return cachedResponse;
+
+        try {
+          const networkResponse = await fetch(event.request);
+          if (networkResponse && networkResponse.status === 200) {
+            cache.put(event.request, networkResponse.clone());
+            trimCache(TILE_CACHE_NAME, MAX_TILES_CACHE);
+          }
+          return networkResponse;
+        } catch (err) {
+          // Offline tile fallback
+          return new Response('', { status: 404, statusText: 'Offline Tile Unavailable' });
+        }
+      })
+    );
+    return;
+  }
+
+  // 3. Dataset JSON files: Stale-While-Revalidate
+  if (url.pathname.endsWith('.json')) {
+    event.respondWith(
+      caches.open(DATA_CACHE_NAME).then(async (cache) => {
+        const cachedResponse = await cache.match(event.request);
+        const fetchPromise = fetchWithTimeout(event.request, 3000)
+          .then((networkResponse) => {
             if (networkResponse && networkResponse.status === 200) {
               cache.put(event.request, networkResponse.clone());
             }
             return networkResponse;
-          }).catch(() => {
-            // Silently handle tile offline failure
-          });
-        });
+          })
+          .catch(() => cachedResponse);
+
+        return cachedResponse || fetchPromise;
       })
     );
     return;
   }
 
-  // 2. Data & HTML Files: Stale-While-Revalidate Strategy with Network Timeout
-  if (url.pathname.endsWith('index.html') || url.pathname.endsWith('.json') || url.pathname === '/' || url.pathname.endsWith('/')) {
-    event.respondWith(
-      caches.open(CACHE_NAME).then((cache) => {
-        return cache.match(event.request).then((cachedResponse) => {
-          const fetchPromise = fetchWithTimeout(event.request, 3000)
-            .then((networkResponse) => {
-              if (networkResponse && networkResponse.status === 200) {
-                cache.put(event.request, networkResponse.clone());
-              }
-              return networkResponse;
-            })
-            .catch(() => cachedResponse);
-
-          return cachedResponse || fetchPromise;
-        });
-      })
-    );
-    return;
-  }
-
-  // 3. Static Assets (CSS, JS, Fonts, Icons): Cache-First Strategy
+  // 4. Static Assets (CSS, JS, Fonts, Icons): Cache-First Strategy
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
+      if (cachedResponse) return cachedResponse;
+
       return fetch(event.request).then((networkResponse) => {
         if (networkResponse && networkResponse.status === 200) {
           const resClone = networkResponse.clone();
@@ -134,7 +175,7 @@ self.addEventListener('fetch', (event) => {
         }
         return networkResponse;
       }).catch(() => {
-        // Offline fallback for static requests
+        // Silent failure for static assets when offline
       });
     })
   );

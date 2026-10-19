@@ -1,4 +1,4 @@
-const CACHE_NAME = 'greatertunis-static-v8';
+const CACHE_NAME = 'greatertunis-static-v9';
 const DATA_CACHE_NAME = 'greatertunis-data-v1';
 const TILE_CACHE_NAME = 'greatertunis-tiles-v1';
 const MAX_TILES_CACHE = 150;
@@ -107,6 +107,9 @@ function fetchWithTimeout(request, timeoutMs = 3000) {
 
 // Fetch Event Listener
 self.addEventListener('fetch', (event) => {
+  // ignore requests from chrome extensions or non-http(s) schemes
+  if (!event.request.url.startsWith('http')) return;
+
   if (event.request.method !== 'GET') return;
 
   const url = new URL(event.request.url);

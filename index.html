@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>دليل مطاعم ومقاهي ولاية أريانة | Ariana Restaurants Directory</title>
+  <title>دليل مطاعم ومقاهي أريانة وتونس | Greater Tunis Restaurants Directory</title>
 
   <!-- PWA Meta Tags & Manifest -->
   <link rel="manifest" href="manifest.json">
@@ -11,9 +11,9 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="مطاعم أريانة">
+  <meta name="apple-mobile-web-app-title" content="مطاعم أريانة وتونس">
   <link rel="apple-touch-icon" href="icon-192.png">
-  
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -38,7 +38,7 @@
       }
     }
   </script>
-  
+
   <!-- Google Fonts (Tajawal) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -74,12 +74,16 @@
       min-height: 380px;
       z-index: 10;
       border-radius: 1rem;
+      transition: all 0.3s ease;
     }
     .custom-scrollbar::-webkit-scrollbar {
       width: 6px;
     }
     .custom-scrollbar::-webkit-scrollbar-track {
       background: rgba(0, 0, 0, 0.05);
+    }
+    .dark .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
     }
     .custom-scrollbar::-webkit-scrollbar-thumb {
       background: rgba(225, 29, 72, 0.4);
@@ -91,13 +95,31 @@
     .glass-effect {
       background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(12px);
+      transition: background-color 0.3s ease, border-color 0.3s ease;
     }
     .dark .glass-effect {
       background: rgba(15, 23, 42, 0.92);
       backdrop-filter: blur(12px);
     }
+
+    /* Dark Mode Leaflet Filter & Popup Customizations */
     .dark .leaflet-tile-pane {
       filter: brightness(0.75) invert(1) contrast(1.2) hue-rotate(200deg) saturate(0.3);
+    }
+    .dark .leaflet-popup-content-wrapper,
+    .dark .leaflet-popup-tip {
+      background-color: #1e293b !important;
+      color: #f8fafc !important;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5) !important;
+    }
+    .dark .leaflet-popup-content div.font-bold {
+      color: #f8fafc !important;
+    }
+    .dark .leaflet-popup-content div.text-slate-600 {
+      color: #94a3b8 !important;
+    }
+    .dark .leaflet-popup-content div.border-slate-200 {
+      border-color: #334155 !important;
     }
   </style>
 </head>
@@ -106,7 +128,7 @@
   <!-- Top Navigation Bar -->
   <header class="sticky top-0 z-50 glass-effect border-b border-slate-200 dark:border-slate-800 shadow-sm pb-3">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
-      
+
       <!-- Logo & Title -->
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-600 to-amber-500 flex items-center justify-center text-white shadow-md shadow-rose-500/20 shrink-0">
@@ -115,19 +137,19 @@
         <div>
           <div class="flex items-center gap-2 flex-wrap">
             <h1 class="text-base sm:text-lg font-black tracking-tight text-slate-900 dark:text-white">
-              دليل مطاعم أريانة
+              دليل مطاعم ومقاهي أريانة وتونس
             </h1>
             <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-900/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800/50">
-              تونس 🇹🇳
+              تونس الكبرى 🇹🇳
             </span>
           </div>
-          <p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1">المنصة التفاعلية المتكاملة لمطاعم ومقاهي ولاية أريانة</p>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1">المنصة التفاعلية الشاملة لمطاعم ومقاهي ولايتي أريانة وتونس</p>
         </div>
       </div>
 
       <!-- Actions / Install App / Dark Mode -->
       <div class="flex items-center gap-2">
-        
+
         <!-- PWA Install Button -->
         <button id="pwa-install-btn" onclick="installPWA()" class="hidden flex items-center gap-1.5 bg-gradient-to-r from-rose-600 to-amber-500 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow-sm hover:opacity-95 transition shrink-0">
           <i class="fa-solid fa-mobile-screen-button"></i>
@@ -138,6 +160,7 @@
           <i id="favs-btn-icon" class="fa-regular fa-heart text-sm"></i>
           <span>المفضلة (<span id="favs-count">0</span>)</span>
         </button>
+
         <button id="locate-btn" onclick="getUserLocation()" class="hidden sm:flex items-center gap-2 bg-indigo-50 dark:bg-indigo-950/50 hover:bg-indigo-100 dark:hover:bg-indigo-900/70 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/60 px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0">
           <i class="fa-solid fa-location-crosshairs text-sm"></i>
           <span>الأقرب مني</span>
@@ -171,59 +194,59 @@
 
     <!-- KPI / Statistics Banner -->
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
-      <div class="bg-white dark:bg-slate-800 rounded-2xl p-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-3">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-3 transition-colors duration-300">
         <div class="w-11 h-11 rounded-xl bg-rose-50 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xl shrink-0">
           <i class="fa-solid fa-store"></i>
         </div>
         <div>
-          <span class="block text-xl font-black text-slate-900 dark:text-white leading-tight" id="stat-total">236</span>
+          <span class="block text-xl font-black text-slate-900 dark:text-white leading-tight" id="stat-total">0</span>
           <span class="text-[11px] text-slate-500 dark:text-slate-400">مكان مسجل</span>
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 rounded-2xl p-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-3">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-3 transition-colors duration-300">
         <div class="w-11 h-11 rounded-xl bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl shrink-0">
           <i class="fa-solid fa-utensils"></i>
         </div>
         <div>
-          <span class="block text-xl font-black text-slate-900 dark:text-white leading-tight" id="stat-restaurants">165</span>
+          <span class="block text-xl font-black text-slate-900 dark:text-white leading-tight" id="stat-restaurants">0</span>
           <span class="text-[11px] text-slate-500 dark:text-slate-400">مطاعم عامة</span>
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 rounded-2xl p-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-3">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-3 transition-colors duration-300">
         <div class="w-11 h-11 rounded-xl bg-sky-50 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 flex items-center justify-center text-xl shrink-0">
           <i class="fa-solid fa-mug-saucer"></i>
         </div>
         <div>
-          <span class="block text-xl font-black text-slate-900 dark:text-white leading-tight" id="stat-cafes">59</span>
+          <span class="block text-xl font-black text-slate-900 dark:text-white leading-tight" id="stat-cafes">0</span>
           <span class="text-[11px] text-slate-500 dark:text-slate-400">مقاهي وكافيهات</span>
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 rounded-2xl p-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-3">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-3 transition-colors duration-300">
         <div class="w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl shrink-0">
           <i class="fa-solid fa-map-location-dot"></i>
         </div>
         <div>
-          <span class="block text-xl font-black text-slate-900 dark:text-white leading-tight" id="stat-delegations">7</span>
+          <span class="block text-xl font-black text-slate-900 dark:text-white leading-tight" id="stat-delegations">0</span>
           <span class="text-[11px] text-slate-500 dark:text-slate-400">معتمديات ومناطق</span>
         </div>
       </div>
     </div>
 
     <!-- Filters & Search Section -->
-    <section class="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-slate-200/80 dark:border-slate-700/60 space-y-3.5 relative z-20">
-      
+    <section class="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-slate-200/80 dark:border-slate-700/60 space-y-3.5 relative z-20 transition-colors duration-300">
+
       <!-- Top Row: Search input & Quick buttons -->
       <div class="flex flex-col sm:flex-row gap-3">
-        
+
         <!-- Search Input -->
         <div class="relative flex-grow">
           <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
             <i class="fa-solid fa-magnifying-glass"></i>
           </div>
-          <input type="text" id="search-input" oninput="applyFilters()" placeholder="ابحث باسم المطعم، المنطقة، أو المطبخ..." 
+          <input type="text" id="search-input" oninput="applyFilters()" placeholder="ابحث باسم المطعم، المنطقة، أو المطبخ..."
                  class="w-full pl-10 pr-10 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white placeholder-slate-400 transition">
           <button id="clear-search" onclick="clearSearch()" class="hidden absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
             <i class="fa-solid fa-circle-xmark"></i>
@@ -242,24 +265,27 @@
       </div>
 
       <!-- Bottom Row: Dropdown Filters -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-3 pt-2.5 border-t border-slate-100 dark:border-slate-700/50">
-        
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-3 pt-2.5 border-t border-slate-100 dark:border-slate-700/50">
+
+        <!-- Governorate Filter -->
+        <div>
+          <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
+            <i class="fa-solid fa-map text-rose-500 ml-1"></i>الولاية
+          </label>
+          <select id="governorate-filter" onchange="handleGovernorateChange()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
+            <option value="ALL">جميع الولايات (أريانة وتونس)</option>
+            <option value="ولاية أريانة">ولاية أريانة 🌹</option>
+            <option value="ولاية تونس">ولاية تونس 🇹🇳</option>
+          </select>
+        </div>
+
         <!-- Filter by Delegation -->
         <div>
           <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
             <i class="fa-solid fa-city text-rose-500 ml-1"></i>المعتمدية / المنطقة
           </label>
-          <select id="delegation-filter" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white">
+          <select id="delegation-filter" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
             <option value="ALL">جميع المناطق والمجتمعات</option>
-            <option value="أريانة المدينة (حي النصر / المنزه)">أريانة المدينة (حي النصر / المنزه)</option>
-            <option value="أريانة المدينة">أريانة المدينة</option>
-            <option value="سكرة">سكرة</option>
-            <option value="سكرة (برج الوزير)">سكرة (برج الوزير)</option>
-            <option value="رواد (حي الغزالة)">رواد (حي الغزالة)</option>
-            <option value="المنيهلة">المنيهلة</option>
-            <option value="التضامن">التضامن</option>
-            <option value="سيدي ثابت">سيدي ثابت</option>
-            <option value="قلعة الأندلس">قلعة الأندلس</option>
           </select>
         </div>
 
@@ -268,7 +294,7 @@
           <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
             <i class="fa-solid fa-layer-group text-rose-500 ml-1"></i>نوع النشاط
           </label>
-          <select id="category-filter" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white">
+          <select id="category-filter" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
             <option value="ALL">جميع الأنشطة (مطاعم ومقاهي)</option>
             <option value="مطعم عام (Restaurant)">مطاعم عامة</option>
             <option value="مقهى وكافيه (Café & Lounge)">مقاهي وكافيهات</option>
@@ -283,7 +309,7 @@
           <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
             <i class="fa-solid fa-truck-fast text-rose-500 ml-1"></i>الخدمات المتوفرة
           </label>
-          <select id="services-filter" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white">
+          <select id="services-filter" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
             <option value="ALL">جميع الخدمات</option>
             <option value="delivery">خدمة التوصيل متوفرة</option>
             <option value="outdoor">جلسات خارجية متوفرة</option>
@@ -295,7 +321,7 @@
           <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
             <i class="fa-solid fa-money-bill-wave text-rose-500 ml-1"></i>مستوى السعر
           </label>
-          <select id="price-filter" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white">
+          <select id="price-filter" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
             <option value="ALL">جميع الأسعار</option>
             <option value="$">$ (اقتصادي)</option>
             <option value="$$">$$ (متوسط)</option>
@@ -308,7 +334,7 @@
           <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
             <i class="fa-solid fa-star text-amber-500 ml-1"></i>الحد الأدنى للتقييم
           </label>
-          <select id="rating-filter" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white">
+          <select id="rating-filter" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
             <option value="0">الكل</option>
             <option value="4.5">⭐ 4.5 فأكثر</option>
             <option value="4.0">⭐ 4.0 فأكثر</option>
@@ -321,7 +347,7 @@
           <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
             <i class="fa-solid fa-arrow-down-wide-short text-rose-500 ml-1"></i>ترتيب حسب
           </label>
-          <select id="sort-option" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white">
+          <select id="sort-option" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
             <option value="rating_desc">الأعلى تقييماً</option>
             <option value="reviews_desc">الأكثر مراجعة</option>
             <option value="name_asc">الاسم (أ - ي)</option>
@@ -333,9 +359,9 @@
 
     <!-- Content Layout: Interactive Map + List Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start relative z-10">
-      
+
       <!-- Interactive Map Panel -->
-      <div class="lg:col-span-7 bg-white dark:bg-slate-800 rounded-2xl p-3 shadow-sm border border-slate-200/80 dark:border-slate-700/60 lg:sticky lg:top-20 z-10">
+      <div class="lg:col-span-7 bg-white dark:bg-slate-800 rounded-2xl p-3 shadow-sm border border-slate-200/80 dark:border-slate-700/60 lg:sticky lg:top-20 z-10 transition-colors duration-300">
         <div class="flex items-center justify-between mb-2.5 px-1">
           <div class="flex items-center gap-2">
             <span class="relative flex h-2.5 w-2.5">
@@ -344,17 +370,17 @@
             </span>
             <h2 class="text-xs font-bold text-slate-900 dark:text-white">خريطة المطاعم التفاعلية</h2>
           </div>
-          <span class="text-[11px] font-semibold px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300" id="map-counter">236 مكان</span>
+          <span class="text-[11px] font-semibold px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300" id="map-counter">0 مكان</span>
         </div>
         <div id="map" class="shadow-inner overflow-hidden"></div>
       </div>
 
       <!-- Restaurant Cards List -->
       <div class="lg:col-span-5 space-y-3 relative z-10">
-        
+
         <!-- Results Summary Bar -->
         <div class="flex items-center justify-between text-xs font-medium text-slate-500 dark:text-slate-400 px-1">
-          <span>نتائج البحث (<strong id="results-count" class="text-rose-600 dark:text-rose-400 font-extrabold">236</strong> <span id="results-unit">مكان</span>)</span>
+          <span>نتائج البحث (<strong id="results-count" class="text-rose-600 dark:text-rose-400 font-extrabold">0</strong> <span id="results-unit">مكان</span>)</span>
           <button onclick="resetFilters()" class="text-rose-600 dark:text-rose-400 hover:underline">إعادة ضبط الفلاتر</button>
         </div>
 
@@ -368,7 +394,7 @@
 
   </main>
 
-  
+
   <!-- Modal for Adding New Restaurant/Cafe -->
   <div id="add-place-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300">
     <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative overflow-hidden transform transition-all">
@@ -389,6 +415,22 @@
 
         <div class="grid grid-cols-2 gap-2">
           <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الولاية *</label>
+            <select id="new-governorate" required onchange="updateNewPlaceDelegations()" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
+              <option value="ولاية أريانة">ولاية أريانة</option>
+              <option value="ولاية تونس">ولاية تونس</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المعتمدية *</label>
+            <select id="new-delegation" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
             <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">نوع النشاط *</label>
             <select id="new-category" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
               <option value="مطعم عام (Restaurant)">مطعم عام</option>
@@ -399,18 +441,8 @@
             </select>
           </div>
           <div>
-            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المعتمدية *</label>
-            <select id="new-delegation" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
-              <option value="أريانة المدينة">أريانة المدينة</option>
-              <option value="أريانة المدينة (حي النصر / المنزه)">أريانة المدينة (حي النصر / المنزه)</option>
-              <option value="سكرة">سكرة</option>
-              <option value="سكرة (برج الوزير)">سكرة (برج الوزير)</option>
-              <option value="رواد (حي الغزالة)">رواد (حي الغزالة)</option>
-              <option value="المنيهلة">المنيهلة</option>
-              <option value="التضامن">التضامن</option>
-              <option value="سيدي ثابت">سيدي ثابت</option>
-              <option value="قلعة الأندلس">قلعة الأندلس</option>
-            </select>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المطبخ / الاختصاص</label>
+            <input type="text" id="new-cuisine" placeholder="مثال: مشاوي عربية" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
           </div>
         </div>
 
@@ -430,15 +462,9 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المطبخ / الاختصاص</label>
-            <input type="text" id="new-cuisine" placeholder="مثال: مشاوي عربية" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
-          </div>
-          <div>
-            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">رقم الهاتف</label>
-            <input type="text" id="new-phone" placeholder="+216 71 000 000" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
-          </div>
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">رقم الهاتف</label>
+          <input type="text" id="new-phone" placeholder="+216 71 000 000" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
         </div>
 
         <div class="pt-2 flex items-center justify-end gap-2">
@@ -463,9 +489,9 @@
   </div>
 
   <!-- Footer -->
-  <footer class="mt-10 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700/60 py-6 text-center text-xs text-slate-500 dark:text-slate-400">
+  <footer class="mt-10 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700/60 py-6 text-center text-xs text-slate-500 dark:text-slate-400 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 space-y-1.5">
-      <p class="font-medium">دليل مطاعم ولاية أريانة © 2025 - دليل تفاعلي شامل (تطبيق PWA)</p>
+      <p class="font-medium">دليل مطاعم ومقاهي أريانة وتونس © 2025 - دليل تفاعلي شامل (تطبيق PWA)</p>
       <p class="text-slate-400 dark:text-slate-500">مبني عبر خرائط الشارع المفتوحة OSM والتقنيات التفاعلية الحديثة</p>
     </div>
   </footer>
@@ -473,9 +499,19 @@
   <!-- Application Logic -->
   <script>
     let restaurants = [];
+    let filteredRestaurants = [];
     let favorites = JSON.parse(localStorage.getItem('ariana_favs') || '[]');
+    let customPlaces = JSON.parse(localStorage.getItem('ariana_custom_places') || '[]');
     let showFavsOnly = false;
 
+    let map = null;
+    let markersCluster = null;
+    let userMarker = null;
+
+    const OSM_TILES = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    const TILE_ATTR = '© OpenStreetMap contributors';
+
+    // Toast Notification System
     function showToast(message, type = 'info') {
       const container = document.getElementById('toast-container');
       if (!container) return;
@@ -494,6 +530,7 @@
       }, 3000);
     }
 
+    // Favorite System
     function toggleFavorite(id) {
       const idx = favorites.indexOf(id);
       const rest = restaurants.find(r => r.id === id);
@@ -531,27 +568,10 @@
       }
       applyFilters();
     }
-    let filteredRestaurants = [];
-    let map = null;
-    let markersCluster = null;
-    let userMarker = null;
-    let userCoords = null; // { lat, lon }
-
-    // Haversine Distance Formula in Kilometers
-    function calculateDistance(lat1, lon1, lat2, lon2) {
-      const R = 6371; // Radius of Earth in KM
-      const dLat = (lat2 - lat1) * Math.PI / 180;
-      const dLon = (lon2 - lon1) * Math.PI / 180;
-      const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                Math.sin(dLon/2) * Math.sin(dLon/2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-      return (R * c).toFixed(1); // 1 decimal place KM
-    }
 
     function suggestRandomRestaurant() {
       if (filteredRestaurants.length === 0) {
-        showToast('لا توجد مطاعم مطابقة للبحث حالياً للاقتراح منه!', 'warning');
+        showToast('لا توجد مطاعم مطابقة للبحث حالياً للاقتراح منها!', 'warning');
         return;
       }
       const randomItem = filteredRestaurants[Math.floor(Math.random() * filteredRestaurants.length)];
@@ -559,13 +579,15 @@
       openDetailsModal(randomItem.id);
       showToast(`اقترحنا لك: ${randomItem.name} 🎲`, 'success');
     }
+
     let deferredPrompt = null;
 
-    // Load Data, Register Service Worker and Initialize Map on DOM Ready
+    // DOM Ready Initialization
     document.addEventListener('DOMContentLoaded', async () => {
       initMap();
       await loadRestaurantsData();
       initTheme();
+      updateFavsCounter();
       registerServiceWorker();
     });
 
@@ -611,6 +633,10 @@
     }
 
     // Dark Mode Handler
+    function isDarkMode() {
+      return document.documentElement.classList.contains('dark');
+    }
+
     function initTheme() {
       if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.documentElement.classList.add('dark');
@@ -624,7 +650,7 @@
     }
 
     function toggleDarkMode() {
-      if (document.documentElement.classList.contains('dark')) {
+      if (isDarkMode()) {
         document.documentElement.classList.remove('dark');
         localStorage.setItem('theme', 'light');
         document.getElementById('theme-toggle-dark-icon').classList.remove('hidden');
@@ -637,13 +663,13 @@
       }
     }
 
-    // Initialize Leaflet Map centered on Ariana Governorate
+    // Initialize Leaflet Map centered on Greater Tunis (Ariana & Tunis)
     function initMap() {
-      map = L.map('map').setView([36.866, 10.183], 12);
+      map = L.map('map').setView([36.84, 10.22], 11);
 
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      L.tileLayer(OSM_TILES, {
         maxZoom: 19,
-        attribution: '© OpenStreetMap contributors'
+        attribution: TILE_ATTR
       }).addTo(map);
 
       markersCluster = L.markerClusterGroup({
@@ -655,11 +681,37 @@
       map.addLayer(markersCluster);
     }
 
-    // Fetch Restaurants JSON Data
-    
-    let customPlaces = JSON.parse(localStorage.getItem('ariana_custom_places') || '[]');
+    // Populate Delegation Options dynamically based on Governorate Selection
+    function populateDelegationOptions() {
+      const govVal = document.getElementById('governorate-filter').value;
+      const delSelect = document.getElementById('delegation-filter');
+      const currentVal = delSelect.value;
 
+      const availablePlaces = govVal === 'ALL'
+        ? restaurants
+        : restaurants.filter(r => r.governorate === govVal);
+
+      const delegations = Array.from(new Set(availablePlaces.map(r => r.delegation))).sort((a, b) => a.localeCompare(b, 'ar'));
+
+      delSelect.innerHTML = `<option value="ALL">جميع المناطق والمعتمديات</option>` +
+        delegations.map(d => `<option value="${d}">${d}</option>`).join('');
+
+      if (delegations.includes(currentVal)) {
+        delSelect.value = currentVal;
+      } else {
+        delSelect.value = 'ALL';
+      }
+    }
+
+    function handleGovernorateChange() {
+      populateDelegationOptions();
+      updateStats();
+      applyFilters();
+    }
+
+    // Modal Add Place helpers
     function openAddPlaceModal() {
+      updateNewPlaceDelegations();
       document.getElementById('add-place-modal').classList.remove('hidden');
     }
 
@@ -667,25 +719,37 @@
       document.getElementById('add-place-modal').classList.add('hidden');
     }
 
+    function updateNewPlaceDelegations() {
+      const govVal = document.getElementById('new-governorate').value;
+      const delSelect = document.getElementById('new-delegation');
+
+      const availablePlaces = restaurants.filter(r => r.governorate === govVal);
+      const delegations = Array.from(new Set(availablePlaces.map(r => r.delegation))).sort((a, b) => a.localeCompare(b, 'ar'));
+
+      delSelect.innerHTML = delegations.map(d => `<option value="${d}">${d}</option>`).join('');
+    }
+
     function handleAddNewPlace(e) {
       e.preventDefault();
+      const newGov = document.getElementById('new-governorate').value;
       const newPlace = {
         id: Date.now(),
+        governorate: newGov,
         name: document.getElementById('new-name').value.trim(),
         category: document.getElementById('new-category').value,
         icon: document.getElementById('new-category').value.includes('مقهى') ? '☕' : '🍽️',
         delegation: document.getElementById('new-delegation').value,
         address: document.getElementById('new-address').value.trim(),
         street: 'غير محدد',
-        lat: parseFloat(document.getElementById('new-lat').value) || 36.866,
-        lon: parseFloat(document.getElementById('new-lon').value) || 10.183,
+        lat: parseFloat(document.getElementById('new-lat').value) || (newGov === 'ولاية تونس' ? 36.806 : 36.866),
+        lon: parseFloat(document.getElementById('new-lon').value) || (newGov === 'ولاية تونس' ? 10.181 : 10.183),
         rating: 5.0,
         reviews_count: 1,
         price_level: '$$',
-        cuisine: document.getElementById('new-cuisine').value.trim() || 'شرقية',
+        cuisine: document.getElementById('new-cuisine').value.trim() || 'تونسية',
         phone: document.getElementById('new-phone').value.trim() || '+216 00 000 000',
         opening_hours: '08:00 - 23:00 (يومياً)',
-        google_maps_url: `https://www.google.com/maps/search/?api=1&query=${document.getElementById('new-lat').value || '36.866'},${document.getElementById('new-lon').value || '10.183'}`,
+        google_maps_url: `https://www.google.com/maps/search/?api=1&query=${document.getElementById('new-lat').value || '36.806'},${document.getElementById('new-lon').value || '10.181'}`,
         delivery_available: true,
         outdoor_seating: true
       };
@@ -693,54 +757,61 @@
       customPlaces.push(newPlace);
       localStorage.setItem('ariana_custom_places', JSON.stringify(customPlaces));
       restaurants.unshift(newPlace);
-      
+
       closeAddPlaceModal();
       document.getElementById('add-place-form').reset();
-      
+
+      populateDelegationOptions();
       updateStats();
       applyFilters();
       showToast(`تمت إضافة "${newPlace.name}" بنجاح!`, 'success');
     }
 
-    function shareRestaurant(id) {
-      const item = restaurants.find(r => r.id === id);
-      if (!item) return;
-      
-      const shareData = {
-        title: item.name,
-        text: `تعرف على ${item.name} (${item.category}) في ${item.address} عبر دليل مطاعم أريانة`,
-        url: window.location.href
-      };
-
-      if (navigator.share) {
-        navigator.share(shareData).catch(() => {});
-      } else {
-        navigator.clipboard.writeText(`${shareData.text} - ${shareData.url}`);
-        showToast('تم نسخ معلومات المكان إلى الحافظة!', 'success');
-      }
-    }
-
+    // Fetch datasets from restaurants.json and tunis_restaurants.json
     async function loadRestaurantsData() {
       try {
-        const resp = await fetch('restaurants.json');
-        const apiData = await resp.json();
-        restaurants = [...customPlaces, ...apiData];
+        const [arianaResp, tunisResp] = await Promise.all([
+          fetch('restaurants.json'),
+          fetch('tunis_restaurants.json')
+        ]);
+
+        const arianaData = await arianaResp.json();
+        const tunisData = await tunisResp.json();
+
+        const formattedAriana = arianaData.map(item => ({
+          ...item,
+          governorate: item.governorate || "ولاية أريانة"
+        }));
+
+        const formattedTunis = tunisData.map(item => ({
+          ...item,
+          governorate: item.governorate || "ولاية تونس"
+        }));
+
+        restaurants = [...customPlaces, ...formattedAriana, ...formattedTunis];
         filteredRestaurants = [...restaurants];
 
+        populateDelegationOptions();
         updateStats();
         applyFilters();
       } catch (err) {
-        console.error('Error loading restaurants.json:', err);
+        console.error('Error loading restaurant datasets:', err);
+        showToast('تعذر تحميل قاعدة البيانات، يرجى إعادة التأكد من الاتصال', 'danger');
       }
     }
 
-    // Update KPI Header Numbers
+    // Update KPI Numbers based on active Governorate Filter
     function updateStats() {
-      document.getElementById('stat-total').innerText = restaurants.length;
-      
-      const restCount = restaurants.filter(r => r.category.includes('مطعم')).length;
-      const cafeCount = restaurants.filter(r => r.category.includes('مقهى')).length;
-      const delgSet = new Set(restaurants.map(r => r.delegation));
+      const govVal = document.getElementById('governorate-filter').value;
+      const activeList = govVal === 'ALL'
+        ? restaurants
+        : restaurants.filter(r => r.governorate === govVal);
+
+      document.getElementById('stat-total').innerText = activeList.length;
+
+      const restCount = activeList.filter(r => r.category.includes('مطعم')).length;
+      const cafeCount = activeList.filter(r => r.category.includes('مقهى')).length;
+      const delgSet = new Set(activeList.map(r => r.delegation));
 
       document.getElementById('stat-restaurants').innerText = restCount;
       document.getElementById('stat-cafes').innerText = cafeCount;
@@ -750,6 +821,7 @@
     // Apply Search and Multi-Filters
     function applyFilters() {
       const searchTerm = document.getElementById('search-input').value.trim().toLowerCase();
+      const governorateVal = document.getElementById('governorate-filter').value;
       const delegationVal = document.getElementById('delegation-filter').value;
       const categoryVal = document.getElementById('category-filter').value;
       const serviceVal = document.getElementById('services-filter').value;
@@ -766,11 +838,15 @@
       }
 
       filteredRestaurants = restaurants.filter(item => {
+        // Governorate check
+        const matchGov = governorateVal === 'ALL' || item.governorate === governorateVal;
+
         // Search check
-        const matchSearch = !searchTerm || 
+        const matchSearch = !searchTerm ||
           item.name.toLowerCase().includes(searchTerm) ||
           item.address.toLowerCase().includes(searchTerm) ||
           item.delegation.toLowerCase().includes(searchTerm) ||
+          (item.governorate && item.governorate.toLowerCase().includes(searchTerm)) ||
           item.cuisine.toLowerCase().includes(searchTerm);
 
         // Delegation check
@@ -793,7 +869,7 @@
         // Rating check
         const matchRating = (item.rating || 0) >= ratingVal;
 
-        return matchSearch && matchDelegation && matchCategory && matchService && matchFav && matchPrice && matchRating;
+        return matchGov && matchSearch && matchDelegation && matchCategory && matchService && matchFav && matchPrice && matchRating;
       });
 
       // Sorting
@@ -816,10 +892,14 @@
 
     function resetFilters() {
       document.getElementById('search-input').value = '';
-      document.getElementById('delegation-filter').value = 'ALL';
+      document.getElementById('governorate-filter').value = 'ALL';
+      populateDelegationOptions();
       document.getElementById('category-filter').value = 'ALL';
       document.getElementById('services-filter').value = 'ALL';
+      document.getElementById('price-filter').value = 'ALL';
+      document.getElementById('rating-filter').value = '0';
       document.getElementById('sort-option').value = 'rating_desc';
+      updateStats();
       applyFilters();
     }
 
@@ -833,7 +913,7 @@
 
       if (count === 0) {
         container.innerHTML = `
-          <div class="text-center py-10 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6">
+          <div class="text-center py-10 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 transition-colors duration-300">
             <i class="fa-solid fa-magnifying-glass-location text-3xl text-slate-300 dark:text-slate-600 mb-2"></i>
             <h3 class="text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">لا توجد نتائج مطابقة لمحددات البحث</h3>
             <p class="text-[11px] text-slate-400 mb-3">جرب البحث بكلمات أخرى أو تغيير خيارات التصفية.</p>
@@ -846,18 +926,21 @@
       }
 
       container.innerHTML = filteredRestaurants.map(item => `
-        <div onclick="focusOnRestaurant(${item.id})" class="bg-white dark:bg-slate-800 hover:border-rose-400 dark:hover:border-rose-500 rounded-xl p-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700/60 transition cursor-pointer group relative overflow-hidden">
-          
+        <div onclick="focusOnRestaurant(${item.id})" class="bg-white dark:bg-slate-800 hover:border-rose-400 dark:hover:border-rose-500 rounded-xl p-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700/60 transition duration-300 cursor-pointer group relative overflow-hidden">
+
           <div class="flex items-start justify-between gap-2.5">
-            
+
             <div class="flex items-start gap-2.5 min-w-0">
               <div class="w-9 h-9 rounded-xl bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">
                 ${item.icon}
               </div>
-              
+
               <div class="min-w-0">
                 <h3 class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 dark:group-hover:text-rose-400 transition flex items-center gap-1.5 flex-wrap">
                   <span class="truncate">${item.name}</span>
+                  <span class="text-[10px] font-semibold px-2 py-0.2 rounded-full bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-100 dark:border-rose-900/40 shrink-0">
+                    ${item.governorate || 'ولاية أريانة'}
+                  </span>
                   <span class="text-[10px] font-normal px-2 py-0.2 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 shrink-0">
                     ${item.delegation}
                   </span>
@@ -881,7 +964,7 @@
 
           <!-- Tags & Quick Action Row -->
           <div class="mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-700/50 flex items-center justify-between text-xs">
-            
+
             <div class="flex items-center gap-1.5 flex-wrap">
               <span class="bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 px-2 py-0.5 rounded text-[10px]">
                 ${item.cuisine}
@@ -891,7 +974,8 @@
             </div>
 
             <div class="flex items-center gap-1 shrink-0">
-              <button onclick="event.stopPropagation(); toggleFavorite(${item.id})" class="p-1 text-slate-400 hover:text-rose-600 transition" title="حفظ بالمفضلة"><i class="${favorites.includes(item.id) ? 'fa-solid fa-heart text-rose-500' : 'fa-regular fa-heart'} text-xs"></i></button><button onclick="event.stopPropagation(); openDetailsModal(${item.id})" class="p-1 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="عرض التفاصيل">
+              <button onclick="event.stopPropagation(); toggleFavorite(${item.id})" class="p-1 text-slate-400 hover:text-rose-600 transition" title="حفظ بالمفضلة"><i class="${favorites.includes(item.id) ? 'fa-solid fa-heart text-rose-500' : 'fa-regular fa-heart'} text-xs"></i></button>
+              <button onclick="event.stopPropagation(); openDetailsModal(${item.id})" class="p-1 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="عرض التفاصيل">
                 <i class="fa-solid fa-circle-info text-xs"></i>
               </button>
               <a href="${item.google_maps_url}" target="_blank" onclick="event.stopPropagation();" class="p-1 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="فتح في Google Maps">
@@ -921,8 +1005,8 @@
 
         const popupContent = `
           <div dir="rtl" class="text-right font-sans p-1">
-            <div class="font-bold text-slate-900 text-xs mb-0.5">${item.name}</div>
-            <div class="text-[11px] text-rose-600 font-semibold mb-1">${item.category}</div>
+            <div class="font-bold text-xs mb-0.5">${item.name}</div>
+            <div class="text-[11px] text-rose-600 font-semibold mb-1">${item.category} (${item.governorate || 'ولاية أريانة'})</div>
             <div class="text-[11px] text-slate-600 mb-2"><i class="fa-solid fa-location-dot ml-1 text-slate-400"></i>${item.address}</div>
             <div class="flex items-center justify-between pt-1.5 border-t border-slate-200">
               <span class="text-[11px] font-bold text-amber-600">⭐ ${item.rating} (${item.reviews_count})</span>
@@ -960,7 +1044,7 @@
     // Geolocation API - Near Me
     function getUserLocation() {
       if (!navigator.geolocation) {
-        alert('خاصية تحديد الموقع غير مدعومة في متصفحك.');
+        showToast('خاصية تحديد الموقع غير مدعومة في متصفحك.', 'warning');
         return;
       }
 
@@ -994,9 +1078,10 @@
           });
 
           renderList();
+          showToast('تم ترتيب الأماكن حسب الأقرب لموقعك الحالي 📍', 'success');
         },
         (err) => {
-          alert('تعذر الوصول إلى موقعك الحالي. يرجى السماح لصلاحية الموقع.');
+          showToast('تعذر الوصول إلى موقعك الحالي. يرجى السماح بصلاحية الموقع.', 'warning');
         }
       );
     }
@@ -1014,14 +1099,14 @@
           </div>
           <div>
             <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white">${item.name}</h3>
-            <span class="text-xs text-rose-600 dark:text-rose-400 font-semibold">${item.category}</span>
+            <span class="text-xs text-rose-600 dark:text-rose-400 font-semibold">${item.category} • ${item.governorate || 'ولاية أريانة'}</span>
           </div>
         </div>
 
         <div class="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-3 border-t border-slate-100 dark:border-slate-700">
           <p class="flex items-center gap-2">
-            <i class="fa-solid fa-city text-rose-500 w-4"></i>
-            <strong>المعتمدية:</strong> ${item.delegation}
+            <i class="fa-solid fa-map text-rose-500 w-4"></i>
+            <strong>الولاية والمعتمدية:</strong> ${item.governorate || 'ولاية أريانة'} - ${item.delegation}
           </p>
           <p class="flex items-center gap-2">
             <i class="fa-solid fa-location-dot text-rose-500 w-4"></i>
@@ -1070,15 +1155,16 @@
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(filteredRestaurants, null, 2));
         const downloadAnchor = document.createElement('a');
         downloadAnchor.setAttribute("href", dataStr);
-        downloadAnchor.setAttribute("download", `ariana_restaurants_${new Date().toISOString().slice(0,10)}.json`);
+        downloadAnchor.setAttribute("download", `greatertunis_restaurants_${new Date().toISOString().slice(0,10)}.json`);
         document.body.appendChild(downloadAnchor);
         downloadAnchor.click();
         downloadAnchor.remove();
         showToast('تم تصدير ملف JSON بنجاح', 'success');
       } else if (format === 'csv') {
-        const headers = ["id", "name", "category", "delegation", "address", "rating", "reviews_count", "price_level", "cuisine", "phone"];
+        const headers = ["id", "governorate", "name", "category", "delegation", "address", "rating", "reviews_count", "price_level", "cuisine", "phone"];
         const rows = filteredRestaurants.map(r => [
           r.id,
+          `"${(r.governorate || 'ولاية أريانة').replace(/"/g, '""')}"`,
           `"${(r.name || '').replace(/"/g, '""')}"`,
           `"${(r.category || '').replace(/"/g, '""')}"`,
           `"${(r.delegation || '').replace(/"/g, '""')}"`,
@@ -1093,7 +1179,7 @@
         const encodedUri = encodeURI("data:text/csv;charset=utf-8," + csvContent);
         const link = document.createElement("a");
         link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `ariana_restaurants_${new Date().toISOString().slice(0,10)}.csv`);
+        link.setAttribute("download", `greatertunis_restaurants_${new Date().toISOString().slice(0,10)}.csv`);
         document.body.appendChild(link);
         link.click();
         link.remove();

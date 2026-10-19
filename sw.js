@@ -1,8 +1,9 @@
-const CACHE_NAME = 'ariana-restaurants-v2';
+const CACHE_NAME = 'greatertunis-restaurants-v3';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './restaurants.json',
+  './tunis_restaurants.json',
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
@@ -49,8 +50,8 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(event.request.url);
 
-  // Strategy for index.html or restaurants.json: Network first, fall back to cache
-  if (url.pathname.endsWith('index.html') || url.pathname.endsWith('restaurants.json') || url.pathname === '/') {
+  // Strategy for HTML and JSON data files: Network first, fall back to cache
+  if (url.pathname.endsWith('index.html') || url.pathname.endsWith('.json') || url.pathname === '/') {
     event.respondWith(
       fetch(event.request)
         .then((response) => {

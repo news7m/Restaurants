@@ -6,6 +6,7 @@ const MAX_TILES_CACHE = 150;
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
+  './css/styles.css',
   './restaurants.json',
   './tunis_restaurants.json',
   './manifest.json',
@@ -14,7 +15,6 @@ const ASSETS_TO_CACHE = [
   './icon-maskable-512.png',
   './screenshot-desktop.png',
   './screenshot-mobile.png',
-  'https://cdn.tailwindcss.com',
   'https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',

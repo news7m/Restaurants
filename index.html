@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob: 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https: blob:; style-src 'self' 'unsafe-inline' https:;">
   <title>دليل مطاعم ومقاهي أريانة وتونس | Greater Tunis Restaurants Directory</title>
   <meta name="description" content="الدليل التفاعلي الشامل لمطاعم ومقاهي ولايتي أريانة وتونس، استكشف خريطة المطاعم والمقاهي مع التقييمات والاتجاهات وساعات العمل والأسعار.">
 
   <!-- PWA Meta Tags & Manifest -->
   <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="icon-192.png">
   <meta name="theme-color" content="#0f172a">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,30 +17,8 @@
   <meta name="apple-mobile-web-app-title" content="مطاعم أريانة وتونس">
   <link rel="apple-touch-icon" href="icon-192.png">
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            primary: {
-              50: '#fff1f2',
-              100: '#ffe4e6',
-              500: '#e11d48',
-              600: '#e11d48',
-              700: '#be123c',
-              800: '#9f1239',
-            }
-          },
-          fontFamily: {
-            sans: ['Tajawal', 'Cairo', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
+  <!-- Static Compiled Tailwind CSS -->
+  <link rel="stylesheet" href="css/styles.css">
 
   <!-- Google Fonts (Tajawal) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,73 +36,6 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
   <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
-
-  <style>
-    :root {
-      --sat: env(safe-area-inset-top, 0px);
-      --sab: env(safe-area-inset-bottom, 0px);
-    }
-    body {
-      font-family: 'Tajawal', sans-serif;
-      padding-top: var(--sat);
-      padding-bottom: var(--sab);
-    }
-    header {
-      padding-top: max(0.75rem, var(--sat));
-    }
-    #map {
-      height: 100%;
-      min-height: 380px;
-      z-index: 10;
-      border-radius: 1rem;
-      transition: all 0.3s ease;
-    }
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.05);
-    }
-    .dark .custom-scrollbar::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.05);
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: rgba(225, 29, 72, 0.4);
-      border-radius: 10px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-      background: rgba(225, 29, 72, 0.7);
-    }
-    .glass-effect {
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(12px);
-      transition: background-color 0.3s ease, border-color 0.3s ease;
-    }
-    .dark .glass-effect {
-      background: rgba(15, 23, 42, 0.92);
-      backdrop-filter: blur(12px);
-    }
-
-    /* Dark Mode Leaflet Tile Customizations */
-    .dark .leaflet-tile-pane {
-      filter: brightness(0.85) contrast(1.1) invert(0.92) hue-rotate(200deg);
-    }
-    .dark .leaflet-popup-content-wrapper,
-    .dark .leaflet-popup-tip {
-      background-color: #1e293b !important;
-      color: #f8fafc !important;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5) !important;
-    }
-    .dark .leaflet-popup-content div.font-bold {
-      color: #f8fafc !important;
-    }
-    .dark .leaflet-popup-content div.text-slate-600 {
-      color: #94a3b8 !important;
-    }
-    .dark .leaflet-popup-content div.border-slate-200 {
-      border-color: #334155 !important;
-    }
-  </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
 
@@ -259,6 +172,7 @@
 
         <!-- Search Input -->
         <div class="relative flex-grow">
+          <label for="search-input" class="sr-only">البحث عن مطعم أو كافيه</label>
           <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
             <i class="fa-solid fa-magnifying-glass"></i>
           </div>
@@ -425,20 +339,20 @@
 
       <form id="add-place-form" onsubmit="handleAddNewPlace(event)" class="space-y-3 text-xs">
         <div>
-          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم المكان *</label>
+          <label for="new-name" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم المكان *</label>
           <input type="text" id="new-name" required placeholder="مثال: مطعم الياسمين" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:text-white">
         </div>
 
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الولاية *</label>
+            <label for="new-governorate" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الولاية *</label>
             <select id="new-governorate" required onchange="updateNewPlaceDelegations()" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
               <option value="ولاية أريانة">ولاية أريانة</option>
               <option value="ولاية تونس">ولاية تونس</option>
             </select>
           </div>
           <div>
-            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المعتمدية *</label>
+            <label for="new-delegation" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المعتمدية *</label>
             <select id="new-delegation" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
               <!-- Populated dynamically -->
             </select>
@@ -447,7 +361,7 @@
 
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">نوع النشاط *</label>
+            <label for="new-category" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">نوع النشاط *</label>
             <select id="new-category" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
               <option value="مطعم عام (Restaurant)">مطعم عام</option>
               <option value="مقهى وكافيه (Café & Lounge)">مقهى وكافيه</option>
@@ -457,45 +371,45 @@
             </select>
           </div>
           <div>
-            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المطبخ / الاختصاص</label>
+            <label for="new-cuisine" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المطبخ / الاختصاص</label>
             <input type="text" id="new-cuisine" placeholder="مثال: مشاوي عربية" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
           </div>
         </div>
 
         <div>
-          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">العنوان التفصيلي *</label>
+          <label for="new-address" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">العنوان التفصيلي *</label>
           <input type="text" id="new-address" required placeholder="مثال: شارع الهادي نويرة، النصر 2" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
         </div>
 
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">خط العرض (Latitude)</label>
+            <label for="new-lat" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">خط العرض (Latitude)</label>
             <input type="number" step="any" id="new-lat" placeholder="36.866" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
           </div>
           <div>
-            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">خط الطول (Longitude)</label>
+            <label for="new-lon" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">خط الطول (Longitude)</label>
             <input type="number" step="any" id="new-lon" placeholder="10.183" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
           </div>
         </div>
 
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">رقم الهاتف</label>
+            <label for="new-phone" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">رقم الهاتف</label>
             <input type="text" id="new-phone" placeholder="+216 71 000 000" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
           </div>
           <div>
-            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">البريد الإلكتروني</label>
+            <label for="new-email" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">البريد الإلكتروني</label>
             <input type="email" id="new-email" placeholder="contact@example.com" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
           </div>
         </div>
 
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الموقع الإلكتروني</label>
+            <label for="new-website" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الموقع الإلكتروني</label>
             <input type="url" id="new-website" placeholder="https://example.com" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
           </div>
           <div>
-            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">وسائل التواصل الاجتماعي</label>
+            <label for="new-social" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">وسائل التواصل الاجتماعي</label>
             <input type="url" id="new-social" placeholder="https://facebook.com/..." class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
           </div>
         </div>

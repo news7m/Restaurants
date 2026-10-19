@@ -798,6 +798,29 @@
       showToast(`تمت إضافة "${newPlace.name}" بنجاح!`, 'success');
     }
 
+    // Helper to get effective social media link and icon type
+    function getSocialInfo(item) {
+      let url = item.social_media ? item.social_media.trim() : '';
+      if (!url && item.website) {
+        const w = item.website.trim();
+        if (w.includes('facebook.com') || w.includes('instagram.com')) {
+          url = w;
+        }
+      }
+      if (!url) return null;
+
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        url = 'https://' + url;
+      }
+
+      const isInstagram = url.toLowerCase().includes('instagram.com');
+      return {
+        url: url,
+        iconClass: isInstagram ? 'fa-brands fa-instagram text-rose-500' : 'fa-brands fa-facebook text-sky-500',
+        title: isInstagram ? 'Instagram' : 'Facebook'
+      };
+    }
+
     // Fetch datasets from restaurants.json and tunis_restaurants.json
     async function loadRestaurantsData() {
       try {
@@ -947,6 +970,9 @@
     const PAGE_SIZE = 20;
 
     function renderCardHTML(item) {
+      const social = getSocialInfo(item);
+      const websiteUrl = (item.website && !item.website.includes('facebook.com') && !item.website.includes('instagram.com')) ? item.website : '';
+
       return `
         <div onclick="focusOnRestaurant(${item.id})" class="bg-white dark:bg-slate-800 hover:border-rose-400 dark:hover:border-rose-500 rounded-xl p-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700/60 transition duration-300 cursor-pointer group relative overflow-hidden">
           <div class="flex items-start justify-between gap-2.5">
@@ -988,9 +1014,9 @@
             </div>
             <div class="flex items-center gap-1 shrink-0">
               <button onclick="event.stopPropagation(); toggleFavorite(${item.id})" class="p-1 text-slate-400 hover:text-rose-600 transition" title="حفظ بالمفضلة"><i class="${favorites.includes(item.id) ? 'fa-solid fa-heart text-rose-500' : 'fa-regular fa-heart'} text-xs"></i></button>
-              ${item.website ? `<a href="${item.website}" target="_blank" onclick="event.stopPropagation();" class="p-1 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="الموقع الإلكتروني"><i class="fa-solid fa-globe text-xs"></i></a>` : ''}
+              ${websiteUrl ? `<a href="${websiteUrl}" target="_blank" onclick="event.stopPropagation();" class="p-1 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="الموقع الإلكتروني"><i class="fa-solid fa-globe text-xs"></i></a>` : ''}
               ${item.email ? `<a href="mailto:${item.email}" onclick="event.stopPropagation();" class="p-1 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="البريد الإلكتروني"><i class="fa-solid fa-envelope text-xs"></i></a>` : ''}
-              ${item.social_media ? `<a href="${item.social_media}" target="_blank" onclick="event.stopPropagation();" class="p-1 text-slate-400 hover:text-sky-500 transition" title="وسائل التواصل الاجتماعي"><i class="fa-brands fa-facebook text-xs"></i></a>` : ''}
+              ${social ? `<a href="${social.url}" target="_blank" onclick="event.stopPropagation();" class="p-1 transition" title="${social.title}"><i class="${social.iconClass} text-xs"></i></a>` : ''}
               <button onclick="event.stopPropagation(); openDetailsModal(${item.id})" class="p-1 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="عرض التفاصيل">
                 <i class="fa-solid fa-circle-info text-xs"></i>
               </button>
@@ -1102,6 +1128,9 @@
 
         const marker = L.marker([item.lat, item.lon], { icon: customIcon });
 
+        const social = getSocialInfo(item);
+        const websiteUrl = (item.website && !item.website.includes('facebook.com') && !item.website.includes('instagram.com')) ? item.website : '';
+
         const popupContent = `
           <div dir="rtl" class="text-right font-sans p-1">
             <div class="font-bold text-xs mb-0.5">${item.name}</div>
@@ -1110,8 +1139,8 @@
             <div class="flex items-center justify-between pt-1.5 border-t border-slate-200">
               <span class="text-[11px] font-bold text-amber-600">⭐ ${item.rating} (${item.reviews_count})</span>
               <div class="flex items-center gap-1.5">
-                ${item.website ? `<a href="${item.website}" target="_blank" class="text-[11px] text-slate-600 hover:text-rose-600" title="الموقع"><i class="fa-solid fa-globe"></i></a>` : ''}
-                ${item.social_media ? `<a href="${item.social_media}" target="_blank" class="text-[11px] text-sky-600 hover:text-sky-700" title="التواصل الاجتماعي"><i class="fa-brands fa-facebook"></i></a>` : ''}
+                ${websiteUrl ? `<a href="${websiteUrl}" target="_blank" class="text-[11px] text-slate-600 hover:text-rose-600" title="الموقع"><i class="fa-solid fa-globe"></i></a>` : ''}
+                ${social ? `<a href="${social.url}" target="_blank" class="text-[11px]" title="${social.title}"><i class="${social.iconClass}"></i></a>` : ''}
                 <a href="${item.google_maps_url}" target="_blank" class="text-[11px] font-bold text-rose-600 hover:underline">الاتجاهات ↗</a>
               </div>
             </div>
@@ -1197,14 +1226,17 @@
       const item = restaurants.find(r => r.id === id);
       if (!item) return;
 
+      const social = getSocialInfo(item);
+      const websiteUrl = (item.website && !item.website.includes('facebook.com') && !item.website.includes('instagram.com')) ? item.website : '';
+
       const servicesHtml = (item.services && item.services.length > 0)
         ? `<div class="pt-2 flex flex-wrap gap-1">
             ${item.services.map(s => `<span class="bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-[10px] px-2 py-0.5 rounded-md font-medium"><i class="fa-solid fa-check text-emerald-500 ml-1"></i>${s}</span>`).join('')}
            </div>`
         : '';
 
-      const websiteBtn = item.website ? `
-        <a href="${item.website}" target="_blank" class="bg-indigo-50 dark:bg-indigo-950/50 hover:bg-indigo-100 text-indigo-600 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800/60 text-xs font-bold py-2.5 px-3 rounded-xl text-center transition flex items-center justify-center gap-1.5 shrink-0">
+      const websiteBtn = websiteUrl ? `
+        <a href="${websiteUrl}" target="_blank" class="bg-indigo-50 dark:bg-indigo-950/50 hover:bg-indigo-100 text-indigo-600 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800/60 text-xs font-bold py-2.5 px-3 rounded-xl text-center transition flex items-center justify-center gap-1.5 shrink-0">
           <i class="fa-solid fa-globe"></i>
           الموقع
         </a>
@@ -1252,10 +1284,10 @@
             <strong>البريد الإلكتروني:</strong> <a href="mailto:${item.email}" class="text-rose-600 dark:text-rose-400 hover:underline" dir="ltr">${item.email}</a>
           </p>
           ` : ''}
-          ${item.social_media ? `
+          ${social ? `
           <p class="flex items-center gap-2">
-            <i class="fa-brands fa-facebook text-sky-500 w-4"></i>
-            <strong>وسائل التواصل:</strong> <a href="${item.social_media}" target="_blank" class="text-sky-600 dark:text-sky-400 hover:underline">زيارة صفحة التواصل ↗</a>
+            <i class="${social.iconClass} w-4"></i>
+            <strong>وسائل التواصل:</strong> <a href="${social.url}" target="_blank" class="text-sky-600 dark:text-sky-400 hover:underline">زيارة صفحة ${social.title} ↗</a>
           </p>
           ` : ''}
           <p class="flex items-center gap-2">
@@ -1271,9 +1303,9 @@
             الاتجاهات عبر Google Maps
           </a>
           ${websiteBtn}
-          ${item.social_media ? `
-          <a href="${item.social_media}" target="_blank" class="bg-sky-50 dark:bg-sky-950/50 hover:bg-sky-100 text-sky-600 dark:text-sky-300 border border-sky-200 dark:border-sky-800/60 text-xs font-bold py-2.5 px-3 rounded-xl text-center transition flex items-center justify-center gap-1.5 shrink-0">
-            <i class="fa-brands fa-facebook"></i>
+          ${social ? `
+          <a href="${social.url}" target="_blank" class="bg-sky-50 dark:bg-sky-950/50 hover:bg-sky-100 text-sky-600 dark:text-sky-300 border border-sky-200 dark:border-sky-800/60 text-xs font-bold py-2.5 px-3 rounded-xl text-center transition flex items-center justify-center gap-1.5 shrink-0">
+            <i class="${social.iconClass}"></i>
             التواصل
           </a>
           ` : ''}

@@ -125,6 +125,21 @@
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
 
+  <!-- Offline Status Banner -->
+  <div id="offline-banner" class="hidden bg-amber-500 text-white text-center py-2 px-4 text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-inner z-50">
+    <i class="fa-solid fa-wifi"></i>
+    <span>أنت الآن في وضع عدم الاتصال - يتم عرض البيانات المخزنة محلياً وأداء التطبيق متاح كاملاً بالأوفلاين</span>
+  </div>
+
+  <!-- PWA Update Toast Banner -->
+  <div id="update-toast" class="hidden fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3 text-xs font-bold transition-all">
+    <i class="fa-solid fa-arrows-rotate text-amber-400 animate-spin"></i>
+    <span>يتوفر تحديث جديد للتطبيق!</span>
+    <button onclick="reloadPWAUpdate()" class="bg-rose-600 hover:bg-rose-700 text-white px-3 py-1 rounded-xl transition">
+      تحديث الآن
+    </button>
+  </div>
+
   <!-- Top Navigation Bar -->
   <header class="sticky top-0 z-50 glass-effect border-b border-slate-200 dark:border-slate-800 shadow-sm pb-3">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
@@ -617,7 +632,29 @@
       initTheme();
       updateFavsCounter();
       registerServiceWorker();
+      initOfflineStatusListeners();
     });
+
+    // Offline / Online Status Listeners
+    function initOfflineStatusListeners() {
+      const banner = document.getElementById('offline-banner');
+      function updateOnlineStatus() {
+        if (!navigator.onLine) {
+          if (banner) banner.classList.remove('hidden');
+          showToast('انقطع الاتصال بالشبكة. التطبيق يعمل في وضع الأوفلاين 📡', 'warning');
+        } else {
+          if (banner) banner.classList.add('hidden');
+          showToast('تم استعادة الاتصال بالإنترنت 🟢', 'success');
+        }
+      }
+
+      window.addEventListener('online', updateOnlineStatus);
+      window.addEventListener('offline', updateOnlineStatus);
+
+      if (!navigator.onLine && banner) {
+        banner.classList.remove('hidden');
+      }
+    }
 
     // Arabic Pluralization Helper
     function getArabicPlural(count) {
@@ -628,14 +665,44 @@
       return `${count} مكاناً`;
     }
 
-    // PWA Service Worker Registration
+    let newWorker = null;
+
+    // PWA Service Worker Registration & Update Handler
     function registerServiceWorker() {
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('./sw.js')
-            .then(reg => console.log('[PWA] Service Worker registered successfully:', reg.scope))
+            .then(reg => {
+              console.log('[PWA] Service Worker registered successfully:', reg.scope);
+
+              reg.addEventListener('updatefound', () => {
+                newWorker = reg.installing;
+                newWorker.addEventListener('statechange', () => {
+                  if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    const updateToast = document.getElementById('update-toast');
+                    if (updateToast) updateToast.classList.remove('hidden');
+                  }
+                });
+              });
+            })
             .catch(err => console.warn('[PWA] Service Worker registration failed:', err));
+
+          let refreshing = false;
+          navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (!refreshing) {
+              refreshing = true;
+              window.location.reload();
+            }
+          });
         });
+      }
+    }
+
+    function reloadPWAUpdate() {
+      if (newWorker) {
+        newWorker.postMessage({ type: 'SKIP_WAITING' });
+      } else {
+        window.location.reload();
       }
     }
 
@@ -821,7 +888,7 @@
       };
     }
 
-    // Fetch datasets from restaurants.json and tunis_restaurants.json
+    // Fetch datasets from restaurants.json and tunis_restaurants.json with LocalStorage offline cache backup
     async function loadRestaurantsData() {
       try {
         const [arianaResp, tunisResp] = await Promise.all([
@@ -843,13 +910,40 @@
         }));
 
         restaurants = [...customPlaces, ...formattedAriana, ...formattedTunis];
+
+        // Save to local persistence for offline backup
+        try {
+          localStorage.setItem('cached_restaurants_data', JSON.stringify({
+            ariana: formattedAriana,
+            tunis: formattedTunis,
+            timestamp: Date.now()
+          }));
+        } catch (e) {
+          console.warn('LocalStorage quota exceeded or disabled:', e);
+        }
+
         filteredRestaurants = [...restaurants];
 
         populateDelegationOptions();
         updateStats();
         applyFilters(true);
       } catch (err) {
-        console.error('Error loading restaurant datasets:', err);
+        console.warn('Network fetch for JSON failed, attempting LocalStorage fallback:', err);
+        const cached = localStorage.getItem('cached_restaurants_data');
+        if (cached) {
+          try {
+            const parsed = JSON.parse(cached);
+            restaurants = [...customPlaces, ...(parsed.ariana || []), ...(parsed.tunis || [])];
+            filteredRestaurants = [...restaurants];
+            populateDelegationOptions();
+            updateStats();
+            applyFilters(true);
+            showToast('تم تحميل البيانات من المخزون المحلي (وضع عدم الاتصال) 📦', 'info');
+            return;
+          } catch (parseErr) {
+            console.error('Failed to parse local cached data:', parseErr);
+          }
+        }
         showToast('تعذر تحميل قاعدة البيانات، يرجى إعادة التأكد من الاتصال', 'danger');
       }
     }

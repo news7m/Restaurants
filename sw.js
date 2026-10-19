@@ -1,4 +1,6 @@
-const CACHE_NAME = 'greatertunis-restaurants-v5';
+const CACHE_NAME = 'greatertunis-static-v6';
+const TILE_CACHE_NAME = 'greatertunis-tiles-v1';
+
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -17,69 +19,122 @@ const ASSETS_TO_CACHE = [
   'https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js'
 ];
 
+// Install Event
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[Service Worker] Caching app shell and assets');
+      console.log('[Service Worker] Pre-caching core app shell & assets');
       return cache.addAll(ASSETS_TO_CACHE);
     })
   );
   self.skipWaiting();
 });
 
+// Activate Event & Cache Cleanup
 self.addEventListener('activate', (event) => {
-  console.log('[Service Worker] Activating new version:', CACHE_NAME);
+  console.log('[Service Worker] Activating & cleaning old caches');
+  const allowedCaches = [CACHE_NAME, TILE_CACHE_NAME];
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) {
-            console.log('[Service Worker] Deleting old cache:', cache);
+          if (!allowedCaches.includes(cache)) {
+            console.log('[Service Worker] Deleting outdated cache:', cache);
             return caches.delete(cache);
           }
         })
       );
-    })
+    }).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
-// Network-First with Cache Fallback for dynamic requests, Cache-First for static assets
+// Message Listener for SKIP_WAITING
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
+// Helper: Network with Timeout
+function fetchWithTimeout(request, timeoutMs = 3000) {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      reject(new Error('Network timeout'));
+    }, timeoutMs);
+
+    fetch(request)
+      .then((response) => {
+        clearTimeout(timer);
+        resolve(response);
+      })
+      .catch((err) => {
+        clearTimeout(timer);
+        reject(err);
+      });
+  });
+}
+
+// Fetch Listener with Smart Caching Strategies
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
   const url = new URL(event.request.url);
 
-  // Strategy for HTML and JSON data files: Network first, fall back to cache
-  if (url.pathname.endsWith('index.html') || url.pathname.endsWith('.json') || url.pathname === '/') {
+  // 1. OpenStreetMap Tile Strategy: Cache-First with Tile Cache & Network Fallback
+  if (url.hostname.includes('tile.openstreetmap.org')) {
     event.respondWith(
-      fetch(event.request)
-        .then((response) => {
-          if (response.status === 200) {
-            const resClone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, resClone));
-          }
-          return response;
-        })
-        .catch(() => caches.match(event.request))
+      caches.open(TILE_CACHE_NAME).then((cache) => {
+        return cache.match(event.request).then((cachedResponse) => {
+          if (cachedResponse) return cachedResponse;
+          return fetch(event.request).then((networkResponse) => {
+            if (networkResponse && networkResponse.status === 200) {
+              cache.put(event.request, networkResponse.clone());
+            }
+            return networkResponse;
+          }).catch(() => {
+            // Silently handle tile offline failure
+          });
+        });
+      })
     );
     return;
   }
 
-  // Strategy for static assets: Cache first, fall back to network
+  // 2. Data & HTML Files: Stale-While-Revalidate Strategy with Network Timeout
+  if (url.pathname.endsWith('index.html') || url.pathname.endsWith('.json') || url.pathname === '/' || url.pathname.endsWith('/')) {
+    event.respondWith(
+      caches.open(CACHE_NAME).then((cache) => {
+        return cache.match(event.request).then((cachedResponse) => {
+          const fetchPromise = fetchWithTimeout(event.request, 3000)
+            .then((networkResponse) => {
+              if (networkResponse && networkResponse.status === 200) {
+                cache.put(event.request, networkResponse.clone());
+              }
+              return networkResponse;
+            })
+            .catch(() => cachedResponse);
+
+          return cachedResponse || fetchPromise;
+        });
+      })
+    );
+    return;
+  }
+
+  // 3. Static Assets (CSS, JS, Fonts, Icons): Cache-First Strategy
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) {
         return cachedResponse;
       }
       return fetch(event.request).then((networkResponse) => {
-        if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+        if (networkResponse && networkResponse.status === 200) {
           const resClone = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, resClone));
         }
         return networkResponse;
       }).catch(() => {
-        // Fallback or silently fail for tile requests when offline
+        // Offline fallback for static requests
       });
     })
   );

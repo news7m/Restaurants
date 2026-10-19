@@ -24,9 +24,21 @@ const ASSETS_TO_CACHE = [
 // Install Event
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
+    caches.open(CACHE_NAME).then(async (cache) => {
       console.log('[Service Worker] Pre-caching core app shell & static assets');
-      return cache.addAll(ASSETS_TO_CACHE);
+      await Promise.allSettled(
+        ASSETS_TO_CACHE.map(async (url) => {
+          try {
+            const req = new Request(url, { mode: url.startsWith('http') ? 'no-cors' : 'same-origin' });
+            const response = await fetch(req);
+            if (response && (response.ok || response.type === 'opaque')) {
+              await cache.put(url, response);
+            }
+          } catch (err) {
+            console.warn('[Service Worker] Failed to pre-cache asset gracefully:', url, err);
+          }
+        })
+      );
     })
   );
   self.skipWaiting();

@@ -915,40 +915,13 @@
         }));
 
         restaurants = [...customPlaces, ...formattedAriana, ...formattedTunis];
-
-        // Save to local persistence for offline backup
-        try {
-          localStorage.setItem('cached_restaurants_data', JSON.stringify({
-            ariana: formattedAriana,
-            tunis: formattedTunis,
-            timestamp: Date.now()
-          }));
-        } catch (e) {
-          console.warn('LocalStorage quota exceeded or disabled:', e);
-        }
-
         filteredRestaurants = [...restaurants];
 
         populateDelegationOptions();
         updateStats();
         applyFilters(true);
       } catch (err) {
-        console.warn('Network fetch for JSON failed, attempting LocalStorage fallback:', err);
-        const cached = localStorage.getItem('cached_restaurants_data');
-        if (cached) {
-          try {
-            const parsed = JSON.parse(cached);
-            restaurants = [...customPlaces, ...(parsed.ariana || []), ...(parsed.tunis || [])];
-            filteredRestaurants = [...restaurants];
-            populateDelegationOptions();
-            updateStats();
-            applyFilters(true);
-            showToast('تم تحميل البيانات من المخزون المحلي (وضع عدم الاتصال) 📦', 'info');
-            return;
-          } catch (parseErr) {
-            console.error('Failed to parse local cached data:', parseErr);
-          }
-        }
+        console.error('Error loading restaurant datasets:', err);
         showToast('تعذر تحميل قاعدة البيانات، يرجى إعادة التأكد من الاتصال', 'danger');
       }
     }

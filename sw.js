@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ariana-restaurants-v1';
+const CACHE_NAME = 'ariana-restaurants-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -18,17 +18,24 @@ const ASSETS_TO_CACHE = [
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS_TO_CACHE))
+    caches.open(CACHE_NAME).then((cache) => {
+      console.log('[Service Worker] Caching app shell and assets');
+      return cache.addAll(ASSETS_TO_CACHE);
+    })
   );
   self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
+  console.log('[Service Worker] Activating new version:', CACHE_NAME);
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) return caches.delete(cache);
+          if (cache !== CACHE_NAME) {
+            console.log('[Service Worker] Deleting old cache:', cache);
+            return caches.delete(cache);
+          }
         })
       );
     })
@@ -36,9 +43,43 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
+// Network-First with Cache Fallback for dynamic requests, Cache-First for static assets
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
+
+  const url = new URL(event.request.url);
+
+  // Strategy for index.html or restaurants.json: Network first, fall back to cache
+  if (url.pathname.endsWith('index.html') || url.pathname.endsWith('restaurants.json') || url.pathname === '/') {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (response.status === 200) {
+            const resClone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, resClone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  // Strategy for static assets: Cache first, fall back to network
   event.respondWith(
-    caches.match(event.request).then((cached) => cached || fetch(event.request))
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+      return fetch(event.request).then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+          const resClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, resClone));
+        }
+        return networkResponse;
+      }).catch(() => {
+        // Fallback or silently fail for tile requests when offline
+      });
+    })
   );
 });

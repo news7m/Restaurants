@@ -37,6 +37,13 @@ header {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(225, 29, 72, 0.7);
 }
+
+.modal-scroll-container {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
 .glass-effect {
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(12px);
@@ -48,7 +55,8 @@ header {
 }
 
 /* Dark Mode Leaflet Tile Customizations */
-.dark .leaflet-tile-pane {
+.dark .leaflet-tile-pane,
+.dark #picker-map .leaflet-tile-pane {
   filter: brightness(0.85) contrast(1.1) invert(0.92) hue-rotate(200deg);
 }
 .dark .leaflet-popup-content-wrapper,

@@ -833,12 +833,8 @@ video {
   max-height: 640px;
 }
 
-.max-h-\[90vh\] {
-  max-height: 90vh;
-}
-
-.max-h-\[92vh\] {
-  max-height: 92vh;
+.max-h-\[90dvh\] {
+  max-height: 90dvh;
 }
 
 .min-h-screen {
@@ -1054,6 +1050,12 @@ video {
   margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
 }
 
+.space-y-2\.5 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.625rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.625rem * var(--tw-space-y-reverse));
+}
+
 .space-y-3 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
@@ -1076,6 +1078,10 @@ video {
   --tw-space-y-reverse: 0;
   margin-top: calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1.25rem * var(--tw-space-y-reverse));
+}
+
+.self-end {
+  align-self: flex-end;
 }
 
 .self-center {
@@ -1154,6 +1160,11 @@ video {
   border-color: rgb(167 243 208 / var(--tw-border-opacity, 1));
 }
 
+.border-emerald-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(110 231 183 / var(--tw-border-opacity, 1));
+}
+
 .border-indigo-200 {
   --tw-border-opacity: 1;
   border-color: rgb(199 210 254 / var(--tw-border-opacity, 1));
@@ -1202,6 +1213,11 @@ video {
   border-color: rgb(226 232 240 / 0.8);
 }
 
+.border-slate-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(203 213 225 / var(--tw-border-opacity, 1));
+}
+
 .border-slate-700 {
   --tw-border-opacity: 1;
   border-color: rgb(51 65 85 / var(--tw-border-opacity, 1));
@@ -1227,6 +1243,11 @@ video {
   background-color: rgb(217 119 6 / var(--tw-bg-opacity, 1));
 }
 
+.bg-emerald-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 250 229 / var(--tw-bg-opacity, 1));
+}
+
 .bg-emerald-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(236 253 245 / var(--tw-bg-opacity, 1));
@@ -1240,6 +1261,11 @@ video {
 .bg-indigo-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(238 242 255 / var(--tw-bg-opacity, 1));
+}
+
+.bg-indigo-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(79 70 229 / var(--tw-bg-opacity, 1));
 }
 
 .bg-purple-50 {
@@ -1517,6 +1543,10 @@ video {
   padding-top: 0.75rem;
 }
 
+.text-left {
+  text-align: left;
+}
+
 .text-center {
   text-align: center;
 }
@@ -1645,6 +1675,16 @@ video {
 .text-emerald-700 {
   --tw-text-opacity: 1;
   color: rgb(4 120 87 / var(--tw-text-opacity, 1));
+}
+
+.text-emerald-800 {
+  --tw-text-opacity: 1;
+  color: rgb(6 95 70 / var(--tw-text-opacity, 1));
+}
+
+.text-indigo-200 {
+  --tw-text-opacity: 1;
+  color: rgb(199 210 254 / var(--tw-text-opacity, 1));
 }
 
 .text-indigo-500 {
@@ -1801,6 +1841,11 @@ video {
   --tw-shadow: var(--tw-shadow-colored);
 }
 
+.shadow-indigo-500\/20 {
+  --tw-shadow-color: rgb(99 102 241 / 0.2);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
 .shadow-rose-500\/20 {
   --tw-shadow-color: rgb(244 63 94 / 0.2);
   --tw-shadow: var(--tw-shadow-colored);
@@ -1906,6 +1951,12 @@ header {
   background: rgba(225, 29, 72, 0.7);
 }
 
+.modal-scroll-container {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
 .glass-effect {
   background: rgba(255, 255, 255, 0.92);
   -webkit-backdrop-filter: blur(12px);
@@ -1921,7 +1972,8 @@ header {
 
 /* Dark Mode Leaflet Tile Customizations */
 
-.dark .leaflet-tile-pane {
+.dark .leaflet-tile-pane,
+.dark #picker-map .leaflet-tile-pane {
   filter: brightness(0.85) contrast(1.1) invert(0.92) hue-rotate(200deg);
 }
 
@@ -1989,6 +2041,11 @@ header {
 .hover\:bg-indigo-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(224 231 255 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-indigo-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(67 56 202 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:bg-rose-100:hover {
@@ -2105,6 +2162,11 @@ header {
   --tw-ring-color: rgb(244 63 94 / var(--tw-ring-opacity, 1));
 }
 
+.active\:bg-indigo-800:active {
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 48 163 / var(--tw-bg-opacity, 1));
+}
+
 .group:hover .group-hover\:scale-105 {
   --tw-scale-x: 1.05;
   --tw-scale-y: 1.05;
@@ -2134,8 +2196,8 @@ header {
   border-color: rgb(6 95 70 / var(--tw-border-opacity, 1));
 }
 
-.dark\:border-emerald-800\/50:is(.dark *) {
-  border-color: rgb(6 95 70 / 0.5);
+.dark\:border-emerald-800\/80:is(.dark *) {
+  border-color: rgb(6 95 70 / 0.8);
 }
 
 .dark\:border-indigo-800:is(.dark *) {
@@ -2224,6 +2286,15 @@ header {
   background-color: rgb(2 44 34 / 0.6);
 }
 
+.dark\:bg-emerald-950\/80:is(.dark *) {
+  background-color: rgb(2 44 34 / 0.8);
+}
+
+.dark\:bg-indigo-600:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(79 70 229 / var(--tw-bg-opacity, 1));
+}
+
 .dark\:bg-indigo-950\/50:is(.dark *) {
   background-color: rgb(30 27 75 / 0.5);
 }
@@ -2278,6 +2349,10 @@ header {
   background-color: rgb(30 41 59 / var(--tw-bg-opacity, 1));
 }
 
+.dark\:bg-slate-800\/90:is(.dark *) {
+  background-color: rgb(30 41 59 / 0.9);
+}
+
 .dark\:bg-slate-800\/95:is(.dark *) {
   background-color: rgb(30 41 59 / 0.95);
 }
@@ -2287,8 +2362,8 @@ header {
   background-color: rgb(15 23 42 / var(--tw-bg-opacity, 1));
 }
 
-.dark\:bg-slate-900\/70:is(.dark *) {
-  background-color: rgb(15 23 42 / 0.7);
+.dark\:bg-slate-900\/90:is(.dark *) {
+  background-color: rgb(15 23 42 / 0.9);
 }
 
 .dark\:text-amber-300:is(.dark *) {
@@ -2386,12 +2461,13 @@ header {
   border-color: rgb(244 63 94 / var(--tw-border-opacity, 1));
 }
 
-.dark\:hover\:bg-indigo-900\/70:hover:is(.dark *) {
-  background-color: rgb(49 46 129 / 0.7);
+.dark\:hover\:bg-indigo-500:hover:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(99 102 241 / var(--tw-bg-opacity, 1));
 }
 
-.dark\:hover\:bg-indigo-900\/80:hover:is(.dark *) {
-  background-color: rgb(49 46 129 / 0.8);
+.dark\:hover\:bg-indigo-900\/70:hover:is(.dark *) {
+  background-color: rgb(49 46 129 / 0.7);
 }
 
 .dark\:hover\:bg-rose-900\/70:hover:is(.dark *) {
@@ -2449,12 +2525,16 @@ header {
     height: 2.5rem;
   }
 
-  .sm\:h-52 {
-    height: 13rem;
+  .sm\:h-56 {
+    height: 14rem;
   }
 
   .sm\:h-9 {
     height: 2.25rem;
+  }
+
+  .sm\:max-h-\[85vh\] {
+    max-height: 85vh;
   }
 
   .sm\:w-10 {
@@ -2463,6 +2543,10 @@ header {
 
   .sm\:w-9 {
     width: 2.25rem;
+  }
+
+  .sm\:w-auto {
+    width: auto;
   }
 
   .sm\:grid-cols-2 {
@@ -2485,12 +2569,20 @@ header {
     flex-wrap: nowrap;
   }
 
+  .sm\:items-center {
+    align-items: center;
+  }
+
   .sm\:gap-2 {
     gap: 0.5rem;
   }
 
   .sm\:gap-3 {
     gap: 0.75rem;
+  }
+
+  .sm\:self-auto {
+    align-self: auto;
   }
 
   .sm\:p-4 {

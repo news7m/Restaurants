@@ -55,38 +55,38 @@
   </div>
 
   <!-- Top Navigation Bar -->
-  <header class="sticky top-0 z-50 glass-effect border-b border-slate-200 dark:border-slate-800 shadow-sm pb-3">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
+  <header class="sticky top-0 z-50 glass-effect border-b border-slate-200 dark:border-slate-800 shadow-sm py-2.5 sm:py-3">
+    <div class="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-3">
 
       <!-- Logo & Title -->
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-600 to-amber-500 flex items-center justify-center text-white shadow-md shadow-rose-500/20 shrink-0">
-          <i class="fa-solid font-bold text-lg fa-utensils"></i>
+      <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
+        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-rose-600 to-amber-500 flex items-center justify-center text-white shadow-md shadow-rose-500/20 shrink-0">
+          <i class="fa-solid font-bold text-base sm:text-lg fa-utensils"></i>
         </div>
-        <div>
-          <div class="flex items-center gap-2 flex-wrap">
-            <h1 class="text-base sm:text-lg font-black tracking-tight text-slate-900 dark:text-white">
+        <div class="min-w-0">
+          <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+            <h1 class="text-sm sm:text-lg font-black tracking-tight text-slate-900 dark:text-white truncate">
               دليل مطاعم
             </h1>
-            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-900/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800/50">
+            <span class="text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-900/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800/50 shrink-0">
               تونس الكبرى 🇹🇳
             </span>
           </div>
-          <p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1">الدليل التفاعلي الشامل لمطاعم ومقاهي ولايتي أريانة وتونس</p>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1 hidden sm:block">الدليل التفاعلي الشامل لمطاعم ومقاهي ولايتي أريانة وتونس</p>
         </div>
       </div>
 
-      <!-- Actions / Install App / Dark Mode -->
-      <div class="flex items-center gap-2">
+      <!-- Actions / Install App / Dark Mode / Mobile Menu -->
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0 relative">
 
         <!-- PWA Install Button -->
-        <button id="pwa-install-btn" onclick="installPWA()" class="hidden flex items-center gap-1.5 bg-gradient-to-r from-rose-600 to-amber-500 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow-sm hover:opacity-95 transition shrink-0">
+        <button id="pwa-install-btn" onclick="installPWA()" class="hidden flex items-center gap-1.5 bg-gradient-to-r from-rose-600 to-amber-500 text-white px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold shadow-sm hover:opacity-95 transition shrink-0">
           <i class="fa-solid fa-mobile-screen-button"></i>
           <span class="hidden sm:inline">تثبيت التطبيق</span>
         </button>
 
-        <button id="favs-toggle-btn" onclick="toggleFavsFilter()" class="flex items-center gap-1.5 bg-rose-50 dark:bg-rose-950/50 hover:bg-rose-100 dark:hover:bg-rose-900/70 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800/60 px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0">
-          <i id="favs-btn-icon" class="fa-regular fa-heart text-sm"></i>
+        <button id="favs-toggle-btn" onclick="toggleFavsFilter()" class="flex items-center gap-1.5 bg-rose-50 dark:bg-rose-950/50 hover:bg-rose-100 dark:hover:bg-rose-900/70 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800/60 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0">
+          <i id="favs-btn-icon" class="fa-regular fa-heart text-xs sm:text-sm"></i>
           <span>المفضلة (<span id="favs-count">0</span>)</span>
         </button>
 
@@ -110,10 +110,33 @@
           </button>
         </div>
 
-        <button onclick="toggleDarkMode()" aria-label="تبديل مظهر الليل والنهار" class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 transition shrink-0">
-          <i id="theme-toggle-dark-icon" class="fa-solid fa-moon text-sm"></i>
-          <i id="theme-toggle-light-icon" class="fa-solid fa-sun text-sm hidden text-amber-400"></i>
+        <button onclick="toggleDarkMode()" aria-label="تبديل مظهر الليل والنهار" class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 transition shrink-0">
+          <i id="theme-toggle-dark-icon" class="fa-solid fa-moon text-xs sm:text-sm"></i>
+          <i id="theme-toggle-light-icon" class="fa-solid fa-sun text-xs sm:text-sm hidden text-amber-400"></i>
         </button>
+
+        <!-- Mobile Action Dropdown Toggle -->
+        <button onclick="toggleMobileHeaderMenu(event)" aria-label="خيارات إضافية" class="md:hidden w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 transition shrink-0">
+          <i class="fa-solid fa-ellipsis-vertical text-xs sm:text-sm"></i>
+        </button>
+
+        <!-- Mobile Header Dropdown Menu -->
+        <div id="mobile-header-menu" class="hidden absolute top-11 left-0 z-50 bg-white dark:bg-slate-800 rounded-2xl p-2 shadow-xl border border-slate-200 dark:border-slate-700 min-w-[190px] space-y-1 text-xs">
+          <button onclick="openAddPlaceModal(); closeMobileHeaderMenu();" class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 font-bold transition text-right">
+            <i class="fa-solid fa-plus-circle text-emerald-500 text-sm"></i>
+            <span>إضافة مكان جديد</span>
+          </button>
+          <div class="border-t border-slate-100 dark:border-slate-700/60 my-1"></div>
+          <button onclick="exportData('json'); closeMobileHeaderMenu();" class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 font-bold transition text-right">
+            <i class="fa-solid fa-file-code text-rose-500 text-sm"></i>
+            <span>تصدير بيانات JSON</span>
+          </button>
+          <button onclick="exportData('csv'); closeMobileHeaderMenu();" class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 font-bold transition text-right">
+            <i class="fa-solid fa-file-csv text-emerald-500 text-sm"></i>
+            <span>تصدير بيانات CSV</span>
+          </button>
+        </div>
+
       </div>
     </div>
   </header>
@@ -197,8 +220,19 @@
       <!-- Active Filter Pills Container -->
       <div id="active-filter-pills" class="hidden flex-wrap gap-2 pt-1 text-xs"></div>
 
+      <!-- Mobile Filter Toggle Button -->
+      <div class="flex lg:hidden items-center justify-between pt-1">
+        <button id="mobile-filter-toggle-btn" onclick="toggleMobileFilters()" class="w-full flex items-center justify-between bg-slate-100/80 dark:bg-slate-700/60 hover:bg-slate-200 dark:hover:bg-slate-700 px-3.5 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-200 transition border border-slate-200/60 dark:border-slate-700">
+          <span class="flex items-center gap-2">
+            <i class="fa-solid fa-sliders text-rose-500"></i>
+            <span>تخصيص البحث والتصفية</span>
+          </span>
+          <i id="mobile-filter-chevron" class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200"></i>
+        </button>
+      </div>
+
       <!-- Bottom Row: Dropdown Filters -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-3 pt-2.5 border-t border-slate-100 dark:border-slate-700/50">
+      <div id="filters-grid-container" class="hidden lg:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-3 pt-2.5 border-t border-slate-100 dark:border-slate-700/50">
 
         <!-- Governorate Filter -->
         <div>
@@ -349,8 +383,8 @@
 
 
   <!-- Modal for Adding New Restaurant/Cafe -->
-  <div id="add-place-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300">
-    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative overflow-hidden transform transition-all">
+  <div id="add-place-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative transform transition-all custom-scrollbar">
       <button onclick="closeAddPlaceModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 flex items-center justify-center text-slate-500 dark:text-slate-300 transition">
         <i class="fa-solid fa-xmark text-lg"></i>
       </button>
@@ -446,8 +480,8 @@
   </div>
 
   <!-- Modal for Restaurant Detailed View -->
-  <div id="details-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300">
-    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative overflow-hidden transform transition-all">
+  <div id="details-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative transform transition-all custom-scrollbar">
       <button onclick="closeModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 flex items-center justify-center text-slate-500 dark:text-slate-300 transition">
         <i class="fa-solid fa-xmark text-lg"></i>
       </button>
@@ -532,6 +566,42 @@
       const el = document.getElementById('favs-count');
       if (el) el.innerText = favorites.length;
     }
+
+    function toggleMobileFilters() {
+      const container = document.getElementById('filters-grid-container');
+      const chevron = document.getElementById('mobile-filter-chevron');
+      if (!container) return;
+
+      if (container.classList.contains('hidden')) {
+        container.classList.remove('hidden');
+        container.classList.add('grid');
+        if (chevron) chevron.style.transform = 'rotate(180deg)';
+      } else {
+        container.classList.add('hidden');
+        container.classList.remove('grid');
+        if (chevron) chevron.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    function toggleMobileHeaderMenu(event) {
+      if (event) event.stopPropagation();
+      const menu = document.getElementById('mobile-header-menu');
+      if (menu) menu.classList.toggle('hidden');
+    }
+
+    function closeMobileHeaderMenu() {
+      const menu = document.getElementById('mobile-header-menu');
+      if (menu) menu.classList.add('hidden');
+    }
+
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('mobile-header-menu');
+      if (menu && !menu.classList.contains('hidden')) {
+        if (!e.target.closest('#mobile-header-menu') && !e.target.closest('button[aria-label="خيارات إضافية"]')) {
+          closeMobileHeaderMenu();
+        }
+      }
+    });
 
     function toggleFavsFilter() {
       showFavsOnly = !showFavsOnly;
@@ -625,7 +695,17 @@
           tabMap.className = 'flex-1 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-white dark:bg-slate-700 text-rose-600 dark:text-rose-400 shadow-sm';
           tabList.className = 'flex-1 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white';
         }
-        setTimeout(() => { if (map) map.invalidateSize(); }, 200);
+        setTimeout(() => {
+          if (map) {
+            map.invalidateSize();
+            if (filteredRestaurants && filteredRestaurants.length > 0) {
+              const bounds = filteredRestaurants.map(r => [r.lat, r.lon]);
+              map.fitBounds(bounds, { padding: [30, 30], maxZoom: 15 });
+            } else {
+              map.setView([36.84, 10.22], 11);
+            }
+          }
+        }, 150);
       } else {
         mapPanel.classList.add('hidden');
         listPanel.classList.remove('hidden');

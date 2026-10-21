@@ -365,97 +365,167 @@
 
   <!-- Modal for Adding New Restaurant/Cafe -->
   <div id="add-place-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300">
-    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative transform transition-all custom-scrollbar">
-      <button onclick="closeAddPlaceModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 flex items-center justify-center text-slate-500 dark:text-slate-300 transition">
-        <i class="fa-solid fa-xmark text-lg"></i>
-      </button>
+    <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-xl w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-slate-200 dark:border-slate-700 relative transform transition-all custom-scrollbar flex flex-col">
 
-      <h3 class="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-        <i class="fa-solid fa-store text-emerald-500"></i>
-        إضافة مطعم أو مقهى جديد
-      </h3>
-
-      <form id="add-place-form" onsubmit="handleAddNewPlace(event)" class="space-y-3 text-xs">
-        <div>
-          <label for="new-name" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم المكان *</label>
-          <input type="text" id="new-name" required placeholder="مثال: مطعم الياسمين" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:text-white">
-        </div>
-
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label for="new-governorate" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الولاية *</label>
-            <select id="new-governorate" required onchange="updateNewPlaceDelegations()" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
-              <option value="ولاية أريانة">ولاية أريانة</option>
-              <option value="ولاية تونس">ولاية تونس</option>
-            </select>
+      <!-- Modal Header -->
+      <div class="sticky top-0 z-20 bg-white/95 dark:bg-slate-800/95 backdrop-blur-md px-5 py-4 border-b border-slate-100 dark:border-slate-700/80 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/20 shrink-0">
+            <i class="fa-solid fa-store text-base"></i>
           </div>
           <div>
-            <label for="new-delegation" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المعتمدية *</label>
-            <select id="new-delegation" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
-              <!-- Populated dynamically -->
-            </select>
+            <h3 class="text-sm sm:text-base font-black text-slate-900 dark:text-white">إضافة مطعم أو مقهى جديد</h3>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400">أدخل معلومات المكان لإضافته فوراً إلى الدليل التفاعلي</p>
           </div>
         </div>
+        <button type="button" onclick="closeAddPlaceModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 flex items-center justify-center text-slate-500 dark:text-slate-300 transition shrink-0">
+          <i class="fa-solid fa-xmark text-base"></i>
+        </button>
+      </div>
 
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label for="new-category" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">نوع النشاط *</label>
-            <select id="new-category" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
-              <option value="مطعم عام (Restaurant)">مطعم عام</option>
-              <option value="مقهى وكافيه (Café & Lounge)">مقهى وكافيه</option>
-              <option value="وجبات سريعة (Fast Food)">وجبات سريعة</option>
-              <option value="مطعم بيتزا (Pizzeria)">مطعم بيتزا</option>
-              <option value="حلويات ومخبوزات (Bakery & Sweets)">حلويات ومخبوزات</option>
-            </select>
-          </div>
-          <div>
-            <label for="new-cuisine" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المطبخ / الاختصاص</label>
-            <input type="text" id="new-cuisine" placeholder="مثال: مشاوي عربية" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
-          </div>
-        </div>
+      <!-- Modal Body Form -->
+      <form id="add-place-form" onsubmit="handleAddNewPlace(event)" class="p-5 sm:p-6 space-y-5 text-xs">
 
-        <div>
-          <label for="new-address" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">العنوان التفصيلي *</label>
-          <input type="text" id="new-address" required placeholder="مثال: شارع الهادي نويرة، النصر 2" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
-        </div>
+        <!-- Section 1: Basic Information -->
+        <div class="space-y-3">
+          <div class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold border-b border-slate-100 dark:border-slate-700/60 pb-1.5 text-xs">
+            <i class="fa-solid fa-circle-info"></i>
+            <span>البيانات الأساسية</span>
+          </div>
 
-        <div class="grid grid-cols-2 gap-2">
           <div>
-            <label for="new-lat" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">خط العرض (Latitude)</label>
-            <input type="number" step="any" id="new-lat" placeholder="36.866" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
+            <label for="new-name" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم المكان *</label>
+            <input type="text" id="new-name" required placeholder="مثال: مطعم الياسمين، مقهى المدار..." class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:text-white placeholder-slate-400 font-medium">
           </div>
-          <div>
-            <label for="new-lon" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">خط الطول (Longitude)</label>
-            <input type="number" step="any" id="new-lon" placeholder="10.183" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
-          </div>
-        </div>
 
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label for="new-phone" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">رقم الهاتف</label>
-            <input type="text" id="new-phone" placeholder="+216 71 000 000" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label for="new-governorate" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الولاية *</label>
+              <select id="new-governorate" required onchange="updateNewPlaceDelegations()" class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:text-white font-medium">
+                <option value="ولاية أريانة">ولاية أريانة 🌹</option>
+                <option value="ولاية تونس">ولاية تونس 🇹🇳</option>
+              </select>
+            </div>
+            <div>
+              <label for="new-delegation" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المعتمدية / المنطقة *</label>
+              <select id="new-delegation" required onchange="autoSetCoordinatesFromSelection()" class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:text-white font-medium">
+                <!-- Populated dynamically -->
+              </select>
+            </div>
           </div>
-          <div>
-            <label for="new-email" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">البريد الإلكتروني</label>
-            <input type="email" id="new-email" placeholder="contact@example.com" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label for="new-category" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">نوع النشاط *</label>
+              <select id="new-category" required class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:text-white font-medium">
+                <option value="مطعم عام (Restaurant)">مطعم عام</option>
+                <option value="مقهى وكافيه (Café & Lounge)">مقهى وكافيه</option>
+                <option value="وجبات سريعة (Fast Food)">وجبات سريعة</option>
+                <option value="مطعم بيتزا (Pizzeria)">مطعم بيتزا</option>
+                <option value="حلويات ومخبوزات (Bakery & Sweets)">حلويات ومخبوزات</option>
+              </select>
+            </div>
+            <div>
+              <label for="new-cuisine" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المطبخ / الاختصاص</label>
+              <input type="text" id="new-cuisine" placeholder="مثال: مشاوي عربية، مأكولات إيطالية..." class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:text-white placeholder-slate-400 font-medium">
+            </div>
           </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label for="new-website" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الموقع الإلكتروني</label>
-            <input type="url" id="new-website" placeholder="https://example.com" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
+        <!-- Section 2: Location & Smart Coordinates -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700/60 pb-1.5">
+            <div class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold text-xs">
+              <i class="fa-solid fa-map-location-dot"></i>
+              <span>الموقع الجغرافي والإحداثيات</span>
+            </div>
+            <span class="text-[10px] text-slate-400 font-normal">تحديد ذكي تلقائي 🎯</span>
           </div>
+
           <div>
-            <label for="new-social" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">وسائل التواصل الاجتماعي</label>
-            <input type="url" id="new-social" placeholder="https://facebook.com/..." class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white">
+            <label for="new-address" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">العنوان التفصيلي *</label>
+            <input type="text" id="new-address" required placeholder="مثال: شارع الهادي نويرة، النصر 2" class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:text-white placeholder-slate-400 font-medium">
+          </div>
+
+          <!-- Interactive Location Picker Header & GPS Button -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="block font-bold text-slate-700 dark:text-slate-300">موقع المكان على الخريطة:</span>
+              <button type="button" onclick="getPickerUserLocation()" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/80 text-indigo-600 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800/60 font-bold text-[11px] transition shadow-sm">
+                <i class="fa-solid fa-location-crosshairs text-indigo-500"></i>
+                <span>استخدام موقعي الحالي 📍</span>
+              </button>
+            </div>
+
+            <!-- Mini Map Container -->
+            <div id="picker-map" class="h-48 sm:h-52 w-full rounded-2xl border border-slate-200 dark:border-slate-700 shadow-inner overflow-hidden relative z-10"></div>
+
+            <!-- Coordinates Readout & Status -->
+            <div class="bg-slate-50 dark:bg-slate-900/70 p-2.5 rounded-xl border border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between gap-2">
+              <div class="flex items-center gap-1.5 text-[11px] text-slate-600 dark:text-slate-300 font-medium min-w-0">
+                <i class="fa-solid fa-circle-check text-emerald-500 shrink-0"></i>
+                <span id="picker-status-text" class="truncate">تم تحديد الموقع تلقائياً للمنطقة</span>
+              </div>
+              <span id="picker-coords-readout" class="font-mono text-[10px] font-bold px-2 py-0.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/50 shrink-0">
+                0, 0
+              </span>
+            </div>
+
+            <!-- Hidden lat & lon input fields -->
+            <input type="hidden" id="new-lat" name="new-lat" value="">
+            <input type="hidden" id="new-lon" name="new-lon" value="">
           </div>
         </div>
 
-        <div class="pt-2 flex items-center justify-end gap-2">
-          <button type="button" onclick="closeAddPlaceModal()" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-xl font-bold">إلغاء</button>
-          <button type="submit" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition">حفظ المكان</button>
+        <!-- Section 3: Contact & Social Links -->
+        <div class="space-y-3">
+          <div class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold border-b border-slate-100 dark:border-slate-700/60 pb-1.5 text-xs">
+            <i class="fa-solid fa-address-book"></i>
+            <span>معلومات التواصل والروابط</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label for="new-phone" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">رقم الهاتف</label>
+              <input type="text" id="new-phone" placeholder="+216 71 000 000" class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:text-white placeholder-slate-400 font-medium">
+            </div>
+            <div>
+              <label for="new-email" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">البريد الإلكتروني</label>
+              <input type="email" id="new-email" placeholder="contact@example.com" class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:text-white placeholder-slate-400 font-medium">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label for="new-website" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الموقع الإلكتروني</label>
+              <input type="url" id="new-website" placeholder="https://example.com" class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:text-white placeholder-slate-400 font-medium">
+            </div>
+            <div>
+              <label for="new-facebook" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+                <i class="fa-brands fa-facebook text-sky-500 ml-1"></i>فيس بوك
+              </label>
+              <input type="url" id="new-facebook" placeholder="https://facebook.com/..." class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:text-white placeholder-slate-400 font-medium">
+            </div>
+            <div>
+              <label for="new-instagram" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+                <i class="fa-brands fa-instagram text-rose-500 ml-1"></i>إنستجرام <span class="text-[10px] font-normal text-slate-400">(اختياري)</span>
+              </label>
+              <input type="url" id="new-instagram" placeholder="https://instagram.com/..." class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:text-white placeholder-slate-400 font-medium">
+            </div>
+          </div>
         </div>
+
+        <!-- Footer Actions -->
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-end gap-2.5">
+          <button type="button" onclick="closeAddPlaceModal()" class="px-4 py-2.5 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-xl font-bold transition">
+            إلغاء
+          </button>
+          <button type="submit" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-md shadow-emerald-600/20 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-plus-circle"></i>
+            <span>حفظ المكان</span>
+          </button>
+        </div>
+
       </form>
     </div>
   </div>
@@ -862,9 +932,104 @@
     }
 
     // Modal Add Place helpers
+    let pickerMap = null;
+    let pickerMarker = null;
+
+    function initPickerMap() {
+      if (pickerMap) return;
+      const pickerContainer = document.getElementById('picker-map');
+      if (!pickerContainer) return;
+
+      pickerMap = L.map('picker-map', {
+        zoomControl: true
+      }).setView([36.866, 10.183], 13);
+
+      L.tileLayer(OSM_TILES, {
+        maxZoom: 19,
+        attribution: TILE_ATTR
+      }).addTo(pickerMap);
+
+      pickerMarker = L.marker([36.866, 10.183], { draggable: true }).addTo(pickerMap);
+
+      pickerMarker.on('dragend', function (e) {
+        const coord = pickerMarker.getLatLng();
+        setPickerCoordinates(coord.lat, coord.lng, 'تم تحديد الموقع يدوياً بسحب الشارة 📍');
+      });
+
+      pickerMap.on('click', function (e) {
+        setPickerCoordinates(e.latlng.lat, e.latlng.lng, 'تم تحديد النقطة بالنقر على الخريطة 📍');
+      });
+    }
+
+    function setPickerCoordinates(lat, lon, statusText = 'تم تحديد الموقع') {
+      const roundedLat = roundTo(lat, 6);
+      const roundedLon = roundTo(lon, 6);
+
+      document.getElementById('new-lat').value = roundedLat;
+      document.getElementById('new-lon').value = roundedLon;
+
+      const coordsReadout = document.getElementById('picker-coords-readout');
+      if (coordsReadout) {
+        coordsReadout.innerText = `${roundedLat}, ${roundedLon}`;
+      }
+
+      const statusEl = document.getElementById('picker-status-text');
+      if (statusEl) {
+        statusEl.innerText = statusText;
+      }
+
+      if (pickerMarker && pickerMap) {
+        pickerMarker.setLatLng([roundedLat, roundedLon]);
+        pickerMap.panTo([roundedLat, roundedLon]);
+      }
+    }
+
+    function autoSetCoordinatesFromSelection() {
+      const govVal = document.getElementById('new-governorate').value;
+      const delVal = document.getElementById('new-delegation').value;
+
+      const matchedPlaces = restaurants.filter(r => r.governorate === govVal && r.delegation === delVal);
+      if (matchedPlaces.length > 0) {
+        const avgLat = matchedPlaces.reduce((sum, r) => sum + r.lat, 0) / matchedPlaces.length;
+        const avgLon = matchedPlaces.reduce((sum, r) => sum + r.lon, 0) / matchedPlaces.length;
+        setPickerCoordinates(avgLat, avgLon, `الموقع التلقائي لمنطقة: ${delVal}`);
+      } else {
+        const fallbackLat = govVal === 'ولاية تونس' ? 36.8065 : 36.8665;
+        const fallbackLon = govVal === 'ولاية تونس' ? 10.1815 : 10.1835;
+        setPickerCoordinates(fallbackLat, fallbackLon, `الموقع التلقائي لـ ${govVal}`);
+      }
+    }
+
+    function getPickerUserLocation() {
+      if (!navigator.geolocation) {
+        showToast('خاصية تحديد الموقع غير مدعومة في متصفحك.', 'warning');
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
+          setPickerCoordinates(lat, lon, 'تم التقاط موقعك الحالي بنجاح عبر GPS 📍');
+          showToast('تم تحديد موقعك الحالي على الخريطة 📍', 'success');
+        },
+        (err) => {
+          showToast('تعذر الوصول إلى موقعك الحالي. يرجى التأكد من السماح بالصلاحيات.', 'warning');
+        }
+      );
+    }
+
     function openAddPlaceModal() {
       updateNewPlaceDelegations();
       document.getElementById('add-place-modal').classList.remove('hidden');
+
+      setTimeout(() => {
+        initPickerMap();
+        if (pickerMap) {
+          pickerMap.invalidateSize();
+        }
+        autoSetCoordinatesFromSelection();
+      }, 100);
     }
 
     function closeAddPlaceModal() {
@@ -879,6 +1044,7 @@
       const delegations = Array.from(new Set(availablePlaces.map(r => r.delegation))).sort((a, b) => a.localeCompare(b, 'ar'));
 
       delSelect.innerHTML = delegations.map(d => `<option value="${d}">${d}</option>`).join('');
+      autoSetCoordinatesFromSelection();
     }
 
     function roundTo(num, decimals = 6) {
@@ -890,8 +1056,20 @@
     function handleAddNewPlace(e) {
       e.preventDefault();
       const newGov = document.getElementById('new-governorate').value;
-      const latVal = roundTo(document.getElementById('new-lat').value || (newGov === 'ولاية تونس' ? 36.806 : 36.866), 6);
-      const lonVal = roundTo(document.getElementById('new-lon').value || (newGov === 'ولاية تونس' ? 10.181 : 10.183), 6);
+      let latVal = parseFloat(document.getElementById('new-lat').value);
+      let lonVal = parseFloat(document.getElementById('new-lon').value);
+
+      if (isNaN(latVal) || isNaN(lonVal) || latVal === 0 || lonVal === 0) {
+        latVal = newGov === 'ولاية تونس' ? 36.8065 : 36.8665;
+        lonVal = newGov === 'ولاية تونس' ? 10.1815 : 10.1835;
+      }
+
+      latVal = roundTo(latVal, 6);
+      lonVal = roundTo(lonVal, 6);
+
+      const fbUrl = document.getElementById('new-facebook') ? document.getElementById('new-facebook').value.trim() : '';
+      const instaUrl = document.getElementById('new-instagram') ? document.getElementById('new-instagram').value.trim() : '';
+
       const newPlace = {
         id: Date.now(),
         governorate: newGov,
@@ -910,7 +1088,9 @@
         phone: document.getElementById('new-phone').value.trim() || '+216 00 000 000',
         email: document.getElementById('new-email') ? document.getElementById('new-email').value.trim() : '',
         website: document.getElementById('new-website') ? document.getElementById('new-website').value.trim() : '',
-        social_media: document.getElementById('new-social') ? document.getElementById('new-social').value.trim() : '',
+        social_media: fbUrl || instaUrl,
+        facebook: fbUrl,
+        instagram: instaUrl,
         opening_hours: '08:00 - 23:00 (يومياً)',
         google_maps_url: `https://www.google.com/maps/search/?api=1&query=${latVal},${lonVal}`,
         delivery_available: true,
@@ -930,27 +1110,55 @@
       showToast(`تمت إضافة "${newPlace.name}" بنجاح!`, 'success');
     }
 
-    // Helper to get effective social media link and icon type
-    function getSocialInfo(item) {
-      let url = item.social_media ? item.social_media.trim() : '';
-      if (!url && item.website) {
-        const w = item.website.trim();
-        if (w.includes('facebook.com') || w.includes('instagram.com')) {
-          url = w;
+    // Helper to get effective social media links and icons
+    function getSocialList(item) {
+      const socialList = [];
+
+      let fbUrl = item.facebook ? item.facebook.trim() : '';
+      let instaUrl = item.instagram ? item.instagram.trim() : '';
+
+      if (!fbUrl && !instaUrl && item.social_media) {
+        const sm = item.social_media.trim();
+        if (sm.toLowerCase().includes('instagram.com')) {
+          instaUrl = sm;
+        } else {
+          fbUrl = sm;
         }
       }
-      if (!url) return null;
 
-      if (!url.startsWith('http://') && !url.startsWith('https://')) {
-        url = 'https://' + url;
+      if (!fbUrl && !instaUrl && item.website) {
+        const w = item.website.trim();
+        if (w.toLowerCase().includes('facebook.com')) {
+          fbUrl = w;
+        } else if (w.toLowerCase().includes('instagram.com')) {
+          instaUrl = w;
+        }
       }
 
-      const isInstagram = url.toLowerCase().includes('instagram.com');
-      return {
-        url: url,
-        iconClass: isInstagram ? 'fa-brands fa-instagram text-rose-500' : 'fa-brands fa-facebook text-sky-500',
-        title: isInstagram ? 'Instagram' : 'Facebook'
-      };
+      if (fbUrl) {
+        if (!fbUrl.startsWith('http://') && !fbUrl.startsWith('https://')) fbUrl = 'https://' + fbUrl;
+        socialList.push({
+          url: fbUrl,
+          iconClass: 'fa-brands fa-facebook text-sky-500',
+          title: 'Facebook'
+        });
+      }
+
+      if (instaUrl) {
+        if (!instaUrl.startsWith('http://') && !instaUrl.startsWith('https://')) instaUrl = 'https://' + instaUrl;
+        socialList.push({
+          url: instaUrl,
+          iconClass: 'fa-brands fa-instagram text-rose-500',
+          title: 'Instagram'
+        });
+      }
+
+      return socialList;
+    }
+
+    function getSocialInfo(item) {
+      const list = getSocialList(item);
+      return list.length > 0 ? list[0] : null;
     }
 
     // Fetch datasets from restaurants.json and tunis_restaurants.json with LocalStorage offline cache backup
@@ -1140,9 +1348,15 @@
     const PAGE_SIZE = 20;
 
     function renderCardHTML(item) {
-      const social = getSocialInfo(item);
+      const socialLinks = getSocialList(item);
       const websiteUrl = (item.website && !item.website.includes('facebook.com') && !item.website.includes('instagram.com')) ? item.website : '';
       const phoneDigits = item.phone ? item.phone.replace(/\s+/g, '') : '';
+
+      const socialButtonsHtml = socialLinks.map(s => `
+        <a href="${s.url}" target="_blank" onclick="event.stopPropagation();" class="touch-target transition" title="${s.title}">
+          <i class="${s.iconClass} text-sm"></i>
+        </a>
+      `).join('');
 
       return `
         <div onclick="focusOnRestaurant(${item.id})" class="bg-white dark:bg-slate-800 hover:border-rose-400 dark:hover:border-rose-500 rounded-2xl p-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700/60 transition duration-300 cursor-pointer group relative overflow-hidden">
@@ -1192,7 +1406,7 @@
               </button>
               ${phoneDigits ? `<a href="tel:${phoneDigits}" onclick="event.stopPropagation();" class="touch-target text-emerald-600 hover:text-emerald-700 transition" title="اتصال تلفوني"><i class="fa-solid fa-phone text-sm"></i></a>` : ''}
               ${websiteUrl ? `<a href="${websiteUrl}" target="_blank" onclick="event.stopPropagation();" class="touch-target text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="الموقع الإلكتروني"><i class="fa-solid fa-globe text-sm"></i></a>` : ''}
-              ${social ? `<a href="${social.url}" target="_blank" onclick="event.stopPropagation();" class="touch-target transition" title="${social.title}"><i class="${social.iconClass} text-sm"></i></a>` : ''}
+              ${socialButtonsHtml}
               <button onclick="event.stopPropagation(); openDetailsModal(${item.id})" class="touch-target text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="عرض التفاصيل">
                 <i class="fa-solid fa-circle-info text-sm"></i>
               </button>
@@ -1402,7 +1616,7 @@
       const item = restaurants.find(r => r.id === id);
       if (!item) return;
 
-      const social = getSocialInfo(item);
+      const socialLinks = getSocialList(item);
       const websiteUrl = (item.website && !item.website.includes('facebook.com') && !item.website.includes('instagram.com')) ? item.website : '';
 
       const servicesHtml = (item.services && item.services.length > 0)
@@ -1417,6 +1631,20 @@
           الموقع
         </a>
       ` : '';
+
+      const socialRowsHtml = socialLinks.map(s => `
+        <p class="flex items-center gap-2">
+          <i class="${s.iconClass} w-4"></i>
+          <strong>${s.title}:</strong> <a href="${s.url}" target="_blank" class="text-sky-600 dark:text-sky-400 hover:underline">زيارة صفحة ${s.title} ↗</a>
+        </p>
+      `).join('');
+
+      const socialBtnsHtml = socialLinks.map(s => `
+        <a href="${s.url}" target="_blank" class="bg-sky-50 dark:bg-sky-950/50 hover:bg-sky-100 text-sky-600 dark:text-sky-300 border border-sky-200 dark:border-sky-800/60 text-xs font-bold py-2.5 px-3 rounded-xl text-center transition flex items-center justify-center gap-1.5 shrink-0">
+          <i class="${s.iconClass}"></i>
+          ${s.title}
+        </a>
+      `).join('');
 
       const modalContent = document.getElementById('modal-content');
       modalContent.innerHTML = `
@@ -1460,12 +1688,7 @@
             <strong>البريد الإلكتروني:</strong> <a href="mailto:${item.email}" class="text-rose-600 dark:text-rose-400 hover:underline" dir="ltr">${item.email}</a>
           </p>
           ` : ''}
-          ${social ? `
-          <p class="flex items-center gap-2">
-            <i class="${social.iconClass} w-4"></i>
-            <strong>وسائل التواصل:</strong> <a href="${social.url}" target="_blank" class="text-sky-600 dark:text-sky-400 hover:underline">زيارة صفحة ${social.title} ↗</a>
-          </p>
-          ` : ''}
+          ${socialRowsHtml}
           <p class="flex items-center gap-2">
             <i class="fa-solid fa-star text-amber-500 w-4"></i>
             <strong>التقييم:</strong> ⭐ ${item.rating} من 5 (${item.reviews_count} مراجعة)
@@ -1479,12 +1702,7 @@
             الاتجاهات عبر Google Maps
           </a>
           ${websiteBtn}
-          ${social ? `
-          <a href="${social.url}" target="_blank" class="bg-sky-50 dark:bg-sky-950/50 hover:bg-sky-100 text-sky-600 dark:text-sky-300 border border-sky-200 dark:border-sky-800/60 text-xs font-bold py-2.5 px-3 rounded-xl text-center transition flex items-center justify-center gap-1.5 shrink-0">
-            <i class="${social.iconClass}"></i>
-            التواصل
-          </a>
-          ` : ''}
+          ${socialBtnsHtml}
           ${item.phone ? `
           <a href="tel:${item.phone.replace(/\s+/g, '')}" class="bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-800 dark:text-slate-100 text-xs font-bold py-2.5 px-3 rounded-xl text-center transition flex items-center justify-center gap-1.5 shrink-0">
             <i class="fa-solid fa-phone"></i>

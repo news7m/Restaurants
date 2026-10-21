@@ -1,4 +1,4 @@
-const CACHE_NAME = 'greatertunis-static-v9';
+const CACHE_NAME = 'greatertunis-static-v10';
 const DATA_CACHE_NAME = 'greatertunis-data-v1';
 const TILE_CACHE_NAME = 'greatertunis-tiles-v1';
 const MAX_TILES_CACHE = 150;

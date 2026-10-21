@@ -66,3 +66,21 @@ header {
 .dark .leaflet-popup-content div.border-slate-200 {
   border-color: #334155 !important;
 }
+
+/* Skeleton loader pulse effect */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.animate-skeleton {
+  animation: skeleton-pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Touch-friendly target sizing */
+.touch-target {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -99,16 +99,6 @@
           <i class="fa-solid fa-plus-circle"></i>
           <span>إضافة مكان</span>
         </button>
-        <div class="hidden md:flex items-center gap-1">
-          <button onclick="exportData('json')" class="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 px-2.5 py-1.5 rounded-xl text-xs font-medium transition shrink-0" title="تصدير JSON">
-            <i class="fa-solid fa-file-code text-rose-500"></i>
-            <span>JSON</span>
-          </button>
-          <button onclick="exportData('csv')" class="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 px-2.5 py-1.5 rounded-xl text-xs font-medium transition shrink-0" title="تصدير CSV">
-            <i class="fa-solid fa-file-csv text-emerald-500"></i>
-            <span>CSV</span>
-          </button>
-        </div>
 
         <button onclick="toggleDarkMode()" aria-label="تبديل مظهر الليل والنهار" class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 transition shrink-0">
           <i id="theme-toggle-dark-icon" class="fa-solid fa-moon text-xs sm:text-sm"></i>
@@ -121,19 +111,10 @@
         </button>
 
         <!-- Mobile Header Dropdown Menu -->
-        <div id="mobile-header-menu" class="hidden absolute top-11 left-0 z-50 bg-white dark:bg-slate-800 rounded-2xl p-2 shadow-xl border border-slate-200 dark:border-slate-700 min-w-[190px] space-y-1 text-xs">
+        <div id="mobile-header-menu" class="hidden absolute top-full left-0 mt-2 z-50 bg-white dark:bg-slate-800 rounded-2xl p-2 shadow-xl border border-slate-200 dark:border-slate-700 min-w-[190px] space-y-1 text-xs">
           <button onclick="openAddPlaceModal(); closeMobileHeaderMenu();" class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 font-bold transition text-right">
             <i class="fa-solid fa-plus-circle text-emerald-500 text-sm"></i>
             <span>إضافة مكان جديد</span>
-          </button>
-          <div class="border-t border-slate-100 dark:border-slate-700/60 my-1"></div>
-          <button onclick="exportData('json'); closeMobileHeaderMenu();" class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 font-bold transition text-right">
-            <i class="fa-solid fa-file-code text-rose-500 text-sm"></i>
-            <span>تصدير بيانات JSON</span>
-          </button>
-          <button onclick="exportData('csv'); closeMobileHeaderMenu();" class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 font-bold transition text-right">
-            <i class="fa-solid fa-file-csv text-emerald-500 text-sm"></i>
-            <span>تصدير بيانات CSV</span>
           </button>
         </div>
 
@@ -802,30 +783,38 @@
       return document.documentElement.classList.contains('dark');
     }
 
+    function updateThemeIcons() {
+      const darkIcon = document.getElementById('theme-toggle-dark-icon');
+      const lightIcon = document.getElementById('theme-toggle-light-icon');
+      if (!darkIcon || !lightIcon) return;
+
+      if (document.documentElement.classList.contains('dark')) {
+        darkIcon.classList.add('hidden');
+        lightIcon.classList.remove('hidden');
+      } else {
+        darkIcon.classList.remove('hidden');
+        lightIcon.classList.add('hidden');
+      }
+    }
+
     function initTheme() {
       if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.documentElement.classList.add('dark');
-        document.getElementById('theme-toggle-dark-icon').classList.add('hidden');
-        document.getElementById('theme-toggle-light-icon').classList.remove('hidden');
       } else {
         document.documentElement.classList.remove('dark');
-        document.getElementById('theme-toggle-dark-icon').classList.remove('hidden');
-        document.getElementById('theme-toggle-light-icon').classList.add('hidden');
       }
+      updateThemeIcons();
     }
 
     function toggleDarkMode() {
       if (isDarkMode()) {
         document.documentElement.classList.remove('dark');
         localStorage.setItem('theme', 'light');
-        document.getElementById('theme-toggle-dark-icon').classList.remove('hidden');
-        document.getElementById('theme-toggle-light-icon').classList.add('hidden');
       } else {
         document.documentElement.classList.add('dark');
         localStorage.setItem('theme', 'dark');
-        document.getElementById('theme-toggle-dark-icon').classList.add('hidden');
-        document.getElementById('theme-toggle-light-icon').classList.remove('hidden');
       }
+      updateThemeIcons();
       updateMapTileTheme();
     }
 
@@ -1512,46 +1501,6 @@
       document.getElementById('details-modal').classList.add('hidden');
     }
 
-    // Export Dataset
-    function exportData(format) {
-      if (format === 'json') {
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(filteredRestaurants, null, 2));
-        const downloadAnchor = document.createElement('a');
-        downloadAnchor.setAttribute("href", dataStr);
-        downloadAnchor.setAttribute("download", `greatertunis_restaurants_${new Date().toISOString().slice(0,10)}.json`);
-        document.body.appendChild(downloadAnchor);
-        downloadAnchor.click();
-        downloadAnchor.remove();
-        showToast('تم تصدير ملف JSON بنجاح', 'success');
-      } else if (format === 'csv') {
-        const headers = ["id", "governorate", "name", "category", "delegation", "address", "rating", "reviews_count", "price_level", "cuisine", "phone", "email", "website", "social_media"];
-        const rows = filteredRestaurants.map(r => [
-          r.id,
-          `"${(r.governorate || 'ولاية أريانة').replace(/"/g, '""')}"`,
-          `"${(r.name || '').replace(/"/g, '""')}"`,
-          `"${(r.category || '').replace(/"/g, '""')}"`,
-          `"${(r.delegation || '').replace(/"/g, '""')}"`,
-          `"${(r.address || '').replace(/"/g, '""')}"`,
-          r.rating,
-          r.reviews_count,
-          `"${r.price_level || ''}"`,
-          `"${(r.cuisine || '').replace(/"/g, '""')}"`,
-          `"${r.phone || ''}"`,
-          `"${r.email || ''}"`,
-          `"${r.website || ''}"`,
-          `"${r.social_media || ''}"`
-        ]);
-        const csvContent = "\uFEFF" + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
-        const encodedUri = encodeURI("data:text/csv;charset=utf-8," + csvContent);
-        const link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `greatertunis_restaurants_${new Date().toISOString().slice(0,10)}.csv`);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        showToast('تم تصدير ملف CSV بنجاح', 'success');
-      }
-    }
   </script>
   <!-- Toast Notification Container -->
   <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>

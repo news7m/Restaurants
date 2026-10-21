@@ -364,8 +364,8 @@
 
 
   <!-- Modal for Adding New Restaurant/Cafe -->
-  <div id="add-place-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300">
-    <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-xl w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-slate-200 dark:border-slate-700 relative transform transition-all custom-scrollbar flex flex-col">
+  <div id="add-place-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-2 sm:p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-xl w-full max-h-[90dvh] sm:max-h-[85vh] overflow-y-auto shadow-2xl border border-slate-200 dark:border-slate-700 relative transform transition-all custom-scrollbar modal-scroll-container flex flex-col">
 
       <!-- Modal Header -->
       <div class="sticky top-0 z-20 bg-white/95 dark:bg-slate-800/95 backdrop-blur-md px-5 py-4 border-b border-slate-100 dark:border-slate-700/80 flex items-center justify-between">
@@ -448,27 +448,33 @@
           </div>
 
           <!-- Interactive Location Picker Header & GPS Button -->
-          <div class="space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="block font-bold text-slate-700 dark:text-slate-300">موقع المكان على الخريطة:</span>
-              <button type="button" onclick="getPickerUserLocation()" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/80 text-indigo-600 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800/60 font-bold text-[11px] transition shadow-sm">
-                <i class="fa-solid fa-location-crosshairs text-indigo-500"></i>
+          <div class="space-y-2.5 p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-700/80">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <label for="picker-map" class="block font-bold text-slate-800 dark:text-slate-200 text-xs sm:text-sm">موقع المكان على الخريطة</label>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">انقر على الخريطة أو اسحب العلامة لتحديد الموقع بدقة</p>
+              </div>
+              <button type="button" onclick="getPickerUserLocation()" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white font-bold text-xs transition shadow-md shadow-indigo-500/20 shrink-0">
+                <i class="fa-solid fa-location-crosshairs text-sm text-indigo-200"></i>
                 <span>استخدام موقعي الحالي 📍</span>
               </button>
             </div>
 
             <!-- Mini Map Container -->
-            <div id="picker-map" class="h-48 sm:h-52 w-full rounded-2xl border border-slate-200 dark:border-slate-700 shadow-inner overflow-hidden relative z-10"></div>
+            <div id="picker-map" class="h-48 sm:h-56 w-full rounded-xl border border-slate-300 dark:border-slate-700 shadow-inner overflow-hidden relative z-10"></div>
 
             <!-- Coordinates Readout & Status -->
-            <div class="bg-slate-50 dark:bg-slate-900/70 p-2.5 rounded-xl border border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between gap-2">
-              <div class="flex items-center gap-1.5 text-[11px] text-slate-600 dark:text-slate-300 font-medium min-w-0">
-                <i class="fa-solid fa-circle-check text-emerald-500 shrink-0"></i>
+            <div class="bg-white dark:bg-slate-800/90 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div class="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-200 font-semibold min-w-0">
+                <i class="fa-solid fa-circle-check text-emerald-500 text-sm shrink-0"></i>
                 <span id="picker-status-text" class="truncate">تم تحديد الموقع تلقائياً للمنطقة</span>
               </div>
-              <span id="picker-coords-readout" class="font-mono text-[10px] font-bold px-2 py-0.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/50 shrink-0">
-                0, 0
-              </span>
+              <div class="flex items-center gap-1.5 shrink-0 self-end sm:self-auto">
+                <span class="text-[10px] text-slate-400 dark:text-slate-400 font-medium">الإحداثيات:</span>
+                <span id="picker-coords-readout" class="font-mono text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800/80 dir-ltr text-left">
+                  0, 0
+                </span>
+              </div>
             </div>
 
             <!-- Hidden lat & lon input fields -->
@@ -531,8 +537,8 @@
   </div>
 
   <!-- Modal for Restaurant Detailed View -->
-  <div id="details-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300">
-    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative transform transition-all custom-scrollbar">
+  <div id="details-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-2 sm:p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full max-h-[90dvh] sm:max-h-[85vh] overflow-y-auto p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative transform transition-all custom-scrollbar modal-scroll-container">
       <button onclick="closeModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 flex items-center justify-center text-slate-500 dark:text-slate-300 transition">
         <i class="fa-solid fa-xmark text-lg"></i>
       </button>
@@ -941,7 +947,8 @@
       if (!pickerContainer) return;
 
       pickerMap = L.map('picker-map', {
-        zoomControl: true
+        zoomControl: true,
+        tap: false
       }).setView([36.866, 10.183], 13);
 
       L.tileLayer(OSM_TILES, {

@@ -50,10 +50,13 @@ def clean_item(item, default_gov):
 
     delg = item.get('region') or item.get('delegation') or 'عام'
 
+    import urllib.parse
     lat_val = round(float(lat), 6) if lat else 0.0
     lon_val = round(float(lon), 6) if lon else 0.0
 
-    gmaps_url = f'https://www.google.com/maps/search/?api=1&query={lat_val},{lon_val}'
+    query_text = f"{item.get('name', 'غير مسمى').strip()} {delg.strip()}".strip()
+    encoded_query = urllib.parse.quote(query_text)
+    gmaps_url = f'https://www.google.com/maps/search/?api=1&query={encoded_query}@{lat_val},{lon_val}'
 
     return {
         'id': item.get('id'),

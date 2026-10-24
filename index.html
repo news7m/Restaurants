@@ -221,9 +221,31 @@
             <i class="fa-solid fa-map text-rose-500 ml-1"></i>الولاية
           </label>
           <select id="governorate-filter" aria-label="تصفية حسب الولاية" onchange="handleGovernorateChange()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-white transition-colors duration-300">
-            <option value="ALL">جميع الولايات (أريانة وتونس)</option>
-            <option value="ولاية أريانة">ولاية أريانة 🌹</option>
+            <option value="ALL">جميع ولايات تونس (24 ولاية) 🇹🇳</option>
             <option value="ولاية تونس">ولاية تونس 🇹🇳</option>
+            <option value="ولاية أريانة">ولاية أريانة 🌹</option>
+            <option value="ولاية بن عروس">ولاية بن عروس</option>
+            <option value="ولاية منوبة">ولاية منوبة</option>
+            <option value="ولاية نابل">ولاية نابل</option>
+            <option value="ولاية زغوان">ولاية زغوان</option>
+            <option value="ولاية بنزرت">ولاية بنزرت</option>
+            <option value="ولاية باجة">ولاية باجة</option>
+            <option value="ولاية جندوبة">ولاية جندوبة</option>
+            <option value="ولاية الكاف">ولاية الكاف</option>
+            <option value="ولاية سليانة">ولاية سليانة</option>
+            <option value="ولاية سوسة">ولاية سوسة 🌊</option>
+            <option value="ولاية المنستير">ولاية المنستير</option>
+            <option value="ولاية المهدية">ولاية المهدية</option>
+            <option value="ولاية صفاقس">ولاية صفاقس ⚙️</option>
+            <option value="ولاية القيروان">ولاية القيروان 🕌</option>
+            <option value="ولاية القصرين">ولاية القصرين</option>
+            <option value="ولاية سيدي بوزيد">ولاية سيدي بوزيد</option>
+            <option value="ولاية قابس">ولاية قابس</option>
+            <option value="ولاية مدنين">ولاية مدنين (جربة)</option>
+            <option value="ولاية تطاوين">ولاية تطاوين 🏜️</option>
+            <option value="ولاية قفصة">ولاية قفصة</option>
+            <option value="ولاية توزر">ولاية توزر 🌴</option>
+            <option value="ولاية قبلي">ولاية قبلي</option>
           </select>
         </div>
 
@@ -402,8 +424,30 @@
             <div>
               <label for="new-governorate" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الولاية *</label>
               <select id="new-governorate" required onchange="updateNewPlaceDelegations()" class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:text-white font-medium">
-                <option value="ولاية أريانة">ولاية أريانة 🌹</option>
                 <option value="ولاية تونس">ولاية تونس 🇹🇳</option>
+                <option value="ولاية أريانة">ولاية أريانة 🌹</option>
+                <option value="ولاية بن عروس">ولاية بن عروس</option>
+                <option value="ولاية منوبة">ولاية منوبة</option>
+                <option value="ولاية نابل">ولاية نابل</option>
+                <option value="ولاية زغوان">ولاية زغوان</option>
+                <option value="ولاية بنزرت">ولاية بنزرت</option>
+                <option value="ولاية باجة">ولاية باجة</option>
+                <option value="ولاية جندوبة">ولاية جندوبة</option>
+                <option value="ولاية الكاف">ولاية الكاف</option>
+                <option value="ولاية سليانة">ولاية سليانة</option>
+                <option value="ولاية سوسة">ولاية سوسة 🌊</option>
+                <option value="ولاية المنستير">ولاية المنستير</option>
+                <option value="ولاية المهدية">ولاية المهدية</option>
+                <option value="ولاية صفاقس">ولاية صفاقس ⚙️</option>
+                <option value="ولاية القيروان">ولاية القيروان 🕌</option>
+                <option value="ولاية القصرين">ولاية القصرين</option>
+                <option value="ولاية سيدي بوزيد">ولاية سيدي بوزيد</option>
+                <option value="ولاية قابس">ولاية قابس</option>
+                <option value="ولاية مدنين">ولاية مدنين (جربة)</option>
+                <option value="ولاية تطاوين">ولاية تطاوين 🏜️</option>
+                <option value="ولاية قفصة">ولاية قفصة</option>
+                <option value="ولاية توزر">ولاية توزر 🌴</option>
+                <option value="ولاية قبلي">ولاية قبلي</option>
               </select>
             </div>
             <div>
@@ -909,17 +953,29 @@
       map.addLayer(markersCluster);
     }
 
+    let governorateMeta = {};
+    const loadedGovernoratesCache = {};
+
     // Populate Delegation Options dynamically based on Governorate Selection
     function populateDelegationOptions() {
       const govVal = document.getElementById('governorate-filter').value;
       const delSelect = document.getElementById('delegation-filter');
       const currentVal = delSelect.value;
 
-      const availablePlaces = govVal === 'ALL'
-        ? restaurants
-        : restaurants.filter(r => r.governorate === govVal);
+      let delegations = [];
+      if (govVal !== 'ALL' && governorateMeta) {
+        const entry = Object.values(governorateMeta).find(v => v.name_ar === govVal || govVal.includes(v.name_ar));
+        if (entry && entry.delegations) {
+          delegations = entry.delegations;
+        }
+      }
 
-      const delegations = Array.from(new Set(availablePlaces.map(r => r.delegation))).sort((a, b) => a.localeCompare(b, 'ar'));
+      if (delegations.length === 0) {
+        const availablePlaces = govVal === 'ALL'
+          ? restaurants
+          : restaurants.filter(r => r.governorate === govVal);
+        delegations = Array.from(new Set(availablePlaces.map(r => r.delegation))).sort((a, b) => a.localeCompare(b, 'ar'));
+      }
 
       delSelect.innerHTML = `<option value="ALL">جميع المناطق والمعتمديات</option>` +
         delegations.map(d => `<option value="${d}">${d}</option>`).join('');
@@ -931,7 +987,14 @@
       }
     }
 
-    function handleGovernorateChange() {
+    async function handleGovernorateChange() {
+      const govVal = document.getElementById('governorate-filter').value;
+      if (govVal === 'ALL') {
+        showToast('جاري تحميل كافة ولايات تونس الـ 24... 🇹🇳', 'info');
+        await fetchAllGovernorates();
+      } else {
+        await fetchGovernorateDataset(govVal);
+      }
       populateDelegationOptions();
       updateStats();
       applyFilters(true);
@@ -1047,8 +1110,18 @@
       const govVal = document.getElementById('new-governorate').value;
       const delSelect = document.getElementById('new-delegation');
 
-      const availablePlaces = restaurants.filter(r => r.governorate === govVal);
-      const delegations = Array.from(new Set(availablePlaces.map(r => r.delegation))).sort((a, b) => a.localeCompare(b, 'ar'));
+      let delegations = [];
+      if (governorateMeta) {
+        const entry = Object.values(governorateMeta).find(v => v.name_ar === govVal || govVal.includes(v.name_ar));
+        if (entry && entry.delegations) {
+          delegations = entry.delegations;
+        }
+      }
+
+      if (delegations.length === 0) {
+        const availablePlaces = restaurants.filter(r => r.governorate === govVal);
+        delegations = Array.from(new Set(availablePlaces.map(r => r.delegation))).sort((a, b) => a.localeCompare(b, 'ar'));
+      }
 
       delSelect.innerHTML = delegations.map(d => `<option value="${d}">${d}</option>`).join('');
       autoSetCoordinatesFromSelection();
@@ -1168,9 +1241,81 @@
       return list.length > 0 ? list[0] : null;
     }
 
+    async function fetchGovernorateDataset(govName) {
+      if (!governorateMeta || Object.keys(governorateMeta).length === 0) return;
+
+      const entry = Object.entries(governorateMeta).find(([k, v]) => v.name_ar === govName || govName.includes(v.name_ar));
+      if (!entry) return;
+
+      const [key, meta] = entry;
+      if (loadedGovernoratesCache[key]) return;
+
+      const filepath = meta.file.startsWith('data/') || meta.file === 'restaurants.json' || meta.file === 'tunis_restaurants.json'
+        ? meta.file
+        : `data/${meta.file}`;
+
+      try {
+        const resp = await fetch(filepath);
+        if (resp.ok) {
+          const data = await resp.json();
+          loadedGovernoratesCache[key] = data;
+
+          const existingIds = new Set(restaurants.map(r => String(r.id)));
+          const newEntries = data.filter(r => !existingIds.has(String(r.id)));
+          restaurants = restaurants.concat(newEntries);
+        }
+      } catch (err) {
+        console.warn('Could not load governorate file:', filepath, err);
+      }
+    }
+
+    async function fetchAllGovernorates() {
+      if (!governorateMeta) return;
+      const keys = Object.keys(governorateMeta);
+      const fetchPromises = keys.map(k => {
+        const meta = governorateMeta[k];
+        const filepath = meta.file.startsWith('data/') || meta.file === 'restaurants.json' || meta.file === 'tunis_restaurants.json'
+          ? meta.file
+          : `data/${meta.file}`;
+        if (loadedGovernoratesCache[k]) return Promise.resolve(loadedGovernoratesCache[k]);
+
+        return fetch(filepath)
+          .then(r => r.json())
+          .then(data => {
+            loadedGovernoratesCache[k] = data;
+            return data;
+          })
+          .catch(() => []);
+      });
+
+      const allData = await Promise.all(fetchPromises);
+      let combined = [...customPlaces];
+      const seenIds = new Set();
+      allData.forEach(dataset => {
+        if (Array.isArray(dataset)) {
+          dataset.forEach(item => {
+            if (!seenIds.has(String(item.id))) {
+              seenIds.add(String(item.id));
+              combined.push(item);
+            }
+          });
+        }
+      });
+      restaurants = combined;
+    }
+
     // Fetch datasets from restaurants.json and tunis_restaurants.json with LocalStorage offline cache backup
     async function loadRestaurantsData() {
       try {
+        try {
+          const metaResp = await fetch('data/governorates_meta.json');
+          if (metaResp.ok) {
+            governorateMeta = await metaResp.json();
+          }
+        } catch (e) {
+          console.warn('Metadata load fallback:', e);
+        }
+
         const [arianaResp, tunisResp] = await Promise.all([
           fetch('restaurants.json'),
           fetch('tunis_restaurants.json')
@@ -1178,6 +1323,9 @@
 
         const arianaData = await arianaResp.json();
         const tunisData = await tunisResp.json();
+
+        loadedGovernoratesCache['ariana'] = arianaData;
+        loadedGovernoratesCache['tunis'] = tunisData;
 
         const formattedAriana = arianaData.map(item => ({
           ...item,

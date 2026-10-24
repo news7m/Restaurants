@@ -3,6 +3,7 @@ import json
 import os
 import re
 import random
+from clean_dataset_utils import is_valid_restaurant_venue
 
 def fetch_osm_data(iso_code):
     overpass_url = 'https://overpass-api.de/api/interpreter'
@@ -236,7 +237,10 @@ def process_elements(raw_data, gov_id, gov_name_ar, default_regions):
             "google_maps_url": gmaps_url,
             "is_featured": random.random() > 0.85
         }
-        processed.append(item)
+
+        # Filter out non-food venues
+        if is_valid_restaurant_venue(item):
+            processed.append(item)
         idx += 1
 
     return processed

@@ -8,6 +8,7 @@ import json
 import os
 import random
 import urllib.parse
+from clean_dataset_utils import is_valid_restaurant_venue
 
 TUNISIA_GOVERNORATES = {
     "ariana": {
@@ -204,7 +205,7 @@ def generate_governorate_dataset(gov_key, gov_info, count=45):
         encoded_query = urllib.parse.quote(query_str.strip())
         gmaps_url = f"https://www.google.com/maps/search/?api=1&query={encoded_query}"
 
-        venues.append({
+        item = {
             "id": f"{gov_key}_{i}",
             "governorate": gov_name,
             "name": name,
@@ -231,7 +232,10 @@ def generate_governorate_dataset(gov_key, gov_info, count=45):
             "instagram": "",
             "services": ["جلسات عائلية", "تكييف"],
             "is_featured": random.random() > 0.8
-        })
+        }
+
+        if is_valid_restaurant_venue(item):
+            venues.append(item)
 
     return venues
 

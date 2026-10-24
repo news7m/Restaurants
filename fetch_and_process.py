@@ -195,10 +195,14 @@ def process_elements(raw_data, gov_id, gov_name_ar, default_regions):
         if tags.get('internet_access') in ['wlan', 'yes'] and "واي فاي مجاني" not in assigned_services:
             assigned_services.append("واي فاي مجاني")
 
-        # Google Maps URL with precise rounded coordinates
+        # Google Maps URL with precise rounded coordinates and authentic name + delegation search query
         lat_rounded = round(lat, 6)
         lon_rounded = round(lon, 6)
-        gmaps_url = f"https://www.google.com/maps/search/?api=1&query={lat_rounded},{lon_rounded}"
+        clean_name = re.sub(r'\s*\([^)]*\)', '', name_ar).replace('"', '').replace("'", '').strip()
+        clean_reg = re.sub(r'\s*\([^)]*\)', '', region).replace('"', '').replace("'", '').strip()
+        query_str = f"{clean_name} {clean_reg}@{lat_rounded},{lon_rounded}"
+        encoded_query = urllib.parse.quote(query_str.strip())
+        gmaps_url = f"https://www.google.com/maps/search/?api=1&query={encoded_query}"
 
         # Contact details
         email = tags.get('email') or tags.get('contact:email') or ""

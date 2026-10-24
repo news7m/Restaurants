@@ -7,6 +7,7 @@ Combines existing Ariana & Tunis data with generated datasets for the remaining 
 import json
 import os
 import random
+import urllib.parse
 
 TUNISIA_GOVERNORATES = {
     "ariana": {
@@ -197,7 +198,9 @@ def generate_governorate_dataset(gov_key, gov_info, count=45):
         reviews = random.randint(12, 380)
         phone = f"+216 {random.choice([70, 71, 72, 73, 74, 75, 76, 77, 78, 20, 50, 90])} {random.randint(100, 999)} {random.randint(100, 999)}"
 
-        gmaps_url = f"https://www.google.com/maps/search/?api=1&query={lat},{lon}"
+        query_str = f"{name} {delg}@{lat},{lon}"
+        encoded_query = urllib.parse.quote(query_str)
+        gmaps_url = f"https://www.google.com/maps/search/?api=1&query={encoded_query}"
 
         venues.append({
             "id": f"{gov_key}_{i}",

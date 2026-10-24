@@ -1,4 +1,5 @@
 import json
+import urllib.parse
 
 tunis_places = [
     # La Marsa & Sidi Bou Said
@@ -1059,6 +1060,15 @@ tunis_places = [
         "outdoor_seating": False
     }
 ]
+
+for item in tunis_places:
+    name = item.get('name', '')
+    delg = item.get('delegation', '')
+    lat = item.get('lat', 0.0)
+    lon = item.get('lon', 0.0)
+    query_str = f"{name} {delg}@{lat},{lon}"
+    encoded_query = urllib.parse.quote(query_str)
+    item['google_maps_url'] = f"https://www.google.com/maps/search/?api=1&query={encoded_query}"
 
 with open('tunis_restaurants.json', 'w', encoding='utf-8') as f:
     json.dump(tunis_places, f, ensure_ascii=False, indent=2)

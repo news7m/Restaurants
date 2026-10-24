@@ -23,7 +23,8 @@
     "website": "",
     "social_media": "https://www.facebook.com/cafedesdelices.official",
     "services": [],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/cafedesdelices.official"
   },
   {
     "id": 1002,
@@ -49,7 +50,8 @@
     "website": "",
     "social_media": "https://www.facebook.com/cafedesnattes.official",
     "services": [],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/cafedesnattes.official"
   },
   {
     "id": 1003,
@@ -101,7 +103,8 @@
     "website": "",
     "social_media": "https://www.facebook.com/legolfe.lamarsa",
     "services": [],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/legolfe.lamarsa"
   },
   {
     "id": 1005,
@@ -257,7 +260,8 @@
     "website": "",
     "social_media": "https://www.facebook.com/villadidoncarthage.official",
     "services": [],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/villadidoncarthage.official"
   },
   {
     "id": 1011,
@@ -335,7 +339,8 @@
     "website": "",
     "social_media": "https://www.facebook.com/MaisonKayserTunisie",
     "services": [],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/MaisonKayserTunisie"
   },
   {
     "id": 1014,
@@ -361,7 +366,8 @@
     "website": "",
     "social_media": "https://www.facebook.com/fredericcasseltunis",
     "services": [],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/fredericcasseltunis"
   },
   {
     "id": 1015,
@@ -387,7 +393,8 @@
     "website": "",
     "social_media": "https://www.facebook.com/ChilisTunisie",
     "services": [],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/ChilisTunisie"
   },
   {
     "id": 1016,
@@ -465,7 +472,8 @@
     "website": "",
     "social_media": "https://www.facebook.com/KFCTunisie",
     "services": [],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/KFCTunisie"
   },
   {
     "id": 1019,
@@ -491,7 +499,8 @@
     "website": "",
     "social_media": "https://www.facebook.com/paultunisie",
     "services": [],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/paultunisie"
   },
   {
     "id": 1020,
@@ -517,7 +526,8 @@
     "website": "",
     "social_media": "https://www.facebook.com/dareljeld.tunis",
     "services": [],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/dareljeld.tunis"
   },
   {
     "id": 1021,
@@ -540,10 +550,11 @@
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.7978,10.1709",
     "delivery_available": false,
     "outdoor_seating": true,
-    "website": "",
+    "website": "http://www.fondoukelattarine.com",
     "social_media": "https://www.facebook.com/fondoukelattarine",
     "services": [],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/fondoukelattarine"
   },
   {
     "id": 1022,
@@ -673,7 +684,8 @@
     "website": "",
     "social_media": "https://www.facebook.com/chezslah.restaurant",
     "services": [],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/chezslah.restaurant"
   },
   {
     "id": 1027,
@@ -751,7 +763,8 @@
     "website": "",
     "social_media": "https://www.facebook.com/maisonzarrouk",
     "services": [],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/maisonzarrouk"
   },
   {
     "id": 1030,
@@ -777,7 +790,8 @@
     "website": "",
     "social_media": "https://www.facebook.com/laspigola.lagoulette",
     "services": [],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/laspigola.lagoulette"
   },
   {
     "id": 1031,
@@ -907,7 +921,8 @@
     "website": "",
     "social_media": "https://www.facebook.com/planb.tunisie",
     "services": [],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/planb.tunisie"
   },
   {
     "id": 1036,
@@ -959,7 +974,8 @@
     "website": "",
     "social_media": "https://www.facebook.com/CosmittoCoffee",
     "services": [],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/CosmittoCoffee"
   },
   {
     "id": 1038,
@@ -1827,19 +1843,21 @@
     "price_level": "$",
     "cuisine": "تونسي تقليدي",
     "phone": "+216 71 560 916",
-    "email": "",
+    "email": "contact@dareljeld.com",
     "opening_hours": "08:00 - 23:00 (يومياً)",
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.798555,10.169161",
     "delivery_available": true,
     "outdoor_seating": true,
     "website": "https://www.dareljeld.com/en/gastronomy/",
-    "social_media": "",
+    "social_media": "https://www.facebook.com/DareljeldTunis",
     "services": [
       "توصيل منازل",
       "جلسات خارجية",
       "موقف سيارات"
     ],
-    "is_featured": true
+    "is_featured": true,
+    "facebook": "https://www.facebook.com/DareljeldTunis",
+    "instagram": "https://www.instagram.com/dareljeld"
   },
   {
     "id": "tunis_node_1037100788",
@@ -2443,37 +2461,6 @@
       "تكييف هواء",
       "مناسب للعائلات",
       "موقف سيارات"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_node_1241949956",
-    "governorate": "ولاية تونس",
-    "name": "Brooklin",
-    "category": "وجبات سريعة (Fast Food)",
-    "icon": "🍔",
-    "delegation": "المنزه / المنار",
-    "address": "المنزه / المنار, ولاية تونس",
-    "street": "المنزه / المنار, ولاية تونس",
-    "lat": 36.839133,
-    "lon": 10.158124,
-    "rating": 4.0,
-    "reviews_count": 330,
-    "price_level": "$$",
-    "cuisine": "وجبات سريعة، ساندويتشات",
-    "phone": "+216 83 433 931",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.839133,10.158124",
-    "delivery_available": false,
-    "outdoor_seating": true,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "مأكولات سفري",
-      "واي فاي مجاني",
-      "مناسب للعائلات",
-      "جلسات خارجية"
     ],
     "is_featured": false
   },
@@ -3145,39 +3132,6 @@
     "is_featured": false
   },
   {
-    "id": "tunis_node_1439755552",
-    "governorate": "ولاية تونس",
-    "name": "وجبات (البحيرة, ولاية تونس)",
-    "category": "وجبات سريعة (Fast Food)",
-    "icon": "🍔",
-    "delegation": "البحيرة",
-    "address": "البحيرة, ولاية تونس",
-    "street": "البحيرة, ولاية تونس",
-    "lat": 36.847853,
-    "lon": 10.269711,
-    "rating": 4.1,
-    "reviews_count": 187,
-    "price_level": "$$",
-    "cuisine": "وجبات سريعة، ساندويتشات",
-    "phone": "+216 71 881 475",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.847853,10.269711",
-    "delivery_available": true,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "مأكولات سفري",
-      "توصيل منازل",
-      "الدفع بالبطاقة",
-      "مناسب للعائلات",
-      "موقف سيارات",
-      "أكل حلال"
-    ],
-    "is_featured": false
-  },
-  {
     "id": "tunis_node_1440219243",
     "governorate": "ولاية تونس",
     "name": "Azzure",
@@ -3780,38 +3734,6 @@
       "تكييف هواء"
     ],
     "is_featured": true
-  },
-  {
-    "id": "tunis_node_1446289205",
-    "governorate": "ولاية تونس",
-    "name": "الحمراء",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "البحيرة",
-    "address": "البحيرة, ولاية تونس",
-    "street": "البحيرة, ولاية تونس",
-    "lat": 36.834931,
-    "lon": 10.244853,
-    "rating": 3.9,
-    "reviews_count": 80,
-    "price_level": "$$$",
-    "cuisine": "مأكولات تونسية، عالمية",
-    "phone": "+216 60 212 827",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.834931,10.244853",
-    "delivery_available": false,
-    "outdoor_seating": true,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "واي فاي مجاني",
-      "شيشة",
-      "جلسات خارجية",
-      "الدفع بالبطاقة",
-      "تكييف هواء"
-    ],
-    "is_featured": false
   },
   {
     "id": "tunis_node_1446289206",
@@ -4601,39 +4523,6 @@
     "is_featured": false
   },
   {
-    "id": "tunis_node_1491348677",
-    "governorate": "ولاية تونس",
-    "name": "مقهى (المنزه / المنار, ولاية تونس)",
-    "category": "مقهى وكافيه (Café & Lounge)",
-    "icon": "☕",
-    "delegation": "المنزه / المنار",
-    "address": "المنزه / المنار, ولاية تونس",
-    "street": "المنزه / المنار, ولاية تونس",
-    "lat": 36.846249,
-    "lon": 10.153912,
-    "rating": 4.3,
-    "reviews_count": 291,
-    "price_level": "$$",
-    "cuisine": "مشروبات وسندويتشات، قهوة مختصة",
-    "phone": "+216 79 275 502",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.846249,10.153912",
-    "delivery_available": false,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "واي فاي مجاني",
-      "شيشة",
-      "الدفع بالبطاقة",
-      "تكييف هواء",
-      "موقف سيارات",
-      "أكل حلال"
-    ],
-    "is_featured": false
-  },
-  {
     "id": "tunis_node_1505116618",
     "governorate": "ولاية تونس",
     "name": "فيلا ديدون",
@@ -4649,13 +4538,13 @@
     "price_level": "$$",
     "cuisine": "مأكولات تونسية، عالمية",
     "phone": "+216 71 733 433",
-    "email": "",
+    "email": "reservation@villadidoncarthage.com",
     "opening_hours": "08:00 - 23:00 (يومياً)",
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.852279,10.325226",
     "delivery_available": false,
     "outdoor_seating": false,
     "website": "https://villadidoncarthage.com/",
-    "social_media": "",
+    "social_media": "https://www.facebook.com/VillaDidonHotel",
     "services": [
       "واي فاي مجاني",
       "شيشة",
@@ -4664,7 +4553,9 @@
       "موقف سيارات",
       "أكل حلال"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/VillaDidonHotel",
+    "instagram": "https://www.instagram.com/villadidoncarthage"
   },
   {
     "id": "tunis_node_1517654780",
@@ -6453,39 +6344,6 @@
     "is_featured": false
   },
   {
-    "id": "tunis_node_2313631873",
-    "governorate": "ولاية تونس",
-    "name": "الصفصاف",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "المرسى",
-    "address": "المرسى, ولاية تونس",
-    "street": "المرسى, ولاية تونس",
-    "lat": 36.883477,
-    "lon": 10.331888,
-    "rating": 4.8,
-    "reviews_count": 159,
-    "price_level": "$$",
-    "cuisine": "تونسي تقليدي",
-    "phone": "+216 32 328 795",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.883477,10.331888",
-    "delivery_available": true,
-    "outdoor_seating": true,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "شيشة",
-      "مأكولات سفري",
-      "جلسات خارجية",
-      "توصيل منازل",
-      "الدفع بالبطاقة",
-      "موقف سيارات"
-    ],
-    "is_featured": false
-  },
-  {
     "id": "tunis_node_2313631876",
     "governorate": "ولاية تونس",
     "name": "وجبات سريعة",
@@ -7743,7 +7601,8 @@
       "مناسب للعائلات",
       "موقف سيارات"
     ],
-    "is_featured": true
+    "is_featured": true,
+    "facebook": "https://www.facebook.com/YABON.LaMarsa/"
   },
   {
     "id": "tunis_node_2817718376",
@@ -8909,7 +8768,8 @@
       "الدفع بالبطاقة",
       "موقف سيارات"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/Sanfours-Sandwiches-Pizzas-720089958033474/"
   },
   {
     "id": "tunis_node_3770326089",
@@ -9066,7 +8926,8 @@
       "شيشة",
       "مأكولات سفري"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/chezslah.restaurant"
   },
   {
     "id": "tunis_node_3871434973",
@@ -10657,13 +10518,13 @@
     "price_level": "$$",
     "cuisine": "مأكولات تونسية، عالمية",
     "phone": "+216 71 888 722",
-    "email": "",
+    "email": "contact@sultanahmet.tn",
     "opening_hours": "08:00 - 23:00 (يومياً)",
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.835774,10.159141",
     "delivery_available": true,
     "outdoor_seating": false,
     "website": "https://www.sultanahmet.tn/",
-    "social_media": "",
+    "social_media": "https://www.facebook.com/restaurantsultanahmetelmanar",
     "services": [
       "شيشة",
       "مأكولات سفري",
@@ -10672,7 +10533,9 @@
       "مناسب للعائلات",
       "موقف سيارات"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/restaurantsultanahmetelmanar",
+    "instagram": "https://www.instagram.com/restaurantsultanahmet"
   },
   {
     "id": "tunis_node_4691387989",
@@ -11177,7 +11040,9 @@
       "الدفع بالبطاقة",
       "أكل حلال"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/CosmittoCoffee",
+    "instagram": "https://www.instagram.com/cosmittocoffee"
   },
   {
     "id": "tunis_node_4908212135",
@@ -11680,7 +11545,8 @@
       "مناسب للعائلات",
       "مأكولات سفري"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/MaisonGourmandise"
   },
   {
     "id": "tunis_node_5152967409",
@@ -13681,19 +13547,20 @@
     "price_level": "$$",
     "cuisine": "برغر",
     "phone": "+216 56 166 666",
-    "email": "",
+    "email": "info@pastelconseil.com",
     "opening_hours": "Tu-Su 12:00-15:30, 19:00-22:30",
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.831139,10.172484",
     "delivery_available": false,
     "outdoor_seating": false,
     "website": "https://www.munchiestunis.com/",
-    "social_media": "",
+    "social_media": "https://www.instagram.com/munchiestunis",
     "services": [
       "واي فاي مجاني",
       "أكل حلال",
       "موقف سيارات"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "instagram": "https://www.instagram.com/munchiestunis"
   },
   {
     "id": "tunis_node_5907339385",
@@ -14328,37 +14195,6 @@
     "services": [
       "توصيل منازل",
       "تكييف هواء",
-      "جلسات خارجية",
-      "موقف سيارات"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_node_6176895487",
-    "governorate": "ولاية تونس",
-    "name": "Fondouk El Attarine",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "وسط المدينة",
-    "address": "وسط المدينة, ولاية تونس",
-    "street": "وسط المدينة, ولاية تونس",
-    "lat": 36.797844,
-    "lon": 10.171793,
-    "rating": 4.3,
-    "reviews_count": 141,
-    "price_level": "$",
-    "cuisine": "تونسي تقليدي",
-    "phone": "+216 71 322 244",
-    "email": "",
-    "opening_hours": "Mo-Fr 10:00-18:00",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.797844,10.171793",
-    "delivery_available": false,
-    "outdoor_seating": true,
-    "website": "http://www.fondoukelattarine.com",
-    "social_media": "https://www.facebook.com/fondoukelattarine",
-    "services": [
-      "مأكولات سفري",
-      "مناسب للعائلات",
       "جلسات خارجية",
       "موقف سيارات"
     ],
@@ -16281,7 +16117,8 @@
       "شيشة",
       "مأكولات سفري"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/MaisonGourmandise"
   },
   {
     "id": "tunis_node_6293532760",
@@ -18525,37 +18362,6 @@
     "is_featured": false
   },
   {
-    "id": "tunis_node_6314603477",
-    "governorate": "ولاية تونس",
-    "name": "النقطة",
-    "category": "مقهى وكافيه (Café & Lounge)",
-    "icon": "☕",
-    "delegation": "وسط المدينة / باب بحر",
-    "address": "وسط المدينة / باب بحر, ولاية تونس",
-    "street": "وسط المدينة / باب بحر, ولاية تونس",
-    "lat": 36.832385,
-    "lon": 10.211595,
-    "rating": 4.1,
-    "reviews_count": 209,
-    "price_level": "$$",
-    "cuisine": "مشروبات وسندويتشات، قهوة مختصة",
-    "phone": "+216 75 961 240",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.832385,10.211595",
-    "delivery_available": false,
-    "outdoor_seating": true,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "جلسات خارجية",
-      "الدفع بالبطاقة",
-      "مناسب للعائلات",
-      "مأكولات سفري"
-    ],
-    "is_featured": false
-  },
-  {
     "id": "tunis_node_6314605524",
     "governorate": "ولاية تونس",
     "name": "Coffeeshop The One",
@@ -19758,7 +19564,8 @@
       "مناسب للعائلات",
       "أكل حلال"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/KFCTunisie"
   },
   {
     "id": "tunis_node_6367585658",
@@ -19808,19 +19615,21 @@
     "price_level": "$$",
     "cuisine": "مشروبات وسندويتشات، قهوة مختصة",
     "phone": "+216 71 744 597",
-    "email": "",
+    "email": "contact@cafesbondin.com.tn",
     "opening_hours": "08:00 - 23:00 (يومياً)",
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.884281,10.329724",
     "delivery_available": false,
     "outdoor_seating": true,
     "website": "https://www.cafesbondin.com.tn/",
-    "social_media": "",
+    "social_media": "https://www.facebook.com/Cafe.Bondin",
     "services": [
       "أكل حلال",
       "جلسات خارجية",
       "تكييف هواء"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/Cafe.Bondin",
+    "instagram": "https://www.instagram.com/cafesbondin"
   },
   {
     "id": "tunis_node_6409207251",
@@ -21009,7 +20818,8 @@
       "مأكولات سفري",
       "تكييف هواء"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/lerochergammarth"
   },
   {
     "id": "tunis_node_6521987563",
@@ -22863,38 +22673,6 @@
     "is_featured": false
   },
   {
-    "id": "tunis_node_6558506092",
-    "governorate": "ولاية تونس",
-    "name": "بابارن",
-    "category": "مقهى وكافيه (Café & Lounge)",
-    "icon": "☕",
-    "delegation": "وسط المدينة",
-    "address": "وسط المدينة, ولاية تونس",
-    "street": "وسط المدينة, ولاية تونس",
-    "lat": 36.799401,
-    "lon": 10.176118,
-    "rating": 3.9,
-    "reviews_count": 159,
-    "price_level": "$$",
-    "cuisine": "مشروبات وسندويتشات، قهوة مختصة",
-    "phone": "+216 83 287 489",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.799401,10.176118",
-    "delivery_available": true,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "شيشة",
-      "مأكولات سفري",
-      "توصيل منازل",
-      "موقف سيارات",
-      "أكل حلال"
-    ],
-    "is_featured": false
-  },
-  {
     "id": "tunis_node_6558506094",
     "governorate": "ولاية تونس",
     "name": "آيس اكريم تركي",
@@ -23604,7 +23382,7 @@
     "price_level": "$$",
     "cuisine": "مأكولات تونسية، عالمية",
     "phone": "+216 51 327 827",
-    "email": "",
+    "email": "commercial@gourmandise.com.tn",
     "opening_hours": "08:00 - 23:00 (يومياً)",
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.84806,10.196425",
     "delivery_available": true,
@@ -23618,7 +23396,8 @@
       "الدفع بالبطاقة",
       "مناسب للعائلات"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/MaisonGourmandise"
   },
   {
     "id": "tunis_node_6580422455",
@@ -25171,7 +24950,8 @@
       "الدفع بالبطاقة",
       "تكييف هواء"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/pg/Khairi-Food-1991266841174551"
   },
   {
     "id": "tunis_node_7211675808",
@@ -25299,7 +25079,8 @@
       "توصيل منازل",
       "تكييف هواء"
     ],
-    "is_featured": true
+    "is_featured": true,
+    "facebook": "https://www.facebook.com/toptacostn/"
   },
   {
     "id": "tunis_node_7211675816",
@@ -25395,7 +25176,8 @@
       "موقف سيارات",
       "أكل حلال"
     ],
-    "is_featured": true
+    "is_featured": true,
+    "facebook": "https://www.facebook.com/pg/Uno-la-marsa-105797887508691"
   },
   {
     "id": "tunis_node_7211675821",
@@ -25429,7 +25211,8 @@
       "مناسب للعائلات",
       "أكل حلال"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/pizza.go.la.marsa/"
   },
   {
     "id": "tunis_node_7211675822",
@@ -25463,7 +25246,8 @@
       "مناسب للعائلات",
       "موقف سيارات"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/pages/Al-Chami-La-Marsa/252033178175406"
   },
   {
     "id": "tunis_node_7215597381",
@@ -26649,39 +26433,6 @@
     "is_featured": false
   },
   {
-    "id": "tunis_node_7959701353",
-    "governorate": "ولاية تونس",
-    "name": "وجبات (وسط المدينة / باب بحر, ولاية تونس)",
-    "category": "وجبات سريعة (Fast Food)",
-    "icon": "🍔",
-    "delegation": "وسط المدينة / باب بحر",
-    "address": "وسط المدينة / باب بحر, ولاية تونس",
-    "street": "وسط المدينة / باب بحر, ولاية تونس",
-    "lat": 36.827527,
-    "lon": 10.185039,
-    "rating": 4.5,
-    "reviews_count": 359,
-    "price_level": "$$$",
-    "cuisine": "وجبات سريعة، ساندويتشات",
-    "phone": "+216 95 968 385",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.827527,10.185039",
-    "delivery_available": true,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "مأكولات سفري",
-      "توصيل منازل",
-      "تكييف هواء",
-      "مناسب للعائلات",
-      "موقف سيارات",
-      "أكل حلال"
-    ],
-    "is_featured": false
-  },
-  {
     "id": "tunis_node_8005933978",
     "governorate": "ولاية تونس",
     "name": "Pomme de Pain",
@@ -27610,38 +27361,6 @@
     "is_featured": true
   },
   {
-    "id": "tunis_node_8783787817",
-    "governorate": "ولاية تونس",
-    "name": "The House of Flavor",
-    "category": "مقهى وكافيه (Café & Lounge)",
-    "icon": "☕",
-    "delegation": "البحيرة",
-    "address": "البحيرة, ولاية تونس",
-    "street": "البحيرة, ولاية تونس",
-    "lat": 36.855715,
-    "lon": 10.289826,
-    "rating": 4.8,
-    "reviews_count": 140,
-    "price_level": "$$",
-    "cuisine": "مشروبات وسندويتشات، قهوة مختصة",
-    "phone": "+216 88 651 771",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.855715,10.289826",
-    "delivery_available": true,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "مأكولات سفري",
-      "توصيل منازل",
-      "تكييف هواء",
-      "موقف سيارات",
-      "أكل حلال"
-    ],
-    "is_featured": false
-  },
-  {
     "id": "tunis_node_8783787818",
     "governorate": "ولاية تونس",
     "name": "Plan B",
@@ -27670,7 +27389,8 @@
       "جلسات خارجية",
       "موقف سيارات"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/planb.tunisie"
   },
   {
     "id": "tunis_node_8783787819",
@@ -27702,38 +27422,6 @@
       "تكييف هواء"
     ],
     "is_featured": true
-  },
-  {
-    "id": "tunis_node_8783787917",
-    "governorate": "ولاية تونس",
-    "name": "Pizza",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "البحيرة",
-    "address": "البحيرة, ولاية تونس",
-    "street": "البحيرة, ولاية تونس",
-    "lat": 36.855565,
-    "lon": 10.289714,
-    "rating": 4.5,
-    "reviews_count": 238,
-    "price_level": "$",
-    "cuisine": "مأكولات تونسية، عالمية",
-    "phone": "+216 47 203 382",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.855565,10.289714",
-    "delivery_available": false,
-    "outdoor_seating": true,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "واي فاي مجاني",
-      "جلسات خارجية",
-      "الدفع بالبطاقة",
-      "تكييف هواء",
-      "مناسب للعائلات"
-    ],
-    "is_featured": false
   },
   {
     "id": "tunis_node_8783787918",
@@ -28272,7 +27960,8 @@
       "أكل حلال",
       "موقف سيارات"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/Grignotine.ad/"
   },
   {
     "id": "tunis_node_9008257838",
@@ -28554,7 +28243,8 @@
       "شيشة",
       "جلسات خارجية"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/MugsBurger.Lac2/"
   },
   {
     "id": "tunis_node_9026989936",
@@ -28619,7 +28309,8 @@
       "مناسب للعائلات",
       "أكل حلال"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/vintage.lac2/"
   },
   {
     "id": "tunis_node_9026989948",
@@ -28846,7 +28537,8 @@
       "موقف سيارات",
       "أكل حلال"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/Burger-Stop-106653545126167/"
   },
   {
     "id": "tunis_node_9160363028",
@@ -28877,67 +28569,6 @@
       "موقف سيارات"
     ],
     "is_featured": false
-  },
-  {
-    "id": "tunis_node_9160458069",
-    "governorate": "ولاية تونس",
-    "name": "مطعم (قرطاج / سيدي بوسعيد, ولاية تونس)",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "قرطاج / سيدي بوسعيد",
-    "address": "قرطاج / سيدي بوسعيد, ولاية تونس",
-    "street": "قرطاج / سيدي بوسعيد, ولاية تونس",
-    "lat": 36.845547,
-    "lon": 10.321656,
-    "rating": 4.0,
-    "reviews_count": 274,
-    "price_level": "$$",
-    "cuisine": "مأكولات تونسية، عالمية",
-    "phone": "+216 20 432 745",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.845547,10.321656",
-    "delivery_available": false,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "شيشة",
-      "الدفع بالبطاقة",
-      "مناسب للعائلات",
-      "مأكولات سفري"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_node_9160458070",
-    "governorate": "ولاية تونس",
-    "name": "مطعم (قرطاج / سيدي بوسعيد, ولاية تونس)",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "قرطاج / سيدي بوسعيد",
-    "address": "قرطاج / سيدي بوسعيد, ولاية تونس",
-    "street": "قرطاج / سيدي بوسعيد, ولاية تونس",
-    "lat": 36.845642,
-    "lon": 10.321651,
-    "rating": 4.3,
-    "reviews_count": 212,
-    "price_level": "$$",
-    "cuisine": "مأكولات تونسية، عالمية",
-    "phone": "+216 28 855 429",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.845642,10.321651",
-    "delivery_available": false,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "واي فاي مجاني",
-      "الدفع بالبطاقة",
-      "تكييف هواء"
-    ],
-    "is_featured": true
   },
   {
     "id": "tunis_node_9160458071",
@@ -29379,39 +29010,6 @@
     "is_featured": false
   },
   {
-    "id": "tunis_node_9632888319",
-    "governorate": "ولاية تونس",
-    "name": "مقهى (وسط المدينة / باب بحر, ولاية تونس)",
-    "category": "مقهى وكافيه (Café & Lounge)",
-    "icon": "☕",
-    "delegation": "وسط المدينة / باب بحر",
-    "address": "وسط المدينة / باب بحر, ولاية تونس",
-    "street": "وسط المدينة / باب بحر, ولاية تونس",
-    "lat": 36.827881,
-    "lon": 10.1951,
-    "rating": 4.9,
-    "reviews_count": 62,
-    "price_level": "$$$",
-    "cuisine": "مشروبات وسندويتشات، قهوة مختصة",
-    "phone": "+216 56 202 526",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.827881,10.1951",
-    "delivery_available": false,
-    "outdoor_seating": true,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "شيشة",
-      "مأكولات سفري",
-      "جلسات خارجية",
-      "الدفع بالبطاقة",
-      "مناسب للعائلات",
-      "موقف سيارات"
-    ],
-    "is_featured": false
-  },
-  {
     "id": "tunis_node_9657948451",
     "governorate": "ولاية تونس",
     "name": "مقهى (وسط المدينة / باب بحر, ولاية تونس)",
@@ -29666,7 +29264,8 @@
       "الدفع بالبطاقة",
       "أكل حلال"
     ],
-    "is_featured": true
+    "is_featured": true,
+    "facebook": "https://www.facebook.com/KFCTunisie"
   },
   {
     "id": "tunis_node_9789909065",
@@ -29696,7 +29295,8 @@
       "مناسب للعائلات",
       "جلسات خارجية"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/MaisonGourmandise"
   },
   {
     "id": "tunis_node_9872018999",
@@ -29756,38 +29356,6 @@
       "واي فاي مجاني",
       "الدفع بالبطاقة",
       "أكل حلال"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_node_9872076741",
-    "governorate": "ولاية تونس",
-    "name": "وجبات (قرطاج / سيدي بوسعيد, ولاية تونس)",
-    "category": "وجبات سريعة (Fast Food)",
-    "icon": "🍔",
-    "delegation": "قرطاج / سيدي بوسعيد",
-    "address": "قرطاج / سيدي بوسعيد, ولاية تونس",
-    "street": "قرطاج / سيدي بوسعيد, ولاية تونس",
-    "lat": 36.869692,
-    "lon": 10.3439,
-    "rating": 4.7,
-    "reviews_count": 45,
-    "price_level": "$$",
-    "cuisine": "ساندويتشات",
-    "phone": "+216 48 417 398",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.869692,10.3439",
-    "delivery_available": true,
-    "outdoor_seating": true,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "واي فاي مجاني",
-      "جلسات خارجية",
-      "توصيل منازل",
-      "مناسب للعائلات",
-      "موقف سيارات"
     ],
     "is_featured": false
   },
@@ -29917,71 +29485,6 @@
     "is_featured": true
   },
   {
-    "id": "tunis_node_9872128930",
-    "governorate": "ولاية تونس",
-    "name": "مقهى (المرسى / قمرت, ولاية تونس)",
-    "category": "مقهى وكافيه (Café & Lounge)",
-    "icon": "☕",
-    "delegation": "المرسى / قمرت",
-    "address": "المرسى / قمرت, ولاية تونس",
-    "street": "المرسى / قمرت, ولاية تونس",
-    "lat": 36.873289,
-    "lon": 10.340084,
-    "rating": 4.1,
-    "reviews_count": 44,
-    "price_level": "$$",
-    "cuisine": "مشروبات وسندويتشات، قهوة مختصة",
-    "phone": "+216 98 416 772",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.873289,10.340084",
-    "delivery_available": false,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "مأكولات سفري",
-      "الدفع بالبطاقة",
-      "تكييف هواء",
-      "مناسب للعائلات",
-      "موقف سيارات"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_node_9872128931",
-    "governorate": "ولاية تونس",
-    "name": "مقهى (المرسى / قمرت, ولاية تونس)",
-    "category": "مقهى وكافيه (Café & Lounge)",
-    "icon": "☕",
-    "delegation": "المرسى / قمرت",
-    "address": "المرسى / قمرت, ولاية تونس",
-    "street": "المرسى / قمرت, ولاية تونس",
-    "lat": 36.873221,
-    "lon": 10.340045,
-    "rating": 4.6,
-    "reviews_count": 73,
-    "price_level": "$$$",
-    "cuisine": "مشروبات وسندويتشات، قهوة مختصة",
-    "phone": "+216 93 410 968",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.873221,10.340045",
-    "delivery_available": true,
-    "outdoor_seating": true,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "واي فاي مجاني",
-      "مأكولات سفري",
-      "جلسات خارجية",
-      "توصيل منازل",
-      "تكييف هواء",
-      "موقف سيارات"
-    ],
-    "is_featured": false
-  },
-  {
     "id": "tunis_node_9872134757",
     "governorate": "ولاية تونس",
     "name": "White",
@@ -30038,72 +29541,6 @@
       "مأكولات سفري",
       "توصيل منازل",
       "الدفع بالبطاقة",
-      "موقف سيارات",
-      "أكل حلال"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_node_9872134921",
-    "governorate": "ولاية تونس",
-    "name": "مطعم (المرسى / قمرت, ولاية تونس)",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "المرسى / قمرت",
-    "address": "المرسى / قمرت, ولاية تونس",
-    "street": "المرسى / قمرت, ولاية تونس",
-    "lat": 36.872983,
-    "lon": 10.339871,
-    "rating": 4.1,
-    "reviews_count": 52,
-    "price_level": "$",
-    "cuisine": "مأكولات تونسية، عالمية",
-    "phone": "+216 54 185 992",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.872983,10.339871",
-    "delivery_available": false,
-    "outdoor_seating": true,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "شيشة",
-      "جلسات خارجية",
-      "الدفع بالبطاقة",
-      "تكييف هواء",
-      "موقف سيارات",
-      "أكل حلال"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_node_9872134922",
-    "governorate": "ولاية تونس",
-    "name": "مقهى (المرسى / قمرت, ولاية تونس)",
-    "category": "مقهى وكافيه (Café & Lounge)",
-    "icon": "☕",
-    "delegation": "المرسى / قمرت",
-    "address": "المرسى / قمرت, ولاية تونس",
-    "street": "المرسى / قمرت, ولاية تونس",
-    "lat": 36.873027,
-    "lon": 10.339785,
-    "rating": 4.4,
-    "reviews_count": 306,
-    "price_level": "$$",
-    "cuisine": "مشروبات وسندويتشات، قهوة مختصة",
-    "phone": "+216 52 339 836",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.873027,10.339785",
-    "delivery_available": true,
-    "outdoor_seating": true,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "واي فاي مجاني",
-      "جلسات خارجية",
-      "توصيل منازل",
-      "تكييف هواء",
       "موقف سيارات",
       "أكل حلال"
     ],
@@ -30223,14 +29660,16 @@
     "delivery_available": false,
     "outdoor_seating": false,
     "website": "https://www.paradice.tn/",
-    "social_media": "",
+    "social_media": "https://www.facebook.com/Paradice.tn",
     "services": [
       "أكل حلال",
       "مناسب للعائلات",
       "واي فاي مجاني",
       "موقف سيارات"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/Paradice.tn",
+    "instagram": "https://www.instagram.com/glaces.paradice"
   },
   {
     "id": "tunis_node_10040118085",
@@ -30607,39 +30046,6 @@
     "is_featured": false
   },
   {
-    "id": "tunis_node_10225887811",
-    "governorate": "ولاية تونس",
-    "name": "مقهى (باردو, ولاية تونس)",
-    "category": "مقهى وكافيه (Café & Lounge)",
-    "icon": "☕",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.798649,
-    "lon": 10.170013,
-    "rating": 4.7,
-    "reviews_count": 264,
-    "price_level": "$$$",
-    "cuisine": "مشروبات وسندويتشات، قهوة مختصة",
-    "phone": "+216 93 173 327",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.798649,10.170013",
-    "delivery_available": false,
-    "outdoor_seating": true,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "واي فاي مجاني",
-      "شيشة",
-      "مأكولات سفري",
-      "جلسات خارجية",
-      "مناسب للعائلات",
-      "أكل حلال"
-    ],
-    "is_featured": false
-  },
-  {
     "id": "tunis_node_10225887812",
     "governorate": "ولاية تونس",
     "name": "مقهى (حلق الوادي, ولاية تونس)",
@@ -30889,38 +30295,6 @@
       "موقف سيارات"
     ],
     "is_featured": true
-  },
-  {
-    "id": "tunis_node_10313200414",
-    "governorate": "ولاية تونس",
-    "name": "Café Sidi Azizi",
-    "category": "مقهى وكافيه (Café & Lounge)",
-    "icon": "☕",
-    "delegation": "المرسى / قمرت",
-    "address": "المرسى / قمرت, ولاية تونس",
-    "street": "المرسى / قمرت, ولاية تونس",
-    "lat": 36.870214,
-    "lon": 10.34686,
-    "rating": 4.4,
-    "reviews_count": 212,
-    "price_level": "$$$",
-    "cuisine": "مشروبات وسندويتشات، قهوة مختصة",
-    "phone": "+216 77 374 342",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.870214,10.34686",
-    "delivery_available": true,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "واي فاي مجاني",
-      "شيشة",
-      "مأكولات سفري",
-      "توصيل منازل",
-      "أكل حلال"
-    ],
-    "is_featured": false
   },
   {
     "id": "tunis_node_10595925154",
@@ -31676,36 +31050,6 @@
     "is_featured": false
   },
   {
-    "id": "tunis_node_10779814716",
-    "governorate": "ولاية تونس",
-    "name": "وجبات (باردو, ولاية تونس)",
-    "category": "وجبات سريعة (Fast Food)",
-    "icon": "🍔",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.730921,
-    "lon": 10.124755,
-    "rating": 4.4,
-    "reviews_count": 342,
-    "price_level": "$$",
-    "cuisine": "وجبات سريعة، ساندويتشات",
-    "phone": "+216 74 548 952",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.730921,10.124755",
-    "delivery_available": false,
-    "outdoor_seating": true,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "أكل حلال",
-      "شيشة",
-      "جلسات خارجية"
-    ],
-    "is_featured": false
-  },
-  {
     "id": "tunis_node_10779837689",
     "governorate": "ولاية تونس",
     "name": "مقهى (باردو, ولاية تونس)",
@@ -32079,68 +31423,6 @@
       "الدفع بالبطاقة",
       "موقف سيارات",
       "أكل حلال"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_node_10876700385",
-    "governorate": "ولاية تونس",
-    "name": "وجبات (باردو, ولاية تونس)",
-    "category": "وجبات سريعة (Fast Food)",
-    "icon": "🍔",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.753466,
-    "lon": 10.101756,
-    "rating": 4.8,
-    "reviews_count": 221,
-    "price_level": "$$$",
-    "cuisine": "وجبات سريعة، ساندويتشات",
-    "phone": "+216 21 487 809",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.753466,10.101756",
-    "delivery_available": false,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "واي فاي مجاني",
-      "شيشة",
-      "الدفع بالبطاقة",
-      "تكييف هواء",
-      "مناسب للعائلات"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_node_10876700390",
-    "governorate": "ولاية تونس",
-    "name": "وجبات (باردو, ولاية تونس)",
-    "category": "وجبات سريعة (Fast Food)",
-    "icon": "🍔",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.753505,
-    "lon": 10.101776,
-    "rating": 4.3,
-    "reviews_count": 208,
-    "price_level": "$$",
-    "cuisine": "Kebab",
-    "phone": "+216 58 841 529",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.753505,10.101776",
-    "delivery_available": true,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "توصيل منازل",
-      "مناسب للعائلات",
-      "شيشة"
     ],
     "is_featured": false
   },
@@ -33023,70 +32305,6 @@
     "is_featured": false
   },
   {
-    "id": "tunis_node_10926945778",
-    "governorate": "ولاية تونس",
-    "name": "وجبات (باردو, ولاية تونس)",
-    "category": "وجبات سريعة (Fast Food)",
-    "icon": "🍔",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.757541,
-    "lon": 10.104847,
-    "rating": 4.5,
-    "reviews_count": 357,
-    "price_level": "$$$",
-    "cuisine": "وجبات سريعة، ساندويتشات",
-    "phone": "+216 73 201 234",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.757541,10.104847",
-    "delivery_available": true,
-    "outdoor_seating": true,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "جلسات خارجية",
-      "مأكولات سفري",
-      "توصيل منازل",
-      "الدفع بالبطاقة",
-      "تكييف هواء",
-      "مناسب للعائلات"
-    ],
-    "is_featured": true
-  },
-  {
-    "id": "tunis_node_10926945779",
-    "governorate": "ولاية تونس",
-    "name": "وجبات (باردو, ولاية تونس)",
-    "category": "وجبات سريعة (Fast Food)",
-    "icon": "🍔",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.757813,
-    "lon": 10.104563,
-    "rating": 4.7,
-    "reviews_count": 263,
-    "price_level": "$$$",
-    "cuisine": "وجبات سريعة، ساندويتشات",
-    "phone": "+216 49 617 758",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.757813,10.104563",
-    "delivery_available": true,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "توصيل منازل",
-      "أكل حلال",
-      "مناسب للعائلات",
-      "مأكولات سفري"
-    ],
-    "is_featured": true
-  },
-  {
     "id": "tunis_node_11034096667",
     "governorate": "ولاية تونس",
     "name": "café aquo",
@@ -33821,101 +33039,6 @@
     "is_featured": true
   },
   {
-    "id": "tunis_node_11036113710",
-    "governorate": "ولاية تونس",
-    "name": "مطعم (باردو, ولاية تونس)",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.763576,
-    "lon": 10.114829,
-    "rating": 4.3,
-    "reviews_count": 113,
-    "price_level": "$$",
-    "cuisine": "مأكولات تونسية، عالمية",
-    "phone": "+216 31 713 362",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.763576,10.114829",
-    "delivery_available": true,
-    "outdoor_seating": true,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "شيشة",
-      "جلسات خارجية",
-      "توصيل منازل",
-      "تكييف هواء",
-      "أكل حلال"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_node_11036113711",
-    "governorate": "ولاية تونس",
-    "name": "مطعم (باردو, ولاية تونس)",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.763463,
-    "lon": 10.114835,
-    "rating": 3.9,
-    "reviews_count": 239,
-    "price_level": "$$",
-    "cuisine": "مأكولات تونسية، عالمية",
-    "phone": "+216 35 723 889",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.763463,10.114835",
-    "delivery_available": true,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "واي فاي مجاني",
-      "شيشة",
-      "توصيل منازل",
-      "تكييف هواء",
-      "مناسب للعائلات",
-      "أكل حلال"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_node_11036113712",
-    "governorate": "ولاية تونس",
-    "name": "مطعم (باردو, ولاية تونس)",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.763409,
-    "lon": 10.114822,
-    "rating": 3.8,
-    "reviews_count": 151,
-    "price_level": "$$",
-    "cuisine": "مأكولات تونسية، عالمية",
-    "phone": "+216 98 768 552",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.763409,10.114822",
-    "delivery_available": false,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "واي فاي مجاني",
-      "الدفع بالبطاقة",
-      "موقف سيارات"
-    ],
-    "is_featured": false
-  },
-  {
     "id": "tunis_node_11036230062",
     "governorate": "ولاية تونس",
     "name": "أكلة خفيفة",
@@ -34105,69 +33228,6 @@
     "is_featured": false
   },
   {
-    "id": "tunis_node_11036371081",
-    "governorate": "ولاية تونس",
-    "name": "وجبات (باردو, ولاية تونس)",
-    "category": "وجبات سريعة (Fast Food)",
-    "icon": "🍔",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.760707,
-    "lon": 10.114877,
-    "rating": 4.0,
-    "reviews_count": 53,
-    "price_level": "$$$",
-    "cuisine": "وجبات سريعة، ساندويتشات",
-    "phone": "+216 39 404 226",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.760707,10.114877",
-    "delivery_available": true,
-    "outdoor_seating": true,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "مأكولات سفري",
-      "توصيل منازل",
-      "شيشة",
-      "جلسات خارجية"
-    ],
-    "is_featured": true
-  },
-  {
-    "id": "tunis_node_11036371086",
-    "governorate": "ولاية تونس",
-    "name": "مقهى (باردو, ولاية تونس)",
-    "category": "مقهى وكافيه (Café & Lounge)",
-    "icon": "☕",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.760928,
-    "lon": 10.114923,
-    "rating": 3.9,
-    "reviews_count": 71,
-    "price_level": "$",
-    "cuisine": "مشروبات وسندويتشات، قهوة مختصة",
-    "phone": "+216 82 412 794",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.760928,10.114923",
-    "delivery_available": true,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "واي فاي مجاني",
-      "توصيل منازل",
-      "الدفع بالبطاقة",
-      "مناسب للعائلات",
-      "موقف سيارات"
-    ],
-    "is_featured": false
-  },
-  {
     "id": "tunis_node_11036371088",
     "governorate": "ولاية تونس",
     "name": "وجبات (باردو, ولاية تونس)",
@@ -34266,38 +33326,6 @@
     "is_featured": false
   },
   {
-    "id": "tunis_node_11043118846",
-    "governorate": "ولاية تونس",
-    "name": "مقهى (باردو, ولاية تونس)",
-    "category": "مقهى وكافيه (Café & Lounge)",
-    "icon": "☕",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.763956,
-    "lon": 10.114491,
-    "rating": 4.9,
-    "reviews_count": 226,
-    "price_level": "$",
-    "cuisine": "قهوة مختصة",
-    "phone": "+216 54 488 281",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.763956,10.114491",
-    "delivery_available": false,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "واي فاي مجاني",
-      "شيشة",
-      "الدفع بالبطاقة",
-      "مناسب للعائلات",
-      "أكل حلال"
-    ],
-    "is_featured": false
-  },
-  {
     "id": "tunis_node_11051433441",
     "governorate": "ولاية تونس",
     "name": "مطعم (باردو, ولاية تونس)",
@@ -34356,37 +33384,6 @@
       "واي فاي مجاني",
       "مناسب للعائلات",
       "مأكولات سفري"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_node_11059034416",
-    "governorate": "ولاية تونس",
-    "name": "ملاوي",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.762909,
-    "lon": 10.114392,
-    "rating": 4.1,
-    "reviews_count": 151,
-    "price_level": "$$",
-    "cuisine": "مأكولات تونسية، عالمية",
-    "phone": "+216 46 186 484",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.762909,10.114392",
-    "delivery_available": true,
-    "outdoor_seating": true,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "توصيل منازل",
-      "أكل حلال",
-      "جلسات خارجية",
-      "تكييف هواء"
     ],
     "is_featured": false
   },
@@ -35498,36 +34495,6 @@
     "is_featured": false
   },
   {
-    "id": "tunis_node_11133074868",
-    "governorate": "ولاية تونس",
-    "name": "مقهى (باردو, ولاية تونس)",
-    "category": "مقهى وكافيه (Café & Lounge)",
-    "icon": "☕",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.773955,
-    "lon": 10.113011,
-    "rating": 4.0,
-    "reviews_count": 317,
-    "price_level": "$$",
-    "cuisine": "مشروبات وسندويتشات، قهوة مختصة",
-    "phone": "+216 55 168 525",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.773955,10.113011",
-    "delivery_available": true,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "توصيل منازل",
-      "أكل حلال",
-      "الدفع بالبطاقة"
-    ],
-    "is_featured": true
-  },
-  {
     "id": "tunis_node_11134728878",
     "governorate": "ولاية تونس",
     "name": "كسكروت ملاوي",
@@ -35805,37 +34772,6 @@
       "مناسب للعائلات",
       "موقف سيارات",
       "أكل حلال"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_node_11140095101",
-    "governorate": "ولاية تونس",
-    "name": "وجبات (باردو, ولاية تونس)",
-    "category": "وجبات سريعة (Fast Food)",
-    "icon": "🍔",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.767492,
-    "lon": 10.106627,
-    "rating": 4.1,
-    "reviews_count": 217,
-    "price_level": "$",
-    "cuisine": "وجبات سريعة، ساندويتشات",
-    "phone": "+216 36 389 988",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.767492,10.106627",
-    "delivery_available": true,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "توصيل منازل",
-      "واي فاي مجاني",
-      "شيشة",
-      "موقف سيارات"
     ],
     "is_featured": false
   },
@@ -36321,68 +35257,6 @@
     "is_featured": false
   },
   {
-    "id": "tunis_node_11144069210",
-    "governorate": "ولاية تونس",
-    "name": "مقهى (باردو, ولاية تونس)",
-    "category": "مقهى وكافيه (Café & Lounge)",
-    "icon": "☕",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.778358,
-    "lon": 10.108569,
-    "rating": 4.1,
-    "reviews_count": 370,
-    "price_level": "$$",
-    "cuisine": "مشروبات وسندويتشات، قهوة مختصة",
-    "phone": "+216 27 203 838",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.778358,10.108569",
-    "delivery_available": true,
-    "outdoor_seating": true,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "شيشة",
-      "جلسات خارجية",
-      "توصيل منازل",
-      "موقف سيارات",
-      "أكل حلال"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_node_11144069211",
-    "governorate": "ولاية تونس",
-    "name": "مطعم (باردو, ولاية تونس)",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.778469,
-    "lon": 10.108439,
-    "rating": 3.9,
-    "reviews_count": 131,
-    "price_level": "$$",
-    "cuisine": "مأكولات تونسية، عالمية",
-    "phone": "+216 78 837 201",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.778469,10.108439",
-    "delivery_available": true,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "توصيل منازل",
-      "أكل حلال",
-      "واي فاي مجاني"
-    ],
-    "is_featured": false
-  },
-  {
     "id": "tunis_node_11144270161",
     "governorate": "ولاية تونس",
     "name": "cafe hkimi",
@@ -36567,38 +35441,6 @@
       "مأكولات سفري",
       "توصيل منازل",
       "موقف سيارات"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_node_11145909582",
-    "governorate": "ولاية تونس",
-    "name": "وجبات (باردو, ولاية تونس)",
-    "category": "وجبات سريعة (Fast Food)",
-    "icon": "🍔",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.781434,
-    "lon": 10.111148,
-    "rating": 3.9,
-    "reviews_count": 63,
-    "price_level": "$$",
-    "cuisine": "Juice",
-    "phone": "+216 44 213 222",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.781434,10.111148",
-    "delivery_available": false,
-    "outdoor_seating": true,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "واي فاي مجاني",
-      "مأكولات سفري",
-      "جلسات خارجية",
-      "الدفع بالبطاقة",
-      "تكييف هواء"
     ],
     "is_featured": false
   },
@@ -37034,36 +35876,6 @@
     "services": [
       "الدفع بالبطاقة",
       "مأكولات سفري",
-      "موقف سيارات"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_node_11148514502",
-    "governorate": "ولاية تونس",
-    "name": "وجبات (rue 4853, باردو, ولاية تونس)",
-    "category": "وجبات سريعة (Fast Food)",
-    "icon": "🍔",
-    "delegation": "باردو",
-    "address": "rue 4853, باردو, ولاية تونس",
-    "street": "rue 4853, باردو, ولاية تونس",
-    "lat": 36.769763,
-    "lon": 10.102021,
-    "rating": 4.2,
-    "reviews_count": 444,
-    "price_level": "$",
-    "cuisine": "وجبات سريعة، ساندويتشات",
-    "phone": "+216 27 384 546",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.769763,10.102021",
-    "delivery_available": false,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "واي فاي مجاني",
-      "الدفع بالبطاقة",
       "موقف سيارات"
     ],
     "is_featured": false
@@ -37513,67 +36325,6 @@
     "is_featured": false
   },
   {
-    "id": "tunis_node_11150483030",
-    "governorate": "ولاية تونس",
-    "name": "مطعم (باردو, ولاية تونس)",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.767894,
-    "lon": 10.103436,
-    "rating": 4.3,
-    "reviews_count": 288,
-    "price_level": "$$",
-    "cuisine": "مأكولات تونسية، عالمية",
-    "phone": "+216 97 139 413",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.767894,10.103436",
-    "delivery_available": false,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "أكل حلال",
-      "مناسب للعائلات",
-      "واي فاي مجاني",
-      "تكييف هواء"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_node_11150483045",
-    "governorate": "ولاية تونس",
-    "name": "مطعم (باردو, ولاية تونس)",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.767988,
-    "lon": 10.103987,
-    "rating": 4.1,
-    "reviews_count": 200,
-    "price_level": "$$$",
-    "cuisine": "مأكولات تونسية، عالمية",
-    "phone": "+216 36 147 780",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.767988,10.103987",
-    "delivery_available": false,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "أكل حلال",
-      "الدفع بالبطاقة",
-      "واي فاي مجاني"
-    ],
-    "is_featured": false
-  },
-  {
     "id": "tunis_node_11150483082",
     "governorate": "ولاية تونس",
     "name": "مطعم (باردو, ولاية تونس)",
@@ -37603,38 +36354,6 @@
       "توصيل منازل",
       "تكييف هواء",
       "أكل حلال"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_node_11150483087",
-    "governorate": "ولاية تونس",
-    "name": "مطعم (باردو, ولاية تونس)",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.767115,
-    "lon": 10.104513,
-    "rating": 3.8,
-    "reviews_count": 89,
-    "price_level": "$",
-    "cuisine": "مأكولات تونسية، عالمية",
-    "phone": "+216 27 594 240",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.767115,10.104513",
-    "delivery_available": false,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "واي فاي مجاني",
-      "الدفع بالبطاقة",
-      "تكييف هواء",
-      "مناسب للعائلات",
-      "موقف سيارات"
     ],
     "is_featured": false
   },
@@ -38112,36 +36831,6 @@
     "is_featured": false
   },
   {
-    "id": "tunis_node_11160962829",
-    "governorate": "ولاية تونس",
-    "name": "Restaurants",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.77069,
-    "lon": 10.112759,
-    "rating": 4.3,
-    "reviews_count": 398,
-    "price_level": "$$",
-    "cuisine": "مأكولات تونسية، عالمية",
-    "phone": "+216 55 375 852",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.77069,10.112759",
-    "delivery_available": false,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "الدفع بالبطاقة",
-      "تكييف هواء",
-      "موقف سيارات"
-    ],
-    "is_featured": false
-  },
-  {
     "id": "tunis_node_11160962830",
     "governorate": "ولاية تونس",
     "name": "Restaurants",
@@ -38170,37 +36859,6 @@
       "جلسات خارجية",
       "تكييف هواء",
       "مناسب للعائلات"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_node_11160962831",
-    "governorate": "ولاية تونس",
-    "name": "Restaurants",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "باردو",
-    "address": "42558, باردو, ولاية تونس",
-    "street": "42558, باردو, ولاية تونس",
-    "lat": 36.771269,
-    "lon": 10.113182,
-    "rating": 4.5,
-    "reviews_count": 19,
-    "price_level": "$$",
-    "cuisine": "مأكولات تونسية، عالمية",
-    "phone": "+216 35 621 694",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.771269,10.113182",
-    "delivery_available": false,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "مناسب للعائلات",
-      "أكل حلال",
-      "شيشة",
-      "تكييف هواء"
     ],
     "is_featured": false
   },
@@ -38388,37 +37046,6 @@
       "توصيل منازل",
       "مناسب للعائلات",
       "موقف سيارات"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_node_11163011858",
-    "governorate": "ولاية تونس",
-    "name": "مقهى (باردو, ولاية تونس)",
-    "category": "مقهى وكافيه (Café & Lounge)",
-    "icon": "☕",
-    "delegation": "باردو",
-    "address": "باردو, ولاية تونس",
-    "street": "باردو, ولاية تونس",
-    "lat": 36.768794,
-    "lon": 10.104757,
-    "rating": 4.0,
-    "reviews_count": 147,
-    "price_level": "$$$",
-    "cuisine": "مشروبات وسندويتشات، قهوة مختصة",
-    "phone": "+216 51 126 208",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.768794,10.104757",
-    "delivery_available": false,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "مناسب للعائلات",
-      "واي فاي مجاني",
-      "شيشة",
-      "تكييف هواء"
     ],
     "is_featured": false
   },
@@ -39845,39 +38472,6 @@
     "is_featured": true
   },
   {
-    "id": "tunis_node_11783441069",
-    "governorate": "ولاية تونس",
-    "name": "George V",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "البحيرة",
-    "address": "نهج ورقة القيقب, البحيرة, ولاية تونس",
-    "street": "نهج ورقة القيقب, البحيرة, ولاية تونس",
-    "lat": 36.846951,
-    "lon": 10.278783,
-    "rating": 4.2,
-    "reviews_count": 322,
-    "price_level": "$$",
-    "cuisine": "مأكولات تونسية، عالمية",
-    "phone": "+216 72 984 598",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.846951,10.278783",
-    "delivery_available": true,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "واي فاي مجاني",
-      "توصيل منازل",
-      "الدفع بالبطاقة",
-      "تكييف هواء",
-      "مناسب للعائلات",
-      "موقف سيارات"
-    ],
-    "is_featured": false
-  },
-  {
     "id": "tunis_node_11793959269",
     "governorate": "ولاية تونس",
     "name": "Resto-Café La Cuillère",
@@ -40471,36 +39065,6 @@
       "توصيل منازل",
       "مأكولات سفري",
       "تكييف هواء"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_node_12741536201",
-    "governorate": "ولاية تونس",
-    "name": "Café M'Rabet",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "وسط المدينة",
-    "address": "وسط المدينة, ولاية تونس",
-    "street": "وسط المدينة, ولاية تونس",
-    "lat": 36.797303,
-    "lon": 10.170385,
-    "rating": 4.6,
-    "reviews_count": 180,
-    "price_level": "$$",
-    "cuisine": "مأكولات تونسية، عالمية",
-    "phone": "+216 90 806 552",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.797303,10.170385",
-    "delivery_available": false,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "مناسب للعائلات",
-      "تكييف هواء",
-      "موقف سيارات"
     ],
     "is_featured": false
   },
@@ -41816,7 +40380,7 @@
     "price_level": "$$",
     "cuisine": "مأكولات تونسية، عالمية",
     "phone": "+216 63 663 220",
-    "email": "",
+    "email": "contact@saray.tn",
     "opening_hours": "08:00 - 23:00 (يومياً)",
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.817438,10.181868",
     "delivery_available": true,
@@ -41828,7 +40392,9 @@
       "واي فاي مجاني",
       "شيشة"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/saray.restaurant.tunisie",
+    "instagram": "https://www.instagram.com/saray_turkish"
   },
   {
     "id": "tunis_node_13699951699",
@@ -42002,13 +40568,13 @@
     "price_level": "$$",
     "cuisine": "مأكولات تونسية، عالمية",
     "phone": "+216 65 827 556",
-    "email": "",
+    "email": "hello@inward.tn",
     "opening_hours": "Tu-We 12:00-16:30; Th-Fr 16:30-20:30",
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.837634,10.240364",
     "delivery_available": true,
     "outdoor_seating": true,
     "website": "https://inward.tn",
-    "social_media": "",
+    "social_media": "https://instagram.com/inward11",
     "services": [
       "واي فاي مجاني",
       "جلسات خارجية",
@@ -42017,7 +40583,8 @@
       "تكييف هواء",
       "أكل حلال"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "instagram": "https://instagram.com/inward11"
   },
   {
     "id": "tunis_node_14004418701",
@@ -42584,14 +41151,15 @@
     "delivery_available": true,
     "outdoor_seating": false,
     "website": "https://lacloserie.tn/",
-    "social_media": "",
+    "social_media": "https://www.facebook.com/groups",
     "services": [
       "توصيل منازل",
       "مناسب للعائلات",
       "شيشة",
       "مأكولات سفري"
     ],
-    "is_featured": true
+    "is_featured": true,
+    "facebook": "https://www.facebook.com/groups"
   },
   {
     "id": "tunis_way_100788107",
@@ -42653,7 +41221,8 @@
       "الدفع بالبطاقة",
       "أكل حلال"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/pages/Le-Relais-La-Marsa/192428700793793"
   },
   {
     "id": "tunis_way_100904181",
@@ -43042,36 +41611,6 @@
     "is_featured": false
   },
   {
-    "id": "tunis_way_147572058",
-    "governorate": "ولاية تونس",
-    "name": "مقهى (البحيرة, ولاية تونس)",
-    "category": "مقهى وكافيه (Café & Lounge)",
-    "icon": "☕",
-    "delegation": "البحيرة",
-    "address": "البحيرة, ولاية تونس",
-    "street": "البحيرة, ولاية تونس",
-    "lat": 36.93935,
-    "lon": 10.257719,
-    "rating": 4.6,
-    "reviews_count": 255,
-    "price_level": "$$$",
-    "cuisine": "مشروبات وسندويتشات، قهوة مختصة",
-    "phone": "+216 74 454 986",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.93935,10.257719",
-    "delivery_available": true,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "توصيل منازل",
-      "أكل حلال",
-      "الدفع بالبطاقة"
-    ],
-    "is_featured": false
-  },
-  {
     "id": "tunis_way_149609004",
     "governorate": "ولاية تونس",
     "name": "Pomodoro",
@@ -43259,36 +41798,6 @@
     "is_featured": true
   },
   {
-    "id": "tunis_way_151947694",
-    "governorate": "ولاية تونس",
-    "name": "نادي الضباط",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "المرسى",
-    "address": "المرسى, ولاية تونس",
-    "street": "المرسى, ولاية تونس",
-    "lat": 36.820985,
-    "lon": 10.17566,
-    "rating": 4.7,
-    "reviews_count": 209,
-    "price_level": "$",
-    "cuisine": "مأكولات تونسية، عالمية",
-    "phone": "+216 82 373 631",
-    "email": "",
-    "opening_hours": "24/7",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.820985,10.17566",
-    "delivery_available": true,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "توصيل منازل",
-      "واي فاي مجاني",
-      "مناسب للعائلات"
-    ],
-    "is_featured": false
-  },
-  {
     "id": "tunis_way_153090102",
     "governorate": "ولاية تونس",
     "name": "Cafe-Restaurant Chargui",
@@ -43349,37 +41858,8 @@
       "مناسب للعائلات",
       "جلسات خارجية"
     ],
-    "is_featured": true
-  },
-  {
-    "id": "tunis_way_154415726",
-    "governorate": "ولاية تونس",
-    "name": "Le Pirate",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "قرطاج / سيدي بوسعيد",
-    "address": "قرطاج / سيدي بوسعيد, ولاية تونس",
-    "street": "قرطاج / سيدي بوسعيد, ولاية تونس",
-    "lat": 36.868557,
-    "lon": 10.350673,
-    "rating": 4.8,
-    "reviews_count": 34,
-    "price_level": "$$$",
-    "cuisine": "تونسي تقليدي",
-    "phone": "+216 71 980 004",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.868557,10.350673",
-    "delivery_available": true,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "توصيل منازل",
-      "أكل حلال",
-      "شيشة"
-    ],
-    "is_featured": true
+    "is_featured": true,
+    "facebook": "https://www.facebook.com/cafedesnattes.official"
   },
   {
     "id": "tunis_way_154415729",
@@ -43628,36 +42108,6 @@
       "أكل حلال",
       "مناسب للعائلات",
       "موقف سيارات"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_way_253296146",
-    "governorate": "ولاية تونس",
-    "name": "اسكوسا",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "البحيرة",
-    "address": "البحيرة, ولاية تونس",
-    "street": "البحيرة, ولاية تونس",
-    "lat": 36.832604,
-    "lon": 10.23269,
-    "rating": 4.5,
-    "reviews_count": 223,
-    "price_level": "$$$",
-    "cuisine": "مأكولات تونسية، عالمية",
-    "phone": "+216 35 318 284",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.832604,10.23269",
-    "delivery_available": true,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "توصيل منازل",
-      "أكل حلال",
-      "شيشة"
     ],
     "is_featured": false
   },
@@ -43944,36 +42394,6 @@
     "is_featured": false
   },
   {
-    "id": "tunis_way_539987059",
-    "governorate": "ولاية تونس",
-    "name": "مقهى فلامنكو",
-    "category": "مقهى وكافيه (Café & Lounge)",
-    "icon": "☕",
-    "delegation": "المنزه",
-    "address": "المنزه, ولاية تونس",
-    "street": "المنزه, ولاية تونس",
-    "lat": 36.74208,
-    "lon": 10.194895,
-    "rating": 4.5,
-    "reviews_count": 401,
-    "price_level": "$",
-    "cuisine": "مشروبات وسندويتشات، قهوة مختصة",
-    "phone": "+216 65 607 436",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.74208,10.194895",
-    "delivery_available": false,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "أكل حلال",
-      "مأكولات سفري",
-      "موقف سيارات"
-    ],
-    "is_featured": false
-  },
-  {
     "id": "tunis_way_540712206",
     "governorate": "ولاية تونس",
     "name": "Lake Club",
@@ -44063,39 +42483,6 @@
       "الدفع بالبطاقة",
       "تكييف هواء",
       "مناسب للعائلات"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_way_657590585",
-    "governorate": "ولاية تونس",
-    "name": "وجبات (البحيرة, ولاية تونس)",
-    "category": "وجبات سريعة (Fast Food)",
-    "icon": "🍔",
-    "delegation": "البحيرة",
-    "address": "البحيرة, ولاية تونس",
-    "street": "البحيرة, ولاية تونس",
-    "lat": 36.761356,
-    "lon": 10.193472,
-    "rating": 4.7,
-    "reviews_count": 299,
-    "price_level": "$$",
-    "cuisine": "بيتزا",
-    "phone": "+216 27 739 806",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.761356,10.193472",
-    "delivery_available": false,
-    "outdoor_seating": true,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "جلسات خارجية",
-      "الدفع بالبطاقة",
-      "تكييف هواء",
-      "مناسب للعائلات",
-      "موقف سيارات",
-      "أكل حلال"
     ],
     "is_featured": false
   },
@@ -44190,7 +42577,8 @@
       "مناسب للعائلات",
       "موقف سيارات"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/KFCTunisie"
   },
   {
     "id": "tunis_way_679063831",
@@ -44214,7 +42602,7 @@
     "delivery_available": false,
     "outdoor_seating": true,
     "website": "https://www.restaurant-lastragale.com/",
-    "social_media": "",
+    "social_media": "https://www.facebook.com/restaurant.lastragale",
     "services": [
       "مأكولات سفري",
       "جلسات خارجية",
@@ -44222,7 +42610,9 @@
       "تكييف هواء",
       "موقف سيارات"
     ],
-    "is_featured": false
+    "is_featured": false,
+    "facebook": "https://www.facebook.com/restaurant.lastragale",
+    "instagram": "https://instagram.com/restaurantlastragale"
   },
   {
     "id": "tunis_way_680063554",
@@ -44664,99 +43054,6 @@
       "توصيل منازل",
       "تكييف هواء",
       "موقف سيارات"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_way_990899815",
-    "governorate": "ولاية تونس",
-    "name": "مقهى (قرطاج / سيدي بوسعيد, ولاية تونس)",
-    "category": "مقهى وكافيه (Café & Lounge)",
-    "icon": "☕",
-    "delegation": "قرطاج / سيدي بوسعيد",
-    "address": "قرطاج / سيدي بوسعيد, ولاية تونس",
-    "street": "قرطاج / سيدي بوسعيد, ولاية تونس",
-    "lat": 36.845688,
-    "lon": 10.321564,
-    "rating": 3.9,
-    "reviews_count": 104,
-    "price_level": "$$$",
-    "cuisine": "مشروبات وسندويتشات، قهوة مختصة",
-    "phone": "+216 66 692 436",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.845688,10.321564",
-    "delivery_available": false,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "واي فاي مجاني",
-      "شيشة",
-      "الدفع بالبطاقة",
-      "تكييف هواء",
-      "موقف سيارات",
-      "أكل حلال"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_way_990899816",
-    "governorate": "ولاية تونس",
-    "name": "مطعم (قرطاج / سيدي بوسعيد, ولاية تونس)",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "قرطاج / سيدي بوسعيد",
-    "address": "قرطاج / سيدي بوسعيد, ولاية تونس",
-    "street": "قرطاج / سيدي بوسعيد, ولاية تونس",
-    "lat": 36.845639,
-    "lon": 10.321639,
-    "rating": 4.5,
-    "reviews_count": 303,
-    "price_level": "$$",
-    "cuisine": "مأكولات تونسية، عالمية",
-    "phone": "+216 97 817 140",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.845639,10.321639",
-    "delivery_available": false,
-    "outdoor_seating": true,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "مناسب للعائلات",
-      "جلسات خارجية",
-      "تكييف هواء"
-    ],
-    "is_featured": false
-  },
-  {
-    "id": "tunis_way_990899817",
-    "governorate": "ولاية تونس",
-    "name": "مطعم (قرطاج / سيدي بوسعيد, ولاية تونس)",
-    "category": "مطعم عام (Restaurant)",
-    "icon": "🍽️",
-    "delegation": "قرطاج / سيدي بوسعيد",
-    "address": "قرطاج / سيدي بوسعيد, ولاية تونس",
-    "street": "قرطاج / سيدي بوسعيد, ولاية تونس",
-    "lat": 36.845522,
-    "lon": 10.321645,
-    "rating": 3.9,
-    "reviews_count": 202,
-    "price_level": "$$",
-    "cuisine": "مأكولات تونسية، عالمية",
-    "phone": "+216 72 672 984",
-    "email": "",
-    "opening_hours": "08:00 - 23:00 (يومياً)",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=36.845522,10.321645",
-    "delivery_available": false,
-    "outdoor_seating": false,
-    "website": "",
-    "social_media": "",
-    "services": [
-      "أكل حلال",
-      "مناسب للعائلات",
-      "واي فاي مجاني"
     ],
     "is_featured": false
   },

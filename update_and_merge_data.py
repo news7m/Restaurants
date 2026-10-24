@@ -1,5 +1,6 @@
 import json
 import os
+import urllib.parse
 
 def clean_item(item, default_gov):
     coords = item.get('coordinates', {})
@@ -53,7 +54,10 @@ def clean_item(item, default_gov):
     lat_val = round(float(lat), 6) if lat else 0.0
     lon_val = round(float(lon), 6) if lon else 0.0
 
-    gmaps_url = f'https://www.google.com/maps/search/?api=1&query={lat_val},{lon_val}'
+    name_val = item.get('name', 'غير مسمى').strip()
+    query_str = f"{name_val} {delg.strip()}@{lat_val},{lon_val}"
+    encoded_query = urllib.parse.quote(query_str)
+    gmaps_url = f'https://www.google.com/maps/search/?api=1&query={encoded_query}'
 
     return {
         'id': item.get('id'),

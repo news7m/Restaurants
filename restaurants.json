@@ -2701,8 +2701,7 @@
     "website": "",
     "social_media": "https://www.facebook.com/saray.restaurant.tunisie",
     "services": [],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/saray.restaurant.tunisie"
+    "is_featured": false
   },
   {
     "id": 107,
@@ -9682,8 +9681,7 @@
       "جلسات خارجية",
       "تكييف هواء"
     ],
-    "is_featured": true,
-    "facebook": "https://www.facebook.com/lebamboucuisineasiatique/"
+    "is_featured": true
   },
   {
     "id": "ariana_node_4354437601",
@@ -9936,8 +9934,7 @@
       "تكييف هواء",
       "أكل حلال"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/planb.tunisie"
+    "is_featured": false
   },
   {
     "id": "ariana_node_4512310991",
@@ -9970,8 +9967,7 @@
       "الدفع بالبطاقة",
       "موقف سيارات"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/MaisonGourmandise"
+    "is_featured": false
   },
   {
     "id": "ariana_node_4539214391",
@@ -11043,8 +11039,7 @@
       "موقف سيارات",
       "أكل حلال"
     ],
-    "is_featured": true,
-    "facebook": "https://www.facebook.com/KFCTunisie"
+    "is_featured": true
   },
   {
     "id": "ariana_node_6498956395",
@@ -11201,8 +11196,7 @@
       "موقف سيارات",
       "أكل حلال"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/iloveinsomnia.tn"
+    "is_featured": false
   },
   {
     "id": "ariana_node_7185245863",
@@ -11265,8 +11259,7 @@
       "جلسات خارجية",
       "توصيل منازل"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/OrigamiSushiBarTunisie"
+    "is_featured": false
   },
   {
     "id": "ariana_node_7347151314",
@@ -11392,8 +11385,7 @@
       "موقف سيارات",
       "أكل حلال"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/TacosChaneb"
+    "is_featured": false
   },
   {
     "id": "ariana_node_7537727114",
@@ -11425,8 +11417,7 @@
       "تكييف هواء",
       "أكل حلال"
     ],
-    "is_featured": true,
-    "facebook": "https://www.facebook.com/planb.tunisie"
+    "is_featured": true
   },
   {
     "id": "ariana_node_8583009337",
@@ -11456,8 +11447,7 @@
       "شيشة",
       "مأكولات سفري"
     ],
-    "is_featured": true,
-    "facebook": "https://www.facebook.com/innout.tunisie"
+    "is_featured": true
   },
   {
     "id": "ariana_node_8690087306",
@@ -11517,8 +11507,7 @@
       "واي فاي مجاني",
       "موقف سيارات"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/MasterFood.Tunisie"
+    "is_featured": false
   },
   {
     "id": "ariana_node_8941367367",
@@ -13210,8 +13199,7 @@
       "مناسب للعائلات",
       "موقف سيارات"
     ],
-    "is_featured": true,
-    "facebook": "http://www.facebook.com/ReservoirBistro/"
+    "is_featured": true
   },
   {
     "id": "ariana_way_138744509",

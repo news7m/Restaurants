@@ -23,8 +23,7 @@
     "website": "",
     "social_media": "https://www.facebook.com/cafedesdelices.official",
     "services": [],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/cafedesdelices.official"
+    "is_featured": false
   },
   {
     "id": 1002,
@@ -50,8 +49,7 @@
     "website": "",
     "social_media": "https://www.facebook.com/cafedesnattes.official",
     "services": [],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/cafedesnattes.official"
+    "is_featured": false
   },
   {
     "id": 1003,
@@ -103,8 +101,7 @@
     "website": "",
     "social_media": "https://www.facebook.com/legolfe.lamarsa",
     "services": [],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/legolfe.lamarsa"
+    "is_featured": false
   },
   {
     "id": 1005,
@@ -260,8 +257,7 @@
     "website": "",
     "social_media": "https://www.facebook.com/villadidoncarthage.official",
     "services": [],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/villadidoncarthage.official"
+    "is_featured": false
   },
   {
     "id": 1011,
@@ -339,8 +335,7 @@
     "website": "",
     "social_media": "https://www.facebook.com/MaisonKayserTunisie",
     "services": [],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/MaisonKayserTunisie"
+    "is_featured": false
   },
   {
     "id": 1014,
@@ -366,8 +361,7 @@
     "website": "",
     "social_media": "https://www.facebook.com/fredericcasseltunis",
     "services": [],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/fredericcasseltunis"
+    "is_featured": false
   },
   {
     "id": 1015,
@@ -393,8 +387,7 @@
     "website": "",
     "social_media": "https://www.facebook.com/ChilisTunisie",
     "services": [],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/ChilisTunisie"
+    "is_featured": false
   },
   {
     "id": 1016,
@@ -472,8 +465,7 @@
     "website": "",
     "social_media": "https://www.facebook.com/KFCTunisie",
     "services": [],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/KFCTunisie"
+    "is_featured": false
   },
   {
     "id": 1019,
@@ -499,8 +491,7 @@
     "website": "",
     "social_media": "https://www.facebook.com/paultunisie",
     "services": [],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/paultunisie"
+    "is_featured": false
   },
   {
     "id": 1020,
@@ -526,8 +517,7 @@
     "website": "",
     "social_media": "https://www.facebook.com/dareljeld.tunis",
     "services": [],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/dareljeld.tunis"
+    "is_featured": false
   },
   {
     "id": 1021,
@@ -553,8 +543,7 @@
     "website": "http://www.fondoukelattarine.com",
     "social_media": "https://www.facebook.com/fondoukelattarine",
     "services": [],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/fondoukelattarine"
+    "is_featured": false
   },
   {
     "id": 1022,
@@ -684,8 +673,7 @@
     "website": "",
     "social_media": "https://www.facebook.com/chezslah.restaurant",
     "services": [],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/chezslah.restaurant"
+    "is_featured": false
   },
   {
     "id": 1027,
@@ -763,8 +751,7 @@
     "website": "",
     "social_media": "https://www.facebook.com/maisonzarrouk",
     "services": [],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/maisonzarrouk"
+    "is_featured": false
   },
   {
     "id": 1030,
@@ -790,8 +777,7 @@
     "website": "",
     "social_media": "https://www.facebook.com/laspigola.lagoulette",
     "services": [],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/laspigola.lagoulette"
+    "is_featured": false
   },
   {
     "id": 1031,
@@ -921,8 +907,7 @@
     "website": "",
     "social_media": "https://www.facebook.com/planb.tunisie",
     "services": [],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/planb.tunisie"
+    "is_featured": false
   },
   {
     "id": 1036,
@@ -974,8 +959,7 @@
     "website": "",
     "social_media": "https://www.facebook.com/CosmittoCoffee",
     "services": [],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/CosmittoCoffee"
+    "is_featured": false
   },
   {
     "id": 1038,
@@ -1855,9 +1839,7 @@
       "جلسات خارجية",
       "موقف سيارات"
     ],
-    "is_featured": true,
-    "facebook": "https://www.facebook.com/DareljeldTunis",
-    "instagram": "https://www.instagram.com/dareljeld"
+    "is_featured": true
   },
   {
     "id": "tunis_node_1037100788",
@@ -4553,9 +4535,7 @@
       "موقف سيارات",
       "أكل حلال"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/VillaDidonHotel",
-    "instagram": "https://www.instagram.com/villadidoncarthage"
+    "is_featured": false
   },
   {
     "id": "tunis_node_1517654780",
@@ -7601,8 +7581,7 @@
       "مناسب للعائلات",
       "موقف سيارات"
     ],
-    "is_featured": true,
-    "facebook": "https://www.facebook.com/YABON.LaMarsa/"
+    "is_featured": true
   },
   {
     "id": "tunis_node_2817718376",
@@ -8768,8 +8747,7 @@
       "الدفع بالبطاقة",
       "موقف سيارات"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/Sanfours-Sandwiches-Pizzas-720089958033474/"
+    "is_featured": false
   },
   {
     "id": "tunis_node_3770326089",
@@ -8926,8 +8904,7 @@
       "شيشة",
       "مأكولات سفري"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/chezslah.restaurant"
+    "is_featured": false
   },
   {
     "id": "tunis_node_3871434973",
@@ -10533,9 +10510,7 @@
       "مناسب للعائلات",
       "موقف سيارات"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/restaurantsultanahmetelmanar",
-    "instagram": "https://www.instagram.com/restaurantsultanahmet"
+    "is_featured": false
   },
   {
     "id": "tunis_node_4691387989",
@@ -11040,9 +11015,7 @@
       "الدفع بالبطاقة",
       "أكل حلال"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/CosmittoCoffee",
-    "instagram": "https://www.instagram.com/cosmittocoffee"
+    "is_featured": false
   },
   {
     "id": "tunis_node_4908212135",
@@ -11545,8 +11518,7 @@
       "مناسب للعائلات",
       "مأكولات سفري"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/MaisonGourmandise"
+    "is_featured": false
   },
   {
     "id": "tunis_node_5152967409",
@@ -13559,8 +13531,7 @@
       "أكل حلال",
       "موقف سيارات"
     ],
-    "is_featured": false,
-    "instagram": "https://www.instagram.com/munchiestunis"
+    "is_featured": false
   },
   {
     "id": "tunis_node_5907339385",
@@ -16117,8 +16088,7 @@
       "شيشة",
       "مأكولات سفري"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/MaisonGourmandise"
+    "is_featured": false
   },
   {
     "id": "tunis_node_6293532760",
@@ -19564,8 +19534,7 @@
       "مناسب للعائلات",
       "أكل حلال"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/KFCTunisie"
+    "is_featured": false
   },
   {
     "id": "tunis_node_6367585658",
@@ -19627,9 +19596,7 @@
       "جلسات خارجية",
       "تكييف هواء"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/Cafe.Bondin",
-    "instagram": "https://www.instagram.com/cafesbondin"
+    "is_featured": false
   },
   {
     "id": "tunis_node_6409207251",
@@ -20818,8 +20785,7 @@
       "مأكولات سفري",
       "تكييف هواء"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/lerochergammarth"
+    "is_featured": false
   },
   {
     "id": "tunis_node_6521987563",
@@ -23396,8 +23362,7 @@
       "الدفع بالبطاقة",
       "مناسب للعائلات"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/MaisonGourmandise"
+    "is_featured": false
   },
   {
     "id": "tunis_node_6580422455",
@@ -24950,8 +24915,7 @@
       "الدفع بالبطاقة",
       "تكييف هواء"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/pg/Khairi-Food-1991266841174551"
+    "is_featured": false
   },
   {
     "id": "tunis_node_7211675808",
@@ -25079,8 +25043,7 @@
       "توصيل منازل",
       "تكييف هواء"
     ],
-    "is_featured": true,
-    "facebook": "https://www.facebook.com/toptacostn/"
+    "is_featured": true
   },
   {
     "id": "tunis_node_7211675816",
@@ -25176,8 +25139,7 @@
       "موقف سيارات",
       "أكل حلال"
     ],
-    "is_featured": true,
-    "facebook": "https://www.facebook.com/pg/Uno-la-marsa-105797887508691"
+    "is_featured": true
   },
   {
     "id": "tunis_node_7211675821",
@@ -25211,8 +25173,7 @@
       "مناسب للعائلات",
       "أكل حلال"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/pizza.go.la.marsa/"
+    "is_featured": false
   },
   {
     "id": "tunis_node_7211675822",
@@ -25246,8 +25207,7 @@
       "مناسب للعائلات",
       "موقف سيارات"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/pages/Al-Chami-La-Marsa/252033178175406"
+    "is_featured": false
   },
   {
     "id": "tunis_node_7215597381",
@@ -27389,8 +27349,7 @@
       "جلسات خارجية",
       "موقف سيارات"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/planb.tunisie"
+    "is_featured": false
   },
   {
     "id": "tunis_node_8783787819",
@@ -27960,8 +27919,7 @@
       "أكل حلال",
       "موقف سيارات"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/Grignotine.ad/"
+    "is_featured": false
   },
   {
     "id": "tunis_node_9008257838",
@@ -28243,8 +28201,7 @@
       "شيشة",
       "جلسات خارجية"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/MugsBurger.Lac2/"
+    "is_featured": false
   },
   {
     "id": "tunis_node_9026989936",
@@ -28309,8 +28266,7 @@
       "مناسب للعائلات",
       "أكل حلال"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/vintage.lac2/"
+    "is_featured": false
   },
   {
     "id": "tunis_node_9026989948",
@@ -28537,8 +28493,7 @@
       "موقف سيارات",
       "أكل حلال"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/Burger-Stop-106653545126167/"
+    "is_featured": false
   },
   {
     "id": "tunis_node_9160363028",
@@ -29264,8 +29219,7 @@
       "الدفع بالبطاقة",
       "أكل حلال"
     ],
-    "is_featured": true,
-    "facebook": "https://www.facebook.com/KFCTunisie"
+    "is_featured": true
   },
   {
     "id": "tunis_node_9789909065",
@@ -29295,8 +29249,7 @@
       "مناسب للعائلات",
       "جلسات خارجية"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/MaisonGourmandise"
+    "is_featured": false
   },
   {
     "id": "tunis_node_9872018999",
@@ -29667,9 +29620,7 @@
       "واي فاي مجاني",
       "موقف سيارات"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/Paradice.tn",
-    "instagram": "https://www.instagram.com/glaces.paradice"
+    "is_featured": false
   },
   {
     "id": "tunis_node_10040118085",
@@ -40392,9 +40343,7 @@
       "واي فاي مجاني",
       "شيشة"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/saray.restaurant.tunisie",
-    "instagram": "https://www.instagram.com/saray_turkish"
+    "is_featured": false
   },
   {
     "id": "tunis_node_13699951699",
@@ -40583,8 +40532,7 @@
       "تكييف هواء",
       "أكل حلال"
     ],
-    "is_featured": false,
-    "instagram": "https://instagram.com/inward11"
+    "is_featured": false
   },
   {
     "id": "tunis_node_14004418701",
@@ -41158,8 +41106,7 @@
       "شيشة",
       "مأكولات سفري"
     ],
-    "is_featured": true,
-    "facebook": "https://www.facebook.com/groups"
+    "is_featured": true
   },
   {
     "id": "tunis_way_100788107",
@@ -41221,8 +41168,7 @@
       "الدفع بالبطاقة",
       "أكل حلال"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/pages/Le-Relais-La-Marsa/192428700793793"
+    "is_featured": false
   },
   {
     "id": "tunis_way_100904181",
@@ -41858,8 +41804,7 @@
       "مناسب للعائلات",
       "جلسات خارجية"
     ],
-    "is_featured": true,
-    "facebook": "https://www.facebook.com/cafedesnattes.official"
+    "is_featured": true
   },
   {
     "id": "tunis_way_154415729",
@@ -42577,8 +42522,7 @@
       "مناسب للعائلات",
       "موقف سيارات"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/KFCTunisie"
+    "is_featured": false
   },
   {
     "id": "tunis_way_679063831",
@@ -42610,9 +42554,7 @@
       "تكييف هواء",
       "موقف سيارات"
     ],
-    "is_featured": false,
-    "facebook": "https://www.facebook.com/restaurant.lastragale",
-    "instagram": "https://instagram.com/restaurantlastragale"
+    "is_featured": false
   },
   {
     "id": "tunis_way_680063554",

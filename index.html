@@ -1172,7 +1172,7 @@
         facebook: fbUrl,
         instagram: instaUrl,
         opening_hours: '08:00 - 23:00 (يومياً)',
-        google_maps_url: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((document.getElementById('new-name').value.trim() + ' ' + (document.getElementById('new-delegation').value || '')).trim())}@${latVal},${lonVal}`,
+        google_maps_url: `https://www.google.com/maps/search/?api=1&query=${latVal},${lonVal}`,
         delivery_available: true,
         outdoor_seating: true
       };

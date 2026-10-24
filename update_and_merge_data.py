@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import urllib.parse
 
 def clean_item(item, default_gov):
@@ -55,8 +56,10 @@ def clean_item(item, default_gov):
     lon_val = round(float(lon), 6) if lon else 0.0
 
     name_val = item.get('name', 'غير مسمى').strip()
-    query_str = f"{name_val} {delg.strip()}@{lat_val},{lon_val}"
-    encoded_query = urllib.parse.quote(query_str)
+    clean_name = re.sub(r'\s*\([^)]*\)', '', name_val).replace('"', '').replace("'", '').strip()
+    clean_delg = re.sub(r'\s*\([^)]*\)', '', delg).replace('"', '').replace("'", '').strip()
+    query_str = f"{clean_name} {clean_delg}@{lat_val},{lon_val}"
+    encoded_query = urllib.parse.quote(query_str.strip())
     gmaps_url = f'https://www.google.com/maps/search/?api=1&query={encoded_query}'
 
     return {

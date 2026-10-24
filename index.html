@@ -605,7 +605,7 @@
     // Favorite System
     function toggleFavorite(id) {
       const idx = favorites.indexOf(id);
-      const rest = restaurants.find(r => r.id === id);
+      const rest = restaurants.find(r => String(r.id) === String(id));
       const name = rest ? rest.name : '';
       if (idx > -1) {
         favorites.splice(idx, 1);
@@ -775,7 +775,7 @@
 
     // Share Venue helper
     function shareVenue(id) {
-      const item = restaurants.find(r => r.id === id);
+      const item = restaurants.find(r => String(r.id) === String(id));
       if (!item) return;
 
       const shareText = `${item.name} - ${item.category}\nالعنوان: ${item.address}\nالرابط: ${item.google_maps_url}`;
@@ -1309,7 +1309,7 @@
         if (serviceVal === 'outdoor') matchService = item.outdoor_seating;
 
         // Favorites check
-        const matchFav = !showFavsOnly || favorites.includes(item.id);
+        const matchFav = !showFavsOnly || favorites.some(favId => String(favId) === String(item.id));
 
         // Price check
         const matchPrice = priceVal === 'ALL' || item.price_level === priceVal;
@@ -1366,7 +1366,7 @@
       `).join('');
 
       return `
-        <div onclick="focusOnRestaurant(${item.id})" class="bg-white dark:bg-slate-800 hover:border-rose-400 dark:hover:border-rose-500 rounded-2xl p-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700/60 transition duration-300 cursor-pointer group relative overflow-hidden">
+        <div onclick="focusOnRestaurant('${item.id}')" class="bg-white dark:bg-slate-800 hover:border-rose-400 dark:hover:border-rose-500 rounded-2xl p-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700/60 transition duration-300 cursor-pointer group relative overflow-hidden">
           <div class="flex items-start justify-between gap-2.5">
             <div class="flex items-start gap-2.5 min-w-0">
               <div class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform">
@@ -1405,16 +1405,16 @@
               ${item.outdoor_seating ? '<span class="text-sky-600 dark:text-sky-400 text-[10px] font-medium"><i class="fa-solid fa-chair ml-0.5"></i>جلسات خارجية</span>' : ''}
             </div>
             <div class="flex items-center gap-0.5 shrink-0">
-              <button onclick="event.stopPropagation(); toggleFavorite(${item.id})" class="touch-target text-slate-400 hover:text-rose-600 transition" title="حفظ بالمفضلة">
-                <i class="${favorites.includes(item.id) ? 'fa-solid fa-heart text-rose-500' : 'fa-regular fa-heart'} text-sm"></i>
+              <button onclick="event.stopPropagation(); toggleFavorite('${item.id}')" class="touch-target text-slate-400 hover:text-rose-600 transition" title="حفظ بالمفضلة">
+                <i class="${favorites.some(favId => String(favId) === String(item.id)) ? 'fa-solid fa-heart text-rose-500' : 'fa-regular fa-heart'} text-sm"></i>
               </button>
-              <button onclick="event.stopPropagation(); shareVenue(${item.id})" class="touch-target text-slate-400 hover:text-indigo-600 transition" title="مشاركة المكان">
+              <button onclick="event.stopPropagation(); shareVenue('${item.id}')" class="touch-target text-slate-400 hover:text-indigo-600 transition" title="مشاركة المكان">
                 <i class="fa-solid fa-share-nodes text-sm"></i>
               </button>
               ${phoneDigits ? `<a href="tel:${phoneDigits}" onclick="event.stopPropagation();" class="touch-target text-emerald-600 hover:text-emerald-700 transition" title="اتصال تلفوني"><i class="fa-solid fa-phone text-sm"></i></a>` : ''}
               ${websiteUrl ? `<a href="${websiteUrl}" target="_blank" onclick="event.stopPropagation();" class="touch-target text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="الموقع الإلكتروني"><i class="fa-solid fa-globe text-sm"></i></a>` : ''}
               ${socialButtonsHtml}
-              <button onclick="event.stopPropagation(); openDetailsModal(${item.id})" class="touch-target text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="عرض التفاصيل">
+              <button onclick="event.stopPropagation(); openDetailsModal('${item.id}')" class="touch-target text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition" title="عرض التفاصيل">
                 <i class="fa-solid fa-circle-info text-sm"></i>
               </button>
               <a href="${item.google_maps_url}" target="_blank" onclick="event.stopPropagation();" class="touch-target text-rose-600 hover:text-rose-700 font-bold transition" title="الاتجاهات عبر Google Maps">
@@ -1561,7 +1561,7 @@
 
     // Center map on clicked item and open popup
     function focusOnRestaurant(id) {
-      const item = restaurants.find(r => r.id === id);
+      const item = restaurants.find(r => String(r.id) === String(id));
       if (!item) return;
 
       map.setView([item.lat, item.lon], 16, { animate: true });
@@ -1620,7 +1620,7 @@
 
     // Modal Details Box
     function openDetailsModal(id) {
-      const item = restaurants.find(r => r.id === id);
+      const item = restaurants.find(r => String(r.id) === String(id));
       if (!item) return;
 
       const socialLinks = getSocialList(item);

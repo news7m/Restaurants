@@ -56,10 +56,8 @@ def process_elements(raw_data, gov_id, gov_name_ar, default_regions):
     elements = raw_data.get('elements', [])
     processed = []
 
-    # Service presets pool based on activity type
     all_services = ["توصيل منازل", "جلسات خارجية", "واي فاي مجاني", "موقف سيارات", "تكييف هواء", "أكل حلال", "الدفع بالبطاقة", "مناسب للعائلات", "شيشة", "مأكولات سفري"]
 
-    # Translation dictionary for common cuisines
     cuisine_tr = {
         "tunisian": "تونسي",
         "regional": "تونسي تقليدي",
@@ -127,6 +125,13 @@ def process_elements(raw_data, gov_id, gov_name_ar, default_regions):
             if lat > 36.88 and lon < 10.12: return "قلعة الأندلس"
             return random.choice(["أريانة المدينة", "النصر", "سكرة", "حي الغزالة", "رواد"])
 
+    category_map = {
+        "مطعم": "مطعم عام (Restaurant)",
+        "مقهى": "مقهى وكافيه (Café & Lounge)",
+        "وجبات سريعة": "وجبات سريعة (Fast Food)",
+        "مثلجات ومقرمشات": "حلويات ومخبوزات (Bakery & Sweets)"
+    }
+
     idx = 1
     for el in elements:
         tags = el.get('tags', {})
@@ -169,6 +174,8 @@ def process_elements(raw_data, gov_id, gov_name_ar, default_regions):
         else:
             activity_type = "مطعم"
             activity_icon = "fa-utensils"
+
+        category_val = category_map.get(activity_type, "مطعم عام (Restaurant)")
 
         raw_cuisine = tags.get('cuisine', '')
         cuisines_list = []
@@ -221,26 +228,36 @@ def process_elements(raw_data, gov_id, gov_name_ar, default_regions):
         website = tags.get('website') or tags.get('contact:website') or ""
         social_media = tags.get('facebook') or tags.get('contact:facebook') or tags.get('instagram') or tags.get('contact:instagram') or tags.get('social_media') or ""
 
+        icon_char = "☕" if "مقهى" in activity_type else ("🍔" if "وجبات" in activity_type else ("🍦" if "مثلجات" in activity_type else "🍽️"))
+
         item = {
             "id": f"{gov_id}_{el['type']}_{el['id']}",
             "osm_id": el['id'],
             "name": name_ar,
             "governorate": gov_name_ar,
             "governorate_code": gov_id,
-            "region": region,
+            "category": category_val,
             "activity_type": activity_type,
             "activity_icon": activity_icon,
+            "icon": icon_char,
+            "delegation": region,
+            "region": region,
             "cuisines": cuisines_list,
+            "cuisine": cuisines_list[0] if cuisines_list else "مأكولات متنوعة",
             "rating": rating,
             "reviews_count": reviews_count,
             "price_level": price_level,
             "address": full_address,
+            "lat": lat_rounded,
+            "lon": lon_rounded,
             "phone": phone,
             "email": email,
             "opening_hours": opening_hours,
             "website": website,
             "social_media": social_media,
             "services": list(set(assigned_services)),
+            "delivery_available": "توصيل منازل" in assigned_services,
+            "outdoor_seating": "جلسات خارجية" in assigned_services,
             "coordinates": {
                 "lat": lat_rounded,
                 "lng": lon_rounded

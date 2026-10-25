@@ -1,14 +1,23 @@
 import urllib.request
+import urllib.error
+import urllib.parse
 import json
 import os
 import re
 import random
+import time
 from clean_dataset_utils import is_valid_restaurant_venue
 
+OVERPASS_ENDPOINTS = [
+    'https://overpass-api.de/api/interpreter',
+    'https://overpass.kumi.systems/api/interpreter',
+    'https://overpass.private.coffee/api/interpreter',
+    'https://maps.mail.ru/osm/tools/overpass/api/interpreter'
+]
+
 def fetch_osm_data(iso_code):
-    overpass_url = 'https://overpass-api.de/api/interpreter'
     query = f'''
-    [out:json][timeout:90];
+    [out:json][timeout:30];
     area["ISO3166-2"="{iso_code}"]->.searchArea;
     (
       node["amenity"~"restaurant|cafe|fast_food|ice_cream"](area.searchArea);
@@ -16,11 +25,34 @@ def fetch_osm_data(iso_code):
     );
     out center tags;
     '''
-    req = urllib.request.Request(overpass_url, data=query.encode('utf-8'), headers={'User-Agent': 'TunisiaRestaurantsApp/1.0'})
-    with urllib.request.urlopen(req) as response:
-        return json.loads(response.read().decode())
+    encoded_query = query.encode('utf-8')
+
+    for endpoint in OVERPASS_ENDPOINTS:
+        for attempt in range(1, 3):
+            try:
+                print(f"Connecting to Overpass API ({endpoint}) for {iso_code}, attempt {attempt}...")
+                req = urllib.request.Request(
+                    endpoint,
+                    data=encoded_query,
+                    headers={'User-Agent': 'TunisiaRestaurantsApp/1.0 (https://github.com)'}
+                )
+                with urllib.request.urlopen(req, timeout=12) as response:
+                    raw_text = response.read().decode('utf-8')
+                    data = json.loads(raw_text)
+                    if 'elements' in data:
+                        print(f"Successfully fetched {len(data['elements'])} elements from {endpoint}")
+                        return data
+            except Exception as e:
+                print(f"Warning: Attempt {attempt} failed for {endpoint}: {e}")
+                time.sleep(1)
+
+    print(f"Error: All Overpass API mirrors failed for ISO code {iso_code}.")
+    return None
 
 def process_elements(raw_data, gov_id, gov_name_ar, default_regions):
+    if not raw_data or not isinstance(raw_data, dict):
+        return []
+
     elements = raw_data.get('elements', [])
     processed = []
 
@@ -56,14 +88,10 @@ def process_elements(raw_data, gov_id, gov_name_ar, default_regions):
         "american": "أمريكي"
     }
 
-    # Region bounds/lookup helpers for Tunis and Ariana
     def deduce_region(lat, lon, tags, gov_id):
-        # 1) Check tag 'addr:suburb' or 'addr:city' or 'addr:district'
         suburb = tags.get('addr:suburb') or tags.get('addr:city') or tags.get('addr:district') or tags.get('addr:neighbourhood')
         if suburb:
-            # clean suburb string
             sub_str = suburb.strip()
-            # standard map
             if "La Marsa" in sub_str or "Marsa" in sub_str or "المرسى" in sub_str: return "المرسى"
             if "Carthage" in sub_str or "قرطاج" in sub_str: return "قرطاج"
             if "Sidi Bou Said" in sub_str or "سيدي بوسعيد" in sub_str or "Sidi Bou" in sub_str: return "سيدي بوسعيد"
@@ -83,7 +111,6 @@ def process_elements(raw_data, gov_id, gov_name_ar, default_regions):
             if "Médina" in sub_str or "Medina" in sub_str or "المدينة" in sub_str: return "المدينة العتيقة"
             if "Centre Ville" in sub_str or "وسط المدينة" in sub_str: return "وسط المدينة / باب بحر"
 
-        # 2) Coordinate based rough fallback
         if gov_id == "tunis":
             if lat > 36.87 and lon > 10.30: return "المرسى / قمرت"
             if lat > 36.84 and lon > 10.31: return "قرطاج / سيدي بوسعيد"
@@ -92,7 +119,7 @@ def process_elements(raw_data, gov_id, gov_name_ar, default_regions):
             if lat > 36.80 and lon > 10.18: return "وسط المدينة / باب بحر"
             if lat < 36.81 and lon < 10.15: return "باردو"
             return random.choice(["وسط المدينة", "المرسى", "المنزه", "البحيرة", "حلق الوادي", "باردو"])
-        else: # ariana
+        else:
             if lat > 36.89 and lon > 10.18: return "رواد / غزالة"
             if lat > 36.85 and lon > 10.23: return "سكرة"
             if lat > 36.85 and lon < 10.16: return "النصر"
@@ -104,7 +131,6 @@ def process_elements(raw_data, gov_id, gov_name_ar, default_regions):
     for el in elements:
         tags = el.get('tags', {})
 
-        # Determine lat/lon
         if el['type'] == 'node':
             lat = el.get('lat')
             lon = el.get('lon')
@@ -116,11 +142,9 @@ def process_elements(raw_data, gov_id, gov_name_ar, default_regions):
         if not lat or not lon:
             continue
 
-        # Raw Name
         name_raw = tags.get('name:ar') or tags.get('name') or tags.get('name:fr') or tags.get('name:en')
         amenity = tags.get('amenity', 'restaurant')
 
-        # Standardize name in Arabic
         if not name_raw or len(name_raw.strip()) < 2:
             if amenity == 'cafe':
                 name_ar = f"مقهى {idx}"
@@ -133,7 +157,6 @@ def process_elements(raw_data, gov_id, gov_name_ar, default_regions):
         else:
             name_ar = name_raw.strip()
 
-        # Activity Type
         if amenity == 'cafe':
             activity_type = "مقهى"
             activity_icon = "fa-coffee"
@@ -147,7 +170,6 @@ def process_elements(raw_data, gov_id, gov_name_ar, default_regions):
             activity_type = "مطعم"
             activity_icon = "fa-utensils"
 
-        # Cuisine tag processing
         raw_cuisine = tags.get('cuisine', '')
         cuisines_list = []
         if raw_cuisine:
@@ -166,26 +188,17 @@ def process_elements(raw_data, gov_id, gov_name_ar, default_regions):
             else:
                 cuisines_list = ["مأكولات تونسية", "عالمية"]
 
-        # Phone
         phone = tags.get('phone') or tags.get('contact:phone') or tags.get('mobile') or f"+216 {random.randint(20, 99)} {random.randint(100, 999)} {random.randint(100, 999)}"
-
-        # Opening hours
         opening_hours = tags.get('opening_hours') or "08:00 - 23:00 (يومياً)"
-
-        # Address
         addr_street = tags.get('addr:street') or tags.get('addr:full') or tags.get('addr:place') or ""
         region = deduce_region(lat, lon, tags, gov_id)
-
         full_address = f"{addr_street}, {region}, {gov_name_ar}".strip(", ") if addr_street else f"{region}, {gov_name_ar}"
 
-        # Rating & Price Range determinator (seeded by id for consistency)
         random.seed(el['id'])
         rating = round(random.uniform(3.8, 4.9), 1)
         reviews_count = random.randint(15, 450)
         price_level = random.choice(["$", "$$", "$$$", "$$$$"])
 
-        # Dynamic Services assignment
-        # ensure 3 to 6 services assigned
         assigned_services = random.sample(all_services, k=random.randint(3, 6))
         if tags.get('takeaway') == 'yes' and "مأكولات سفري" not in assigned_services:
             assigned_services.append("مأكولات سفري")
@@ -196,7 +209,6 @@ def process_elements(raw_data, gov_id, gov_name_ar, default_regions):
         if tags.get('internet_access') in ['wlan', 'yes'] and "واي فاي مجاني" not in assigned_services:
             assigned_services.append("واي فاي مجاني")
 
-        # Google Maps URL with precise rounded coordinates and authentic name + delegation search query
         lat_rounded = round(lat, 6)
         lon_rounded = round(lon, 6)
         clean_name = re.sub(r'\s*\([^)]*\)', '', name_ar).replace('"', '').replace("'", '').strip()
@@ -205,7 +217,6 @@ def process_elements(raw_data, gov_id, gov_name_ar, default_regions):
         encoded_query = urllib.parse.quote(query_str.strip())
         gmaps_url = f"https://www.google.com/maps/search/?api=1&query={encoded_query}"
 
-        # Contact details
         email = tags.get('email') or tags.get('contact:email') or ""
         website = tags.get('website') or tags.get('contact:website') or ""
         social_media = tags.get('facebook') or tags.get('contact:facebook') or tags.get('instagram') or tags.get('contact:instagram') or tags.get('social_media') or ""
@@ -238,28 +249,40 @@ def process_elements(raw_data, gov_id, gov_name_ar, default_regions):
             "is_featured": random.random() > 0.85
         }
 
-        # Filter out non-food venues
         if is_valid_restaurant_venue(item):
             processed.append(item)
         idx += 1
 
     return processed
 
-os.makedirs('data', exist_ok=True)
+def main():
+    os.makedirs('data', exist_ok=True)
 
-print("Fetching Tunis raw data...")
-tunis_raw = fetch_osm_data('TN-11')
-tunis_processed = process_elements(tunis_raw, 'tunis', 'ولاية تونس', ['وسط المدينة', 'المرسى', 'قرطاج', 'سيدي بوسعيد', 'البحيرة', 'المنزه', 'المنار', 'الكرم', 'حلق الوادي', 'باردو'])
+    print("Fetching Tunis raw data...")
+    tunis_raw = fetch_osm_data('TN-11')
+    if tunis_raw:
+        tunis_processed = process_elements(tunis_raw, 'tunis', 'ولاية تونس', ['وسط المدينة', 'المرسى', 'قرطاج', 'سيدي بوسعيد', 'البحيرة', 'المنزه', 'المنار', 'الكرم', 'حلق الوادي', 'باردو'])
+        if tunis_processed:
+            with open('data/tunis_restaurants.json', 'w', encoding='utf-8') as f:
+                json.dump(tunis_processed, f, ensure_ascii=False, indent=2)
+            with open('tunis_restaurants.json', 'w', encoding='utf-8') as f:
+                json.dump(tunis_processed, f, ensure_ascii=False, indent=2)
+            print(f"Successfully saved {len(tunis_processed)} venues for Tunis")
+    else:
+        print("Warning: Retaining existing Tunis dataset due to Overpass API unavailability.")
 
-print("Fetching Ariana raw data...")
-ariana_raw = fetch_osm_data('TN-12')
-ariana_processed = process_elements(ariana_raw, 'ariana', 'ولاية أريانة', ['أريانة المدينة', 'النصر', 'سكرة', 'حي الغزالة', 'رواد', 'المنيهلة', 'التضامن', 'قلعة الأندلس'])
+    print("Fetching Ariana raw data...")
+    ariana_raw = fetch_osm_data('TN-12')
+    if ariana_raw:
+        ariana_processed = process_elements(ariana_raw, 'ariana', 'ولاية أريانة', ['أريانة المدينة', 'النصر', 'سكرة', 'حي الغزالة', 'رواد', 'المنيهلة', 'التضامن', 'قلعة الأندلس'])
+        if ariana_processed:
+            with open('data/ariana_restaurants.json', 'w', encoding='utf-8') as f:
+                json.dump(ariana_processed, f, ensure_ascii=False, indent=2)
+            with open('restaurants.json', 'w', encoding='utf-8') as f:
+                json.dump(ariana_processed, f, ensure_ascii=False, indent=2)
+            print(f"Successfully saved {len(ariana_processed)} venues for Ariana")
+    else:
+        print("Warning: Retaining existing Ariana dataset due to Overpass API unavailability.")
 
-with open('data/tunis_restaurants.json', 'w', encoding='utf-8') as f:
-    json.dump(tunis_processed, f, ensure_ascii=False, indent=2)
-
-with open('data/ariana_restaurants.json', 'w', encoding='utf-8') as f:
-    json.dump(ariana_processed, f, ensure_ascii=False, indent=2)
-
-print(f"Successfully saved {len(tunis_processed)} venues to data/tunis_restaurants.json")
-print(f"Successfully saved {len(ariana_processed)} venues to data/ariana_restaurants.json")
+if __name__ == '__main__':
+    main()

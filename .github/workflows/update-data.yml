@@ -1,0 +1,39 @@
+name: Automated Restaurant Data Update
+
+on:
+  schedule:
+    # Runs every Sunday at 00:00 UTC
+    - cron: '0 0 * * 0'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions UI
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Fetch and Process OSM Data
+        run: |
+          python3 fetch_and_process.py
+          python3 generate_governorates_data.py
+          python3 sanitize_all_datasets.py
+
+      - name: Commit and Push Updated Datasets
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/ restaurants.json tunis_restaurants.json
+          if git diff --staged --quiet; then
+            echo "No dataset changes detected."
+          else
+            git commit -m "auto(data): update venue datasets from OpenStreetMap"
+            git push
+          fi

@@ -1,4 +1,3 @@
-
     let restaurants = [];
     let filteredRestaurants = [];
     let favorites = JSON.parse(localStorage.getItem('ariana_favs') || '[]');
@@ -45,7 +44,7 @@
     // Favorite System
     function toggleFavorite(id) {
       const idx = favorites.indexOf(id);
-      const rest = restaurants.find(r => String(r.id) === String(id));
+      const rest = restaurants.find(r => r && String(r.id) === String(id));
       const name = rest ? rest.name : '';
       if (idx > -1) {
         favorites.splice(idx, 1);
@@ -215,10 +214,10 @@
 
     // Share Venue helper
     function shareVenue(id) {
-      const item = restaurants.find(r => String(r.id) === String(id));
+      const item = restaurants.find(r => r && String(r.id) === String(id));
       if (!item) return;
 
-      const shareText = `${item.name} - ${item.category}\nالعنوان: ${item.address}\nالرابط: ${item.google_maps_url}`;
+      const shareText = `${item.name} - ${item.category || item.activity_type || ''}\nالعنوان: ${item.address}\nالرابط: ${item.google_maps_url}`;
       if (navigator.share) {
         navigator.share({
           title: item.name,
@@ -369,8 +368,8 @@
       if (delegations.length === 0) {
         const availablePlaces = govVal === 'ALL'
           ? restaurants
-          : restaurants.filter(r => r.governorate === govVal);
-        delegations = Array.from(new Set(availablePlaces.map(r => r.delegation))).sort((a, b) => a.localeCompare(b, 'ar'));
+          : restaurants.filter(r => r && r.governorate === govVal);
+        delegations = Array.from(new Set(availablePlaces.map(r => r.delegation || r.region).filter(Boolean))).sort((a, b) => a.localeCompare(b, 'ar'));
       }
 
       delSelect.innerHTML = `<option value="ALL">جميع المناطق والمعتمديات</option>` +
@@ -454,10 +453,10 @@
       const govVal = document.getElementById('new-governorate').value;
       const delVal = document.getElementById('new-delegation').value;
 
-      const matchedPlaces = restaurants.filter(r => r.governorate === govVal && r.delegation === delVal);
+      const matchedPlaces = restaurants.filter(r => r && r.governorate === govVal && (r.delegation === delVal || r.region === delVal));
       if (matchedPlaces.length > 0) {
-        const avgLat = matchedPlaces.reduce((sum, r) => sum + r.lat, 0) / matchedPlaces.length;
-        const avgLon = matchedPlaces.reduce((sum, r) => sum + r.lon, 0) / matchedPlaces.length;
+        const avgLat = matchedPlaces.reduce((sum, r) => sum + (r.lat || r.coordinates?.lat || 0), 0) / matchedPlaces.length;
+        const avgLon = matchedPlaces.reduce((sum, r) => sum + (r.lon || r.coordinates?.lng || 0), 0) / matchedPlaces.length;
         setPickerCoordinates(avgLat, avgLon, `الموقع التلقائي لمنطقة: ${delVal}`);
       } else {
         const fallbackLat = govVal === 'ولاية تونس' ? 36.8065 : 36.8665;
@@ -515,8 +514,8 @@
       }
 
       if (delegations.length === 0) {
-        const availablePlaces = restaurants.filter(r => r.governorate === govVal);
-        delegations = Array.from(new Set(availablePlaces.map(r => r.delegation))).sort((a, b) => a.localeCompare(b, 'ar'));
+        const availablePlaces = restaurants.filter(r => r && r.governorate === govVal);
+        delegations = Array.from(new Set(availablePlaces.map(r => r.delegation || r.region).filter(Boolean))).sort((a, b) => a.localeCompare(b, 'ar'));
       }
 
       delSelect.innerHTML = delegations.map(d => `<option value="${d}">${d}</option>`).join('');
@@ -546,17 +545,21 @@
       const fbUrl = document.getElementById('new-facebook') ? document.getElementById('new-facebook').value.trim() : '';
       const instaUrl = document.getElementById('new-instagram') ? document.getElementById('new-instagram').value.trim() : '';
 
+      const catVal = document.getElementById('new-category').value;
       const newPlace = {
         id: Date.now(),
         governorate: newGov,
         name: document.getElementById('new-name').value.trim(),
-        category: document.getElementById('new-category').value,
-        icon: document.getElementById('new-category').value.includes('مقهى') ? '☕' : '🍽️',
+        category: catVal,
+        activity_type: catVal.includes('مقهى') ? 'مقهى' : 'مطعم',
+        icon: catVal.includes('مقهى') ? '☕' : '🍽️',
         delegation: document.getElementById('new-delegation').value,
+        region: document.getElementById('new-delegation').value,
         address: document.getElementById('new-address').value.trim(),
         street: 'غير محدد',
         lat: latVal,
         lon: lonVal,
+        coordinates: { lat: latVal, lng: lonVal },
         rating: 5.0,
         reviews_count: 1,
         price_level: '$$',
@@ -588,6 +591,7 @@
 
     // Helper to get effective social media links and icons
     function getSocialList(item) {
+      if (!item) return [];
       const socialList = [];
 
       let fbUrl = item.facebook ? item.facebook.trim() : '';
@@ -656,8 +660,8 @@
           const data = await resp.json();
           loadedGovernoratesCache[key] = data;
 
-          const existingIds = new Set(restaurants.map(r => String(r.id)));
-          const newEntries = data.filter(r => !existingIds.has(String(r.id)));
+          const existingIds = new Set(restaurants.filter(Boolean).map(r => String(r.id)));
+          const newEntries = data.filter(r => r && !existingIds.has(String(r.id)));
           restaurants = restaurants.concat(newEntries);
         }
       } catch (err) {
@@ -690,7 +694,7 @@
       allData.forEach(dataset => {
         if (Array.isArray(dataset)) {
           dataset.forEach(item => {
-            if (!seenIds.has(String(item.id))) {
+            if (item && !seenIds.has(String(item.id))) {
               seenIds.add(String(item.id));
               combined.push(item);
             }
@@ -723,14 +727,22 @@
         loadedGovernoratesCache['ariana'] = arianaData;
         loadedGovernoratesCache['tunis'] = tunisData;
 
-        const formattedAriana = arianaData.map(item => ({
+        const formattedAriana = (Array.isArray(arianaData) ? arianaData : []).map(item => ({
           ...item,
-          governorate: item.governorate || "ولاية أريانة"
+          governorate: item.governorate || "ولاية أريانة",
+          category: item.category || (item.activity_type ? `${item.activity_type} عام` : "مطعم عام (Restaurant)"),
+          delegation: item.delegation || item.region || "أريانة المدينة",
+          lat: item.lat || item.coordinates?.lat || 36.866,
+          lon: item.lon || item.coordinates?.lng || 10.183
         }));
 
-        const formattedTunis = tunisData.map(item => ({
+        const formattedTunis = (Array.isArray(tunisData) ? tunisData : []).map(item => ({
           ...item,
-          governorate: item.governorate || "ولاية تونس"
+          governorate: item.governorate || "ولاية تونس",
+          category: item.category || (item.activity_type ? `${item.activity_type} عام` : "مطعم عام (Restaurant)"),
+          delegation: item.delegation || item.region || "وسط المدينة",
+          lat: item.lat || item.coordinates?.lat || 36.806,
+          lon: item.lon || item.coordinates?.lng || 10.181
         }));
 
         restaurants = [...customPlaces, ...formattedAriana, ...formattedTunis];
@@ -750,13 +762,23 @@
       const govVal = document.getElementById('governorate-filter').value;
       const activeList = govVal === 'ALL'
         ? restaurants
-        : restaurants.filter(r => r.governorate === govVal);
+        : restaurants.filter(r => r && r.governorate === govVal);
 
       document.getElementById('stat-total').innerText = activeList.length;
 
-      const restCount = activeList.filter(r => r.category.includes('مطعم')).length;
-      const cafeCount = activeList.filter(r => r.category.includes('مقهى')).length;
-      const delgSet = new Set(activeList.map(r => r.delegation));
+      const restCount = activeList.filter(r => {
+        if (!r) return false;
+        const cat = String(r.category || r.activity_type || '');
+        return cat.includes('مطعم') || cat.includes('وجبات') || cat.includes('بيتزا') || cat.includes('Restaurant');
+      }).length;
+
+      const cafeCount = activeList.filter(r => {
+        if (!r) return false;
+        const cat = String(r.category || r.activity_type || '');
+        return cat.includes('مقهى') || cat.includes('كافيه') || cat.includes('Café') || cat.includes('حلويات');
+      }).length;
+
+      const delgSet = new Set(activeList.map(r => r ? (r.delegation || r.region) : null).filter(Boolean));
 
       document.getElementById('stat-restaurants').innerText = restCount;
       document.getElementById('stat-cafes').innerText = cafeCount;
@@ -830,27 +852,35 @@
       }
 
       filteredRestaurants = restaurants.filter(item => {
+        if (!item) return false;
+        const itemGov = item.governorate || '';
+        const itemDelg = item.delegation || item.region || '';
+        const itemCat = item.category || item.activity_type || '';
+        const itemName = item.name || '';
+        const itemAddr = item.address || '';
+        const itemCuisine = item.cuisine || (Array.isArray(item.cuisines) ? item.cuisines.join(' ') : '');
+
         // Governorate check
-        const matchGov = governorateVal === 'ALL' || item.governorate === governorateVal;
+        const matchGov = governorateVal === 'ALL' || itemGov === governorateVal;
 
         // Search check
         const matchSearch = !searchTerm ||
-          item.name.toLowerCase().includes(searchTerm) ||
-          item.address.toLowerCase().includes(searchTerm) ||
-          item.delegation.toLowerCase().includes(searchTerm) ||
-          (item.governorate && item.governorate.toLowerCase().includes(searchTerm)) ||
-          item.cuisine.toLowerCase().includes(searchTerm);
+          itemName.toLowerCase().includes(searchTerm) ||
+          itemAddr.toLowerCase().includes(searchTerm) ||
+          itemDelg.toLowerCase().includes(searchTerm) ||
+          itemGov.toLowerCase().includes(searchTerm) ||
+          itemCuisine.toLowerCase().includes(searchTerm);
 
         // Delegation check
-        const matchDelegation = delegationVal === 'ALL' || item.delegation === delegationVal;
+        const matchDelegation = delegationVal === 'ALL' || itemDelg === delegationVal;
 
         // Category check
-        const matchCategory = categoryVal === 'ALL' || item.category === categoryVal;
+        const matchCategory = categoryVal === 'ALL' || itemCat === categoryVal || itemCat.includes(categoryVal.split(' ')[0]);
 
         // Services check
         let matchService = true;
-        if (serviceVal === 'delivery') matchService = item.delivery_available;
-        if (serviceVal === 'outdoor') matchService = item.outdoor_seating;
+        if (serviceVal === 'delivery') matchService = !!item.delivery_available;
+        if (serviceVal === 'outdoor') matchService = !!item.outdoor_seating;
 
         // Favorites check
         const matchFav = !showFavsOnly || favorites.some(favId => String(favId) === String(item.id));
@@ -866,11 +896,11 @@
 
       // Sorting
       if (sortVal === 'rating_desc') {
-        filteredRestaurants.sort((a, b) => b.rating - a.rating);
+        filteredRestaurants.sort((a, b) => (b.rating || 0) - (a.rating || 0));
       } else if (sortVal === 'reviews_desc') {
-        filteredRestaurants.sort((a, b) => b.reviews_count - a.reviews_count);
+        filteredRestaurants.sort((a, b) => (b.reviews_count || 0) - (a.reviews_count || 0));
       } else if (sortVal === 'name_asc') {
-        filteredRestaurants.sort((a, b) => a.name.localeCompare(b.name, 'ar'));
+        filteredRestaurants.sort((a, b) => (a.name || '').localeCompare(b.name || '', 'ar'));
       }
 
       renderList();
@@ -899,9 +929,14 @@
     const PAGE_SIZE = 20;
 
     function renderCardHTML(item) {
+      if (!item) return '';
       const socialLinks = getSocialList(item);
       const websiteUrl = (item.website && !item.website.includes('facebook.com') && !item.website.includes('instagram.com')) ? item.website : '';
       const phoneDigits = item.phone ? item.phone.replace(/\s+/g, '') : '';
+      const displayCategory = item.category || item.activity_type || 'مطعم';
+      const displayDelegation = item.delegation || item.region || 'غير محدد';
+      const displayIcon = item.icon || '🍽️';
+      const displayCuisine = item.cuisine || (Array.isArray(item.cuisines) ? item.cuisines[0] : 'تونسية');
 
       const socialButtonsHtml = socialLinks.map(s => `
         <a href="${s.url}" target="_blank" aria-label="${s.title}" onclick="event.stopPropagation();" class="touch-target transition" title="${s.title}">
@@ -914,36 +949,36 @@
           <div class="flex items-start justify-between gap-2.5">
             <div class="flex items-start gap-2.5 min-w-0">
               <div class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform">
-                ${item.icon}
+                ${displayIcon}
               </div>
               <div class="min-w-0">
                 <h3 class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 dark:group-hover:text-rose-400 transition flex items-center gap-1.5 flex-wrap">
-                  <span class="truncate">${item.name}</span>
+                  <span class="truncate">${item.name || 'مكان'}</span>
                   ${item.is_featured ? '<span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-amber-100 dark:bg-amber-900/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800/50 shrink-0"><i class="fa-solid fa-star text-[9px] ml-0.5"></i>مميز</span>' : ''}
                   <span class="text-[10px] font-semibold px-2 py-0.2 rounded-full bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-100 dark:border-rose-900/40 shrink-0">
                     ${item.governorate || 'ولاية أريانة'}
                   </span>
                   <span class="text-[10px] font-normal px-2 py-0.2 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 shrink-0">
-                    ${item.delegation}
+                    ${displayDelegation}
                   </span>
                 </h3>
                 <p class="text-[11px] text-slate-600 dark:text-slate-300 mt-0.5 line-clamp-1">
-                  <i class="fa-solid fa-location-dot text-rose-500 ml-1"></i>${item.address}
+                  <i class="fa-solid fa-location-dot text-rose-500 ml-1"></i>${item.address || ''}
                 </p>
               </div>
             </div>
             <div class="flex flex-col items-end shrink-0">
               <div class="flex items-center gap-1 bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 px-1.5 py-0.5 rounded-lg text-xs font-bold border border-amber-200/60 dark:border-amber-800/40">
                 <i class="fa-solid fa-star text-amber-500 text-[10px]"></i>
-                <span>${item.rating}</span>
+                <span>${item.rating || '4.5'}</span>
               </div>
-              <span class="text-[9px] text-slate-600 dark:text-slate-300 font-medium mt-0.5">(${item.reviews_count} تقييم)</span>
+              <span class="text-[9px] text-slate-600 dark:text-slate-300 font-medium mt-0.5">(${item.reviews_count || 1} تقييم)</span>
             </div>
           </div>
           <div class="mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-700/50 flex items-center justify-between text-xs flex-wrap gap-2">
             <div class="flex items-center gap-1.5 flex-wrap">
               <span class="bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 px-2 py-0.5 rounded text-[10px]">
-                ${item.cuisine}
+                ${displayCuisine}
               </span>
               ${item.delivery_available ? '<span class="text-emerald-600 dark:text-emerald-400 text-[10px] font-medium"><i class="fa-solid fa-truck-fast ml-0.5"></i>توصيل</span>' : ''}
               ${item.outdoor_seating ? '<span class="text-sky-600 dark:text-sky-400 text-[10px] font-medium"><i class="fa-solid fa-chair ml-0.5"></i>جلسات خارجية</span>' : ''}
@@ -1060,25 +1095,32 @@
       const newMarkers = [];
 
       filteredRestaurants.forEach(item => {
+        if (!item) return;
+        const lat = item.lat || item.coordinates?.lat;
+        const lon = item.lon || item.coordinates?.lng;
+        if (!lat || !lon) return;
+
+        const iconChar = item.icon || '🍽️';
         const customIcon = L.divIcon({
           className: 'custom-div-icon',
-          html: `<div style="background-color: #e11d48; color: white; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 6px -1px rgba(0,0,0,0.3); font-size: 13px; border: 2px solid white;">${item.icon}</div>`,
+          html: `<div style="background-color: #e11d48; color: white; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 6px -1px rgba(0,0,0,0.3); font-size: 13px; border: 2px solid white;">${iconChar}</div>`,
           iconSize: [28, 28],
           iconAnchor: [14, 14]
         });
 
-        const marker = L.marker([item.lat, item.lon], { icon: customIcon });
+        const marker = L.marker([lat, lon], { icon: customIcon });
 
         const social = getSocialInfo(item);
         const websiteUrl = (item.website && !item.website.includes('facebook.com') && !item.website.includes('instagram.com')) ? item.website : '';
+        const displayCategory = item.category || item.activity_type || 'مطعم';
 
         const popupContent = `
           <div dir="rtl" class="text-right font-sans p-1">
-            <div class="font-bold text-xs mb-0.5">${item.name}</div>
-            <div class="text-[11px] text-rose-600 font-semibold mb-1">${item.category} (${item.governorate || 'ولاية أريانة'})</div>
-            <div class="text-[11px] text-slate-600 mb-2"><i class="fa-solid fa-location-dot ml-1 text-slate-400"></i>${item.address}</div>
+            <div class="font-bold text-xs mb-0.5">${item.name || ''}</div>
+            <div class="text-[11px] text-rose-600 font-semibold mb-1">${displayCategory} (${item.governorate || 'ولاية أريانة'})</div>
+            <div class="text-[11px] text-slate-600 mb-2"><i class="fa-solid fa-location-dot ml-1 text-slate-400"></i>${item.address || ''}</div>
             <div class="flex items-center justify-between pt-1.5 border-t border-slate-200">
-              <span class="text-[11px] font-bold text-amber-600">⭐ ${item.rating} (${item.reviews_count})</span>
+              <span class="text-[11px] font-bold text-amber-600">⭐ ${item.rating || '4.5'} (${item.reviews_count || 1})</span>
               <div class="flex items-center gap-1.5">
                 ${websiteUrl ? `<a href="${websiteUrl}" target="_blank" class="text-[11px] text-slate-600 hover:text-rose-600" title="الموقع"><i class="fa-solid fa-globe"></i></a>` : ''}
                 ${social ? `<a href="${social.url}" target="_blank" class="text-[11px]" title="${social.title}"><i class="${social.iconClass}"></i></a>` : ''}
@@ -1105,13 +1147,17 @@
 
     // Center map on clicked item and open popup
     function focusOnRestaurant(id) {
-      const item = restaurants.find(r => String(r.id) === String(id));
+      const item = restaurants.find(r => r && String(r.id) === String(id));
       if (!item) return;
 
-      map.setView([item.lat, item.lon], 16, { animate: true });
+      const lat = item.lat || item.coordinates?.lat;
+      const lon = item.lon || item.coordinates?.lng;
+      if (!lat || !lon) return;
+
+      map.setView([lat, lon], 16, { animate: true });
 
       markersCluster.eachLayer(layer => {
-        if (layer.getLatLng().lat === item.lat && layer.getLatLng().lng === item.lon) {
+        if (layer.getLatLng().lat === lat && layer.getLatLng().lng === lon) {
           layer.openPopup();
         }
       });
@@ -1148,8 +1194,12 @@
 
           // Sort restaurants by proximity to user
           filteredRestaurants.sort((a, b) => {
-            const distA = Math.hypot(a.lat - lat, a.lon - lon);
-            const distB = Math.hypot(b.lat - lat, b.lon - lon);
+            const latA = a.lat || a.coordinates?.lat || 0;
+            const lonA = a.lon || a.coordinates?.lng || 0;
+            const latB = b.lat || b.coordinates?.lat || 0;
+            const lonB = b.lon || b.coordinates?.lng || 0;
+            const distA = Math.hypot(latA - lat, lonA - lon);
+            const distB = Math.hypot(latB - lat, lonB - lon);
             return distA - distB;
           });
 
@@ -1164,11 +1214,14 @@
 
     // Modal Details Box
     function openDetailsModal(id) {
-      const item = restaurants.find(r => String(r.id) === String(id));
+      const item = restaurants.find(r => r && String(r.id) === String(id));
       if (!item) return;
 
       const socialLinks = getSocialList(item);
       const websiteUrl = (item.website && !item.website.includes('facebook.com') && !item.website.includes('instagram.com')) ? item.website : '';
+      const displayCategory = item.category || item.activity_type || 'مطعم';
+      const displayDelegation = item.delegation || item.region || 'غير محدد';
+      const displayIcon = item.icon || '🍽️';
 
       const servicesHtml = (item.services && item.services.length > 0)
         ? `<div class="pt-2 flex flex-wrap gap-1">
@@ -1201,33 +1254,33 @@
       modalContent.innerHTML = `
         <div class="flex items-center gap-3">
           <div class="w-11 h-11 rounded-2xl bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xl shrink-0">
-            ${item.icon}
+            ${displayIcon}
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white">${item.name}</h3>
+              <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white">${item.name || ''}</h3>
               ${item.is_featured ? '<span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-amber-100 dark:bg-amber-900/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800/50 shrink-0"><i class="fa-solid fa-star text-[9px] ml-0.5"></i>مميز</span>' : ''}
             </div>
-            <span class="text-xs text-rose-600 dark:text-rose-400 font-semibold">${item.category} • ${item.governorate || 'ولاية أريانة'}</span>
+            <span class="text-xs text-rose-600 dark:text-rose-400 font-semibold">${displayCategory} • ${item.governorate || 'ولاية أريانة'}</span>
           </div>
         </div>
 
         <div class="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-3 border-t border-slate-100 dark:border-slate-700">
           <p class="flex items-center gap-2">
             <i class="fa-solid fa-map text-rose-500 w-4"></i>
-            <strong>الولاية والمعتمدية:</strong> ${item.governorate || 'ولاية أريانة'} - ${item.delegation}
+            <strong>الولاية والمعتمدية:</strong> ${item.governorate || 'ولاية أريانة'} - ${displayDelegation}
           </p>
           <p class="flex items-center gap-2">
             <i class="fa-solid fa-location-dot text-rose-500 w-4"></i>
-            <strong>العنوان التفصيلي:</strong> ${item.address}
+            <strong>العنوان التفصيلي:</strong> ${item.address || ''}
           </p>
           <p class="flex items-center gap-2">
             <i class="fa-solid fa-utensils text-rose-500 w-4"></i>
-            <strong>نوع المطبخ:</strong> ${item.cuisine}
+            <strong>نوع المطبخ:</strong> ${item.cuisine || (Array.isArray(item.cuisines) ? item.cuisines.join(' ') : 'تونسية')}
           </p>
           <p class="flex items-center gap-2">
             <i class="fa-solid fa-clock text-rose-500 w-4"></i>
-            <strong>أوقات العمل:</strong> ${item.opening_hours}
+            <strong>أوقات العمل:</strong> ${item.opening_hours || '08:00 - 23:00 (يومياً)'}
           </p>
           <p class="flex items-center gap-2">
             <i class="fa-solid fa-phone text-rose-500 w-4"></i>
@@ -1242,7 +1295,7 @@
           ${socialRowsHtml}
           <p class="flex items-center gap-2">
             <i class="fa-solid fa-star text-amber-500 w-4"></i>
-            <strong>التقييم:</strong> ⭐ ${item.rating} من 5 (${item.reviews_count} مراجعة)
+            <strong>التقييم:</strong> ⭐ ${item.rating || '4.5'} من 5 (${item.reviews_count || 1} مراجعة)
           </p>
           ${servicesHtml}
         </div>
